@@ -43,8 +43,13 @@ export default {
 	line-height: 24px;
 	border-radius: 20px;
 
-	&:active {
+	&:active,
+	&:focus {
 		outline: none;
+	}
+	&:disabled {
+		opacity: 0.5;
+		cursor: default;
 	}
 
 	&.--type {

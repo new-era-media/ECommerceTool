@@ -8,7 +8,8 @@
 						br
 						| рынка электронной торговли
 					.index__system-request
-						Button(@click="onClickRequest") Заявка на доступ
+						a(href="#request")
+							Button(@click="onClickRequest") Заявка на доступ
 				.index__system-img
 					img(src="~@/assets/img/system.png")
 		.index__cards.container.flex.justify-between
@@ -29,25 +30,40 @@
 					| Если Вы призводитель или оптовая компания, отслеживайте демпинг и выявляйте общие тенденции на рынке.
 		.index__product.container
 			//ProductCard(v-for="(card, index) in products" :key="index" :card="card")
-			.product-card.flex
-				.product-card__content
+			.product-card.flex.relative
+				.product-card__bg
+					EllipseItem
+				.product-card__content.relative
 					.product-card__title Сравнение своего товара с товарами конкурентов
 					.product-card__text Описание ждем от Саши/Наташи. Анализ цен конкурентов позволит выстроить ценообразование основываясь на текущей ситуации рынка и максимизировать доход.
-				.product-card__img
+				.product-card__img.relative
 					img(src="~@/assets/img/products/product-card-1.png")
-			.product-card.flex
-				.product-card__content
+			.product-card.flex.relative
+				.product-card__bg
+					EllipseItem(type="left")
+				.product-card__content.relative
 					.product-card__title Популярность товара в своей категории
 					.product-card__text Описание ждем от Саши/Наташи. Анализ цен конкурентов позволит выстроить ценообразование основываясь на текущей ситуации рынка и максимизировать доход.
-				.product-card__img
+				.product-card__img.relative
 					img(src="~@/assets/img/products/product-card-2.png")
-			.product-card.flex
-				.product-card__content
+			.product-card.flex.relative
+				.product-card__bg
+					EllipseItem
+				.product-card__content.relative
 					.product-card__title Сравнение своего товара с товарами конкурентов
 					.product-card__text Описание ждем от Саши/Наташи. Анализ цен конкурентов позволит выстроить ценообразование основываясь на текущей ситуации рынка и максимизировать доход.
-				.product-card__img
+				.product-card__img.relative
 					img(src="~@/assets/img/products/product-card-3.png")
-
+		.index__request.container.flex.items-center.justify-between
+			a(name="request")
+			.index__request-title.relative
+				h1 Оставьте заявку и получите доступ одними из первых
+				.index__request-title-bg
+					EllipseItem(:opacity="true" type="left")
+			.index__request-form.relative
+				.index__request-bg
+					EllipseItem(size="sm" :opacity="true")
+				Request()
 
 
 </template>
@@ -55,9 +71,11 @@
 <script>
 import Button from '../components/Button/Button.vue'
 import ProductCard from '../components/ProductCard/ProductCard.vue'
+import Request from '../components/Request/Request.vue'
+import EllipseItem from '../components/Elements/EllipseItem.vue'
 
 export default {
-	components: { Button, ProductCard },
+	components: { Button, ProductCard, Request, EllipseItem },
 	data() {
 		return {
 			products: [
@@ -89,7 +107,8 @@ export default {
 
 <style lang="scss" scoped>
 .index {
-	margin-bottom: 400px;
+	padding-bottom: 40px;
+	overflow: hidden;
 
 	&__system {
 		position: relative;
@@ -138,6 +157,35 @@ export default {
 	&__product {
 		margin-top: 16px;
 	}
+	&__request {
+		margin-top: 190px;
+
+		&-title {
+			width: 36.5%;
+			margin-left: 190px;
+			text-align: right;
+		}
+		&-form {
+			width: 42%;
+			padding: 74px 130px 74px 90px;
+			border-top-left-radius: 100px;
+			border-bottom-left-radius: 100px;
+			background-color: #ffffff;
+			overflow: hidden;
+		}
+		&-bg {
+			position: absolute;
+			top: 63px;
+			right: -245px;
+		}
+		&-title-bg {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin-top: -120px;
+			margin-left: -740px;
+		}
+	}
 }
 .product-card {
 	margin-top: 25px;
@@ -159,11 +207,37 @@ export default {
 			order: 1;
 		}
 	}
+	&:nth-of-type(1) {
+		.product-card__bg {
+			top: 50%;
+			left: 50%;
+			margin-left: -590px;
+			margin-top: -80px;
+		}
+	}
+	&:nth-of-type(2) {
+		.product-card__bg {
+			top: 50%;
+			left: 50%;
+			margin-left: -242px;
+			margin-top: -112px;
+		}
+	}
 	&:nth-of-type(3) {
 		.product-card__content {
 			margin-top: 96px;
 			margin-left: 36px;
 		}
+		.product-card__bg {
+			top: 50%;
+			left: 50%;
+			margin-left: -502px;
+			margin-top: 18px;
+		}
+	}
+
+	&__bg {
+		position: absolute;
 	}
 
 	&__content {

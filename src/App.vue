@@ -20,5 +20,6 @@ export default {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	font-size: 14px;
+	background-color: #fafafa;
 }
 </style>
