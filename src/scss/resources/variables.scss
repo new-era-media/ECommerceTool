@@ -1,0 +1,24 @@
+//colors
+//$white: #ffffff;
+//$black: #000000;
+//$primary: #212121;
+//$violet: #5744D6;
+
+$colors: (
+	white: #ffffff,
+	black: #000000,
+	primary: #212121,
+	violet: #5744D6,
+	violet-dark: #3D2F9E,
+);
+
+@function color($name) {
+
+	@if(map-has-key($colors, $name)) {
+	@return map-get($colors, $name);
+	}
+
+	@else {
+		@error 'No color found';
+	}
+}

@@ -1,0 +1,81 @@
+@import './fonts.scss';
+
+
+/*
+	Flex Helpers
+*/
+
+
+.flex {
+	display: flex;
+}
+
+.grow {
+	flex-grow: 1;
+}
+
+.flex-col {
+	flex-direction: column;
+}
+
+.flex-wrap {
+	flex-wrap: wrap;
+}
+
+.flex-grow {
+	flex-grow: 1;
+}
+
+.flex-nogrow {
+	flex-grow: 0;
+}
+
+.flex-noshrink {
+	flex-shrink: 0;
+}
+
+.items {
+	&-start { align-items: flex-start; }
+	&-end { align-items: flex-end; }
+	&-center { align-items: center; }
+	&-baseline { align-items: baseline; }
+	&-stretch { align-items: stretch; }
+}
+
+.justify {
+	&-start { justify-content: flex-start; }
+	&-end { justify-content: flex-end; }
+	&-center { justify-content: center; }
+	&-baseline { justify-content: baseline; }
+	&-stretch { justify-content: stretch; }
+	&-between { justify-content: space-between; }
+	&-around { justify-content: space-around; }
+	&-evenly { justify-content: space-evenly; }
+}
+
+.self {
+	&-start { align-self: flex-start; }
+	&-end { align-self: flex-end; }
+	&-center { align-self: center; }
+	&-stretch { align-self: stretch; }
+	&-baseline { align-self: baseline; }
+}
+
+* {
+	box-sizing: border-box;
+}
+
+h1 {
+	font-size: 34px;
+	line-height: 1.35;
+}
+
+p {
+	color: #212121;
+	font-size: 14px;
+	line-height: 24px;
+}
+.container {
+	max-width: 1280px;
+	margin: 0 auto;
+}
