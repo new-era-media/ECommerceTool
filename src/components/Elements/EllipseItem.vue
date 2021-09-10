@@ -1,23 +1,20 @@
-<template >
-	<div class="ellipse" :class="classNames">
-		<svg viewBox="0 0 776 208" fill="none" xmlns="http://www.w3.org/2000/svg">
-			<path d="M2.22361 106.677C2.33063 120.276 13.0477 133.281 32.6777 145.131C52.2794 156.964 80.6253 167.554 115.663 176.366C185.731 193.989 282.447 204.474 389.198 203.634C495.949 202.794 592.489 190.788 662.27 172.064C697.165 162.702 725.341 151.667 744.754 139.527C764.195 127.37 774.706 114.197 774.599 100.598C774.492 86.9987 763.775 73.9933 744.145 62.1433C724.543 50.3105 696.197 39.7205 661.16 30.9083C591.092 13.2856 494.375 2.80023 387.624 3.64035C280.873 4.48047 184.334 16.4868 114.552 35.21C79.6574 44.5726 51.4817 55.6074 32.0687 67.7473C12.6276 79.9047 2.11658 93.0772 2.22361 106.677Z" stroke="url(#paint0_linear)"/>
-			<defs>
-				<linearGradient id="paint0_linear" x1="541.871" y1="152.681" x2="65.8542" y2="-587.917" gradientUnits="userSpaceOnUse">
-					<stop stop-color="#426EFD"/>
-					<stop offset="0.354167" stop-color="#8D4DF9"/>
-				</linearGradient>
-			</defs>
-		</svg>
-	</div>
+<template lang="pug">
+	.ellipse(:class="classNames")
+		EllipseSvg(v-if="smallEllipse")
+		EllipseSvgXXl(v-else)
+
 </template>
 
 <script>
+import EllipseSvg from '@/assets/svg/ellipse.svg'
+import EllipseSvgXXl from '@/assets/svg/ellipse-xxl.svg'
+
 export default {
+	components: { EllipseSvg, EllipseSvgXXl },
 	props: {
 		size: {
 			default: 'md',
-			validator: value => ~['sm', 'md', 'lg'].indexOf(value),
+			validator: value => ~['sm', 'md', 'lg', 'xl', 'xxl'].indexOf(value),
 		},
 		opacity: Boolean,
 		type: {
@@ -35,6 +32,9 @@ export default {
 
 			return cn
 		},
+		smallEllipse() {
+			return ~['sm', 'md', 'lg'].indexOf(this.type)
+		}
 	}
 }
 </script>
@@ -50,6 +50,18 @@ export default {
 		&-md {
 			width: 776px;
 			height: 208px;
+		}
+		&-lg {
+			width: 776px;
+			height: 208px;
+		}
+		&-xl {
+			width: 1622px;
+			height: 421px;
+		}
+		&-xxl {
+			width: 2160px;
+			height: 562px;
 		}
 	}
 	&.--type {

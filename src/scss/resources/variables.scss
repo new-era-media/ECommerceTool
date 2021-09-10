@@ -1,21 +1,27 @@
-//colors
-//$white: #ffffff;
-//$black: #000000;
-//$primary: #212121;
-//$violet: #5744D6;
+/*
+	Colors
+*/
 
 $colors: (
 	white: #ffffff,
 	black: #000000,
+	milky: #fafafa,
 	primary: #212121,
 	violet: #5744D6,
 	violet-dark: #3D2F9E,
+	violet-bright: #8D4DF9,
+	violet-light: #9C27B0,
+	gray-700: #424242,
+	gray-600: #757575,
+	gray-400: #9E9E9E,
+	gray-100: #EEEEEE,
+	blue: #426EFD,
 );
 
 @function color($name) {
 
 	@if(map-has-key($colors, $name)) {
-	@return map-get($colors, $name);
+		@return map-get($colors, $name);
 	}
 
 	@else {

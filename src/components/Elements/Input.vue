@@ -1,11 +1,12 @@
 <template lang="pug">
 	input(
 		:class="classNames"
-		type="text"
+		:type="type",
 		:placeholder="placeholder"
 		v-on="listeners"
 		v-model="model"
 		)
+
 </template>
 <script>
 import { omit } from 'lodash'
@@ -14,6 +15,12 @@ export default {
 	props: {
 		value: String,
 		placeholder: String,
+		type: {
+			default: 'text',
+			validator: value => ~[
+				'text', 'password',
+			].indexOf(value),
+		},
 	},
 	computed: {
 		model: {
@@ -46,8 +53,21 @@ export default {
 	height: 40px;
 	line-height: 40px;
 	padding: 0 15px;
-	border: 1px solid #9E9E9E;
+	border: 1px solid color(gray-400);
 	border-radius: 4px;
 	outline: none;
+
+	&::-webkit-input-placeholder {
+		color: color(gray-600);
+	}
+	&::-moz-placeholder          {
+		color: color(gray-600);
+	}/* Firefox 19+ */
+	&:-moz-placeholder           {
+		color: color(gray-600);
+	}/* Firefox 18- */
+	&:-ms-input-placeholder      {
+		color: color(gray-600);
+	}
 }
 </style>

@@ -26,7 +26,7 @@
 	position: relative;
 	display: inline-block;
 	line-height: 24px;
-	color: #212121;
+	color: color(primary);
 	cursor: pointer;
 
 	&:after {
@@ -40,11 +40,11 @@
 	}
 
 	&:hover {
-		color: #3D2F9E;
+		color: color(violet-dark);
 
 		&:after {
 			width: 100%;
-			background: linear-gradient(67.64deg, #426EFD 28.69%, #8D4DF9 82.18%);
+			background: linear-gradient(67.64deg, color(blue) 28.69%, color(violet-bright) 82.18%);
 			transition: width 0.3s ease-in;
 		}
 

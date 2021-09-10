@@ -71,11 +71,12 @@ h1 {
 }
 
 p {
-	color: #212121;
+	color: color(primary);
 	font-size: 14px;
 	line-height: 24px;
 }
 .container {
+	min-width: 1280px;
 	max-width: 1280px;
 	margin: 0 auto;
 }

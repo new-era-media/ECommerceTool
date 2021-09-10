@@ -41,10 +41,23 @@ export default {
 </script>
 <style lang="scss" scoped>
 .textarea {
-	border: 1px solid #9E9E9E;
+	border: 1px solid color(gray-400);
 	border-radius: 4px;
 	outline: none;
 	padding: 6px 15px;
 	resize: none;
+
+	&::-webkit-input-placeholder {
+		color: color(gray-600);
+	}
+	&::-moz-placeholder          {
+		color: color(gray-600);
+	}/* Firefox 19+ */
+	&:-moz-placeholder           {
+		color: color(gray-600);
+	}/* Firefox 18- */
+	&:-ms-input-placeholder      {
+		color: color(gray-600);
+	}
 }
 </style>

@@ -1,19 +1,17 @@
 <template lang="pug">
 	main.layout
-		.layout__header(v-if="!noHeader")
-			Header
+		.layout__header
+			HeaderEntry
 		.layout__content
 			RouterView
 </template>
 <script>
-import Header from '@/components/Layout/Header.vue'
+import HeaderEntry from '@/components/Layout/HeaderEntry.vue'
 
 export default {
-	components: { Header },
+	components: { HeaderEntry },
 	computed: {
-		noHeader() {
-			return this.$route.meta.noHeader
-		}
+
 	}
 }
 </script>

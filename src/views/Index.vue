@@ -9,22 +9,22 @@
 						| рынка электронной торговли
 					.index__system-request
 						a(href="#request")
-							Button(@click="onClickRequest") Заявка на доступ
+							Button(@click="request") Заявка на доступ
 				.index__system-img
 					img(src="~@/assets/img/system.png")
 		.index__cards.container.flex.justify-between
 			.index__card
-				img.index__card-icon(src="~@/assets/svg/loupe.svg")
+				LoupeIcon.index__card-icon
 				.index__card-title Мониторинг цен
 				.index__card-text
 					| Анализ цен конкурентов позволит выстроить ценообразование на основе текущей ситуации рынка и максимизировать доход
 			.index__card
-				img.index__card-icon(src="~@/assets/svg/price.svg")
+				PriceIcon.index__card-icon
 				.index__card-title Цены конкурентов
 				.index__card-text
 					| Отслеживайте цены на сайтах конкурентов и маркетплейсах, чтобы делать лучшее предложение для потребителя.
 			.index__card
-				img.index__card-icon(src="~@/assets/svg/chart.svg")
+				ChartIcon.index__card-icon
 				.index__card-title Цены ритейлеров
 				.index__card-text
 					| Если Вы призводитель или оптовая компания, отслеживайте демпинг и выявляйте общие тенденции на рынке.
@@ -63,19 +63,32 @@
 			.index__request-form.relative
 				.index__request-bg
 					EllipseItem(size="sm" :opacity="true")
-				Request()
+				RequestForm
 
 
 </template>
 
 <script>
-import Button from '../components/Button/Button.vue'
-import ProductCard from '../components/ProductCard/ProductCard.vue'
-import Request from '../components/Request/Request.vue'
-import EllipseItem from '../components/Elements/EllipseItem.vue'
+import Button from '@/components/Button/Button.vue'
+import ProductCard from '@/components/ProductCard/ProductCard.vue'
+import RequestForm from '@/components/RequestForm/RequestForm.vue'
+import EllipseItem from '@/components/Elements/EllipseItem.vue'
+import LoupeIcon from '@/assets/svg/loupe.svg'
+import PriceIcon from '@/assets/svg/price.svg'
+import ChartIcon from '@/assets/svg/chart.svg'
+
+
 
 export default {
-	components: { Button, ProductCard, Request, EllipseItem },
+	components: {
+		Button,
+		ProductCard,
+		RequestForm,
+		EllipseItem,
+		LoupeIcon,
+		PriceIcon,
+		ChartIcon,
+	},
 	data() {
 		return {
 			products: [
@@ -98,8 +111,8 @@ export default {
 		}
 	},
 	methods: {
-		onClickRequest() {
-			console.log(this.products)
+		request() {
+			console.log('request')
 		}
 	}
 }
@@ -140,7 +153,7 @@ export default {
 
 		&-icon {
 			margin: 0 auto;
-			min-height: 67px;
+			height: 67px;
 		}
 		&-title {
 			margin-top: 22px;
@@ -170,7 +183,7 @@ export default {
 			padding: 74px 130px 74px 90px;
 			border-top-left-radius: 100px;
 			border-bottom-left-radius: 100px;
-			background-color: #ffffff;
+			background-color: color(white);
 			overflow: hidden;
 		}
 		&-bg {

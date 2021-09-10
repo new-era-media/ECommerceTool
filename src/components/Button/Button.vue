@@ -12,7 +12,7 @@ export default {
 		type: {
 			default: 'violet',
 			validator: value => ~[
-				'violet', 'violet-outline',
+				'violet', 'violet-outline', 'empty',
 			].indexOf(value),
 		},
 	},
@@ -37,7 +37,7 @@ export default {
 <style lang="scss" scoped>
 .button {
 	height: 40px;
-	padding: 0 16px;
+	padding: 0 18px;
 	font-weight: 600;
 	font-size: 14px;
 	line-height: 24px;
@@ -47,20 +47,24 @@ export default {
 	&:focus {
 		outline: none;
 	}
-	&:disabled {
-		opacity: 0.5;
-		cursor: default;
-	}
 
 	&.--type {
 		&-violet {
-			color: #ffffff;
+			color: color(white);
 			background: linear-gradient(67.64deg, #2954DF 28.69%, #733BD1 82.18%);
 		}
 		&-violet-outline {
-			color: #5744D6;
-			border: 2px solid #5744D6;
+			color: color(violet);
+			border: 2px solid color(violet);
 		}
+		&-empty {
+			color: color(violet);
+		}
+	}
+	&:disabled {
+		color: color(gray-400)!important;
+		background: color(gray-100)!important;
+		cursor: default;
 	}
 }
 </style>
