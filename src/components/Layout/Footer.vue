@@ -14,6 +14,20 @@ export default {
 		},
 		feedback() {
 			console.log('feedback')
+			this.$modal({
+				component: 'Feedback',
+				props: {
+
+				},
+				on: {
+					cancel: () => {
+						console.log('cancel')
+					},
+					save: () => {
+						console.log('save')
+					}
+				},
+			})
 		}
 	}
 }
@@ -30,9 +44,11 @@ export default {
 			font-size: 14px;
 			line-height: 1.6;
 			cursor: pointer;
+			transition: color 0.3s ease-out;
 
 			&:hover {
 				color: color(violet);
+				transition: color 0.3s ease-in;
 			}
 		}
 	}

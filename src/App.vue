@@ -1,13 +1,15 @@
 <template lang="pug">
 	#app
 		RouterView
-
+		ModalService
 </template>
 
 <script>
+import ModalService from '@/components/Layout/ModalService.vue'
 
 export default {
-  name: 'App',
+	name: 'App',
+	components: { ModalService }
 }
 </script>
 
