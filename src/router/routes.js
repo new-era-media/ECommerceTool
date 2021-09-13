@@ -1,12 +1,13 @@
-import Layout from '../components/Layout/Layout.vue'
+import LayoutLanding from '../components/Layout/LayoutLanding.vue'
 import LayoutFullPage from '../components/Layout/LayoutFullPage.vue'
+//import Layout from '../components/Layout/Layout.vue'
 const _import = name => () => import('@/views/' + name + '.vue')
 
 export default [
 	{
 		path: '',
-		name: 'Layout',
-		component: Layout,
+		name: 'LayoutLanding',
+		component: LayoutLanding,
 		redirect: { name: 'Index' },
 		children: [
 			{
@@ -47,6 +48,11 @@ export default [
 				path: '/',
 				name: 'Entry',
 				component: _import('Entry'),
+			},
+			{
+				path: '/welcome',
+				name: 'Welcome',
+				component: _import('Welcome'),
 			},
 		]
 	},

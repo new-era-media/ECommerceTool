@@ -2,13 +2,12 @@
 	header.header.container
 		.flex.justify-between.items-center
 			Link(:to="{name: 'Index'}" unstyled)
-				img.header__logo(src="~@/assets/img/logo.png")
-			nav.header__nav.flex.justify-between.items-center
-				Link.header__nav-item(native) Возможности
-				Link.header__nav-item(native) Площадки
-				Link.header__nav-item(native) Метрики
-				Link(:to="{name: 'SignIn'}" unstyled)
-					Button(label="Войти" type="violet-outline")
+				.header__logo.flex.items-center
+					.header__logo-icon L
+					.header__logo-title
+						span Ecomm
+						| monitor
+			Button(@click="logout" label="Выйти" type="empty")
 
 
 </template>
@@ -22,18 +21,43 @@ export default {
 		return {
 
 		}
+	},
+	methods: {
+		logout() {
+			console.log('logout')
+		}
 	}
 }
 </script>
 <style lang="scss" scoped>
 .header {
-	padding: 25px 20px;
+	padding: 22px;
 
 	&__logo {
-		width: 334px;
-	}
-	&__nav {
-		width: 400px;
+
+		&-icon {
+			width: 32px;
+			height: 32px;
+			margin-right: 6px;
+			text-align: center;
+			color: color(white);
+			font-weight: 600;
+			font-size: 20px;
+			background-color: color(violet-light);
+			border-radius: 4px;
+		}
+		&-title {
+			color: color(violet-dark);
+			font-size: 24px;
+			line-height: 1.08;
+
+			span {
+				display: inline-block;
+				margin-right: 4px;
+				font-weight: 700;
+			}
+		}
+
 	}
 }
 </style>

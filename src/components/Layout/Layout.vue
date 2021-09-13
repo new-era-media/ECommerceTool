@@ -1,19 +1,20 @@
 <template lang="pug">
 	main.layout
-		.layout__header(v-if="!noHeader")
+		.layout__header
 			Header
 		.layout__content
 			RouterView
+		.layout__footer
+			Footer
 </template>
 <script>
 import Header from '@/components/Layout/Header.vue'
+import Footer from '@/components/Layout/Footer.vue'
 
 export default {
-	components: { Header },
+	components: { Header, Footer },
 	computed: {
-		noHeader() {
-			return this.$route.meta.noHeader
-		}
+
 	}
 }
 </script>

@@ -1,15 +1,18 @@
 <template lang="pug">
-	main.layout
+	main.layout.flex.flex-col.justify-between
 		.layout__header
-			HeaderEntry
-		.layout__content
+			Header
+		.layout__content.container.flex.justify-around.items-center
 			RouterView
+		.layout__footer
+			Footer
 </template>
 <script>
-import HeaderEntry from '@/components/Layout/HeaderEntry.vue'
+import Header from '@/components/Layout/Header.vue'
+import Footer from '@/components/Layout/Footer.vue'
 
 export default {
-	components: { HeaderEntry },
+	components: { Header, Footer },
 	computed: {
 
 	}
@@ -17,6 +20,8 @@ export default {
 </script>
 <style lang="scss" scoped>
 .layout {
-
+	height: 100vh;
+	max-height: 100vh;
+	overflow: hidden;
 }
 </style>
