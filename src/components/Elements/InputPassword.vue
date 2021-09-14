@@ -2,17 +2,17 @@
 	.input__wrap.relative
 		Input(v-bind="$props" :type="inputType")
 		.input__icon(@click="togglePass")
-			EyeHideIcon(v-if="showPass")
+			EyeOffIcon(v-if="showPass")
 			EyeIcon(v-else)
 
 </template>
 <script>
 import Input from '@/components/Elements/Input.vue'
-import EyeIcon from '@/assets/svg/eye.svg'
-import EyeHideIcon from '@/assets/svg/eye-slash-solid.svg'
+import EyeIcon from 'vue-material-design-icons/Eye.vue'
+import EyeOffIcon from 'vue-material-design-icons/EyeOff.vue'
 
 export default {
-	components: { Input, EyeIcon, EyeHideIcon },
+	components: { Input, EyeIcon, EyeOffIcon },
 	props: {
 		value: String,
 		placeholder: String,
@@ -48,7 +48,7 @@ export default {
 		right: 10px;
 		transform: translateY(-50%);
 		cursor: pointer;
-		color: color(gray-700);
+		color: color(gray-800);
 	}
 }
 </style>

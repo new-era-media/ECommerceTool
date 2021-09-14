@@ -11,13 +11,15 @@
 				) {{product.title}}
 			ArrowIcon.welcome__item-next
 		.welcome__item
-			SettingsIcon.welcome__item-icon
+			.welcome__item-icon
+				SettingsIcon(:size="40")
 			.welcome__item-title.flex.justify-center.items-center Настройте категорию
 			.welcome__item-text
 				| Укажите Ваши интересы в рамках категории: свои бренды, близких конкурентов для сравнения и ритейлеров.
 			ArrowIcon.welcome__item-next
 		.welcome__item
-			CalendarIcon.welcome__item-icon
+			.welcome__item-icon
+				CalendarIcon(:size="40")
 			.welcome__item-title.flex.justify-center.items-center Настройте актуальный вид дашборда, SKU брендов
 			.welcome__item-text
 				| Настройте фильтр периода статистики или данные по конкретным брендам. Еще, Вы можете скрывать виджеты и графики, которые вам не нужны и менять их порядок
@@ -25,8 +27,8 @@
 </template>
 <script>
 import PointerIcon from '@/assets/svg/pointer.svg'
-import SettingsIcon from '@/assets/svg/settings.svg'
-import CalendarIcon from '@/assets/svg/calendar.svg'
+import SettingsIcon from 'vue-material-design-icons/Cog.vue'
+import CalendarIcon from 'vue-material-design-icons/Calendar.vue'
 import ArrowIcon from '@/assets/svg/arrow.svg'
 import Button from '@/components/Button/Button.vue'
 
@@ -82,6 +84,7 @@ export default {
 		text-align: center;
 
 		&-icon {
+			width: 40px;
 			height: 42px;
 			margin: 0 auto;
 		}

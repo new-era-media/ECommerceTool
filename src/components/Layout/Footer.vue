@@ -10,10 +10,22 @@ footer.footer.container
 export default {
 	methods: {
 		onboarding() {
-			console.log('onboarding')
+			this.$modal({
+				component: 'Onboarding',
+				props: {
+
+				},
+				on: {
+					cancel: () => {
+						console.log('cancel')
+					},
+					save: () => {
+						console.log('save')
+					}
+				},
+			})
 		},
 		feedback() {
-			console.log('feedback')
 			this.$modal({
 				component: 'Feedback',
 				props: {

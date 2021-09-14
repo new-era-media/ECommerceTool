@@ -23,6 +23,6 @@ export default {
 	-moz-osx-font-smoothing: grayscale;
 	color: color(primary);
 	font-size: 14px;
-	background-color: color(milky);
+	background-color: color(gray-100);
 }
 </style>

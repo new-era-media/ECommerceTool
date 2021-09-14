@@ -1,11 +1,12 @@
 <template lang="pug">
 	.modal
 		.modal__header
-			.modal__title {{title}}
+			slot(name="header")
+				.modal__title(v-if="title") {{title}}
 			button.modal__close(v-if="closable" @click="$emit('close')")
 		.modal__content
 			slot
-		.modal__footer
+		.modal__footer(v-if="hasFooterSlot")
 			slot(name="footer")
 </template>
 
@@ -15,6 +16,11 @@ export default {
 		title: String,
 		closable: Boolean,
 	},
+	computed: {
+		hasFooterSlot() {
+			return !!this.$slots.footer
+		}
+	}
 }
 </script>
 
@@ -39,7 +45,7 @@ export default {
 			top: 4px;
 			right: 4px;
 			margin-left: auto;
-			color: color(gray-600);
+			color: color(gray-700);
 			transition: color 160ms;
 			outline: none;
 
@@ -81,7 +87,7 @@ export default {
 		&__footer {
 			margin-top: 16px;
 			padding-top: 16px;
-			border-top: 1px solid color(gray-100);
+			border-top: 1px solid color(gray-300);
 		}
 	}
 </style>

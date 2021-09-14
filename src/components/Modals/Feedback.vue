@@ -92,7 +92,7 @@ export default {
 			line-height: 1.42;
 		}
 		&-text {
-			color: color(gray-600);
+			color: color(gray-700);
 			font-size: 12px;
 			line-height: 1.33;
 		}

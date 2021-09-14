@@ -49,7 +49,7 @@ export default {
 	}
 	&__sub {
 		margin-top: 10px;
-		color: color(gray-600);
+		color: color(gray-700);
 		font-size: 14px;
 		line-height: 1.42;
 	}

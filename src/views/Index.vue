@@ -29,7 +29,6 @@
 				.index__card-text
 					| Если Вы призводитель или оптовая компания, отслеживайте демпинг и выявляйте общие тенденции на рынке.
 		.index__product.container
-			//ProductCard(v-for="(card, index) in products" :key="index" :card="card")
 			.product-card.flex.relative
 				.product-card__bg
 					EllipseItem
@@ -70,7 +69,6 @@
 
 <script>
 import Button from '@/components/Button/Button.vue'
-import ProductCard from '@/components/ProductCard/ProductCard.vue'
 import RequestForm from '@/components/RequestForm/RequestForm.vue'
 import EllipseItem from '@/components/Elements/EllipseItem.vue'
 import LoupeIcon from '@/assets/svg/loupe.svg'
@@ -82,7 +80,6 @@ import ChartIcon from '@/assets/svg/chart.svg'
 export default {
 	components: {
 		Button,
-		ProductCard,
 		RequestForm,
 		EllipseItem,
 		LoupeIcon,
