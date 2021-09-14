@@ -119,6 +119,9 @@ export default {
 .index {
 	padding-bottom: 40px;
 	overflow: hidden;
+	//background: radial-gradient(ellipse at top, #DFD3F2, transparent),
+	//	radial-gradient(ellipse at top, #D3E7F7, transparent),
+	//	radial-gradient(ellipse at top, #FAE9D4, transparent);
 
 	&__system {
 		position: relative;

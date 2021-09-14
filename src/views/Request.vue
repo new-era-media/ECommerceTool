@@ -33,6 +33,9 @@ export default {
 </script>
 <style lang="scss" scoped>
 .request {
+	position: relative;
+	@include radialBg(#FAE9D4);
+
 	&__bg {
 		position: absolute;
 		top: 50%;

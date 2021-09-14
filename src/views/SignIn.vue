@@ -5,21 +5,6 @@ WelcomePage.singin
 			Button(type="violet-outline") Заявка на доступ
 	template(#form)
 		SignInForm
-//.singin
-	.singin__inner.container.flex.justify-between.items-center
-		.singin__content.relative
-			.singin__bg
-				EllipseItem(size="xl" type="left" :opacity="true")
-			.relative
-				img.singin__logo(src="~@/assets/img/logo.png")
-				h1.singin__title
-					| Система мониторинга
-					br
-					| рынка электронной торговли
-				.singin__btn(@click="request")
-					Button(type="violet-outline") Заявка на доступ
-		.singin__enter.relative.flex.justify-around.items-center
-			SignInForm
 
 </template>
 
@@ -41,6 +26,9 @@ export default {
 
 <style lang="scss" scoped>
 .singin {
+	position: relative;
+	@include radialBg(#DFD3F2);
+
 	&__btn {
 		margin-top: 30px;
 		margin-left: 40px;

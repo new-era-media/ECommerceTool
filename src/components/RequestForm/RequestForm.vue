@@ -1,17 +1,17 @@
 <template lang="pug">
-	.request
-		.request__title(v-if="title") {{title}}
-		.request__item
+	.request-form
+		.request-form__title(v-if="title") {{title}}
+		.request-form__item
 			Input(placeholder="Фамилия и имя")
-		.request__item
+		.request-form__item
 			Input(placeholder="Эл. почта")
-		.request__item
+		.request-form__item
 			Input(placeholder="Компания")
-		.request__item
+		.request-form__item
 			Input(placeholder="Должность")
-		.request__item
+		.request-form__item
 			Textarea(placeholder="Категории товаров, ваши вопросы и пожелания")
-		.request__btn
+		.request-form__btn
 			Button() Отправить заявку
 
 		slot(name="bottom")
@@ -30,7 +30,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.request {
+.request-form {
 	width: 100%;
 	position: relative;
 
