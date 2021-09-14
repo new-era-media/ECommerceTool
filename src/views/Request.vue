@@ -34,7 +34,7 @@ export default {
 <style lang="scss" scoped>
 .request {
 	position: relative;
-	@include radialBg(#FAE9D4);
+	@include radialBg(#FBE6BE);
 
 	&__bg {
 		position: absolute;

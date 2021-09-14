@@ -8,7 +8,13 @@ ModalBase.feedback(
 	.feedback__text От: %Имя Фамилия автора%
 	.feedback__subtitle Тип обращения
 	.feedback__list
-		.feedback__item(v-for="item of list" :key="item.title")
+		Radio.feedback__item(v-model='reason' @input='changeOptions' :options='options')
+			template(#default="{option}")
+				.feedback__item-title {{option.title}}
+				.feedback__item-text(v-if="option.text") {{option.text}}
+
+
+		//.feedback__item(v-for="item of list" :key="item.title")
 			.feedback__item-title {{item.title}}
 			.feedback__item-text(v-if="item.text") {{item.text}}
 	.feedback__subtitle Описание
@@ -28,26 +34,32 @@ ModalBase.feedback(
 <script>
 import ModalBase from '@/components/Layout/ModalBase.vue'
 import Textarea from '@/components/Elements/Textarea.vue'
+import Radio from '@/components/Elements/Radio.vue'
 import Button from '@/components/Button/Button.vue'
 
 export default {
-	components: { ModalBase, Textarea, Button },
+	components: { ModalBase, Textarea, Radio, Button },
 	data() {
 		return {
-			list: [
+			reason: 0,
+			options: [
 				{
+					value: 0,
 					title: 'Ошибка в системе',
 					text: 'Если что-то не работает так, как должно'
 				},
 				{
+					value: 1,
 					title: 'Просьба предоставить доступ',
 					text: 'Если нужно добавить пользователей или проблемы с доступом у добавленных ранее людей'
 				},
 				{
+					value: 2,
 					title: 'Предложение улучшения',
 					text: 'Функционал, которого вам не хватает'
 				},
 				{
+					value: 3,
 					title: 'Другое',
 					text: ''
 				}
@@ -63,6 +75,9 @@ export default {
 		},
 		save() {
 			this.$emit('save')
+		},
+		changeOptions() {
+			console.log('changeOptions')
 		}
 	}
 }
@@ -85,7 +100,6 @@ export default {
 	}
 	&__item {
 		margin-top: 16px;
-		padding-left: 36px;
 
 		&-title {
 			font-size: 14px;
