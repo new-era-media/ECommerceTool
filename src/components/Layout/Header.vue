@@ -7,16 +7,31 @@
 					.header__logo-title
 						span Ecomm
 						| monitor
-			Button(@click="logout" label="Выйти" type="empty")
+			.header__content.flex.items-center
+				nav.header__nav.flex.items-center(v-if="nav.length")
+					.header__nav-item(v-for="item of nav" :key="item.page")
+						template(v-if="item.active")
+							.header__nav-label {{item.title}}
+						Link(v-else :to="`/${item.page}`")
+				slot
+					Profile
+					//Button(@click="logout" label="Выйти" type="empty")
 
 
 </template>
 <script>
 import Button from '@/components/Button/Button.vue'
 import Link from '@/components/Link/Link.vue'
+import Profile from '@/components/Profile/Profile.vue'
 
 export default {
-	components: { Button, Link },
+	components: { Button, Link, Profile },
+	props: {
+		nav: {
+			type: Array,
+			default: () => [],
+		}
+	},
 	data() {
 		return {
 
@@ -58,6 +73,44 @@ export default {
 			}
 		}
 
+	}
+	&__profile {
+		margin-right: 12px;
+	}
+	&__nav {
+		position: relative;
+		margin: 0 48px;
+
+		&:after {
+			content: '';
+			position: absolute;
+			width: 4px;
+			height: 4px;
+			top: 50%;
+			right: -22px;
+			transform: translateY(-50%);
+			border-radius: 50%;
+			background-color: color(gray-600);
+		}
+
+		&-item {
+			margin-right: 10px;
+		}
+		&-label {
+			position: relative;
+			font-size: 14px;
+			line-height: 1.72;
+
+			&:after {
+				content: '';
+				position: absolute;
+				width: 100%;
+				height: 3px;
+				bottom: -1px;
+				left: 0;
+				background: linear-gradient(67.64deg, color(blue) 28.69%, color(violet-bright) 82.18%);
+			}
+		}
 	}
 }
 </style>

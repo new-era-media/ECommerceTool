@@ -1,7 +1,8 @@
 <template lang="pug">
 	main.layout
 		.layout__header
-			Header
+			Header(:nav="nav")
+			Menu(title="Настройки категории Кофе в зернах")
 		.layout__content
 			RouterView
 		.layout__footer
@@ -9,10 +10,22 @@
 </template>
 <script>
 import Header from '@/components/Layout/Header.vue'
+import Menu from '@/components/Layout/Menu.vue'
 import Footer from '@/components/Layout/Footer.vue'
 
 export default {
-	components: { Header, Footer },
+	components: { Header, Menu, Footer },
+	data() {
+		return {
+			nav: [
+				{
+					page: 'category',
+					title: 'Настройки категории',
+					active: true,
+				}
+			]
+		}
+	},
 	computed: {
 
 	}
@@ -20,6 +33,10 @@ export default {
 </script>
 <style lang="scss" scoped>
 .layout {
+	min-height: 100vh;
 
+	&__content {
+		min-height: calc(100vh - 84px - 66px); // 84px -header height, 66px - footer height
+	}
 }
 </style>
