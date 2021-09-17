@@ -71,6 +71,24 @@ export default [
 				path: '/dashboard',
 				name: 'Dashboard',
 				component: _import('Dashboard'),
+			},
+			{
+				path: '/brand',
+				name: 'Brand',
+				component: _import('Brand'),
+				redirect: { name: 'Brand.List' },
+				children: [
+					{
+						path: 'list',
+						name: 'Brand.List',
+						component: _import('Brand/List'),
+					},
+					{
+						path: 'item',
+						name: 'Brand.Item',
+						component: _import('Brand/Item'),
+					},
+				]
 			}
 		]
 	},

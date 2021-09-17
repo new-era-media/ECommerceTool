@@ -1,45 +1,47 @@
 <template lang="pug">
-.dashboard.container
-	.dashboard__section.flex.justify-between.items-center
-		.flex.items-center
-			.dashboard__title Данные у ритейлеров
-			.dashboard__tabs.flex
-				.dashboard__tab-item.flex.items-center.--active
-					ComparisonIcon
-					.dashboard__tab-label Сравнение
-				.dashboard__tab-item.flex.items-center
-					.dashboard__tab-icon.--blue
-					.dashboard__tab-label Наши бренды
-				.dashboard__tab-item.flex.items-center
-					.dashboard__tab-icon.--orange
-					.dashboard__tab-label Близкие конкуренты
-				.dashboard__tab-item.flex.items-center
-					.dashboard__tab-icon.--gray
-					.dashboard__tab-label Другие бренды категории
-			//Tabs.dashboard__tabs
-				TabItem(title="Сравнение")
-					.dashboard__tab-header
-						| Сравнение 1
-				TabItem(title="Наши бренды")
-					.dashboard__tab-header
-						| Наши бренды 1
-				TabItem(title="Близкие конкуренты")
-					.dashboard__tab-header
-						| Близкие конкуренты 1
-				TabItem(title="Другие бренды категории")
-					.dashboard__tab-header
-						| Другие бренды категории 1
+.dashboard
+	Menu(title="Дашборд")
+	.dashboard__wrap.container
+		.dashboard__section.flex.justify-between.items-center
+			.flex.items-center
+				.dashboard__title Данные у ритейлеров
+				.dashboard__tabs.flex
+					.dashboard__tab-item.flex.items-center.--active
+						ComparisonIcon
+						.dashboard__tab-label Сравнение
+					.dashboard__tab-item.flex.items-center
+						MarkItem(color="blue")
+						.dashboard__tab-label Наши бренды
+					.dashboard__tab-item.flex.items-center
+						MarkItem(color="orange")
+						.dashboard__tab-label Близкие конкуренты
+					.dashboard__tab-item.flex.items-center
+						MarkItem(color="gray")
+						.dashboard__tab-label Другие бренды категории
+				//Tabs.dashboard__tabs
+					TabItem(title="Сравнение")
+						.dashboard__tab-header
+							| Сравнение 1
+					TabItem(title="Наши бренды")
+						.dashboard__tab-header
+							| Наши бренды 1
+					TabItem(title="Близкие конкуренты")
+						.dashboard__tab-header
+							| Близкие конкуренты 1
+					TabItem(title="Другие бренды категории")
+						.dashboard__tab-header
+							| Другие бренды категории 1
 
-		Button.dashboard__settings(type="violet-outline" size="sm" @click="settings")
-			SettingsIcon(:size="18")
-	.dashboard__widgets.flex.flex-wrap
-		Widget.dashboard__widget(:widget="sku")
-		Widget.dashboard__widget(v-for="(item, index) of list" :key="index" :widget="item" type="percent")
-	.dashboard__section
-		.flex.justify-between.items-center
-				.dashboard__title Графики
-				Button.dashboard__settings(type="violet-outline" size="sm" @click="newChart")
-					PlusIcon(:size="18")
+			Button.dashboard__settings(type="violet-outline" size="sm" @click="settings")
+				SettingsIcon(:size="18")
+		.dashboard__widgets.flex.flex-wrap
+			Widget.dashboard__widget(:widget="sku")
+			Widget.dashboard__widget(v-for="(item, index) of list" :key="index" :widget="item" type="percent")
+		.dashboard__section
+			.flex.justify-between.items-center
+					.dashboard__title Графики
+					Button.dashboard__settings(type="violet-outline" size="sm" @click="newChart")
+						PlusIcon(:size="18")
 
 	.dashboard__onboard(v-if="onboardShow")
 		OnboardTooltip(@close="onboardClose")
@@ -47,6 +49,7 @@
 </template>
 
 <script>
+import Menu from '@/components/Menu/Menu.vue'
 import Tabs from '@/components/Tabs/Tabs.vue'
 import TabItem from '@/components/Tabs/TabItem.vue'
 import Button from '@/components/Button/Button.vue'
@@ -55,9 +58,11 @@ import PlusIcon from 'vue-material-design-icons/Plus.vue'
 import ComparisonIcon from '@/assets/svg/comparison.svg'
 import Widget from '@/components/Widget/Widget.vue'
 import OnboardTooltip from '@/components/Onboard/Onboard.vue'
+import MarkItem from '@/components/Elements/MarkItem.vue'
 
 export default {
 	components: {
+		Menu,
 		Tabs,
 		TabItem,
 		Button,
@@ -65,7 +70,8 @@ export default {
 		PlusIcon,
 		ComparisonIcon,
 		Widget,
-		OnboardTooltip
+		OnboardTooltip,
+		MarkItem,
 	},
 	data() {
 		return {
@@ -227,7 +233,10 @@ export default {
 
 <style lang="scss" scoped>
 .dashboard {
-	padding: 12px 24px;
+
+	&__wrap {
+		padding: 12px 24px;
+	}
 
 	&__title {
 		font-weight: 600;
@@ -256,22 +265,6 @@ export default {
 						transition: width 0.3s ease-in;
 					}
 				}
-			}
-		}
-		&-icon {
-			width: 8px;
-			height: 8px;
-			border-radius: 50%;
-			border: 2px solid color(gray-700);
-
-			&.--blue {
-				border-color: color(blue-bright);
-			}
-			&.--orange {
-				border-color: color(orange);
-			}
-			&.--gray {
-				border-color: color(gray-700);
 			}
 		}
 		&-label {

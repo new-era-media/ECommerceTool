@@ -1,5 +1,6 @@
 <template lang="pug">
 .category
+	Menu(title="Настройки категории Кофе в зернах")
 	.container
 		.category__wrap
 			.category__text Эти настройки будут по-умолчанию использоваться в дашборде и разделе SKU брендов
@@ -21,11 +22,12 @@
 </template>
 
 <script>
+import Menu from '@/components/Menu/Menu.vue'
 import Button from '@/components/Button/Button.vue'
 import CategoryFilter from '@/components/CategoryFilter/CategoryFilter.vue'
 
 export default {
-	components: { Button, CategoryFilter },
+	components: { Menu, Button, CategoryFilter },
 	data() {
 		return {
 			options: [

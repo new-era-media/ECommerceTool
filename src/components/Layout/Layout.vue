@@ -2,7 +2,6 @@
 	main.layout
 		.layout__header
 			Header(:nav="nav")
-			Menu(:title="title")
 		.layout__content
 			RouterView
 		.layout__footer
@@ -10,11 +9,10 @@
 </template>
 <script>
 import Header from '@/components/Layout/Header.vue'
-import Menu from '@/components/Layout/Menu.vue'
 import Footer from '@/components/Layout/Footer.vue'
 
 export default {
-	components: { Header, Menu, Footer },
+	components: { Header, Footer },
 	data() {
 		return {
 			nav: [
@@ -26,11 +24,6 @@ export default {
 			]
 		}
 	},
-	computed: {
-		title() {
-			return this.$route.name.toLowerCase() === 'dashboard' ? 'Дашборд' : 'Настройки категории Кофе в зернах'
-		}
-	}
 }
 </script>
 <style lang="scss" scoped>
