@@ -1,6 +1,15 @@
 <template lang="pug">
 .profile
-	Menu(title="Иванов И • Клиент")
+	Menu(:title="title")
+		template(#title)
+			.flex.items-baseline
+				| {{title}}
+				.profile__email client@mail.ru
+
+		nav.profile__nav.flex
+			.profile__nav-item(@click="change('name')") Изменить имя
+			.profile__nav-item(@click="change('pass')") Сменить пароль
+			.profile__nav-item.--logout(@click="logout") Выйти
 	.profile__list.container.flex.items-start
 		.profile__card.profile__rate
 			.flex.justify-between
@@ -31,11 +40,47 @@
 <script>
 import Menu from '@/components/Menu/Menu.vue'
 export default {
-	components: { Menu }
+	components: { Menu },
+	data() {
+		return {
+			title: 'Иванов И • Клиент'
+		}
+	},
+	methods: {
+		change(item) {
+			console.log('change', item)
+		},
+		logout() {
+			console.log('logout')
+		}
+	}
 }
 </script>
 <style lang="scss" scoped>
 .profile {
+
+	&__email {
+		margin-left: 16px;
+		font-size: 14px;
+		line-height: 1.42;
+	}
+
+	&__nav {
+		&-item {
+			margin-right: 32px;
+			color: color(white);
+			cursor: pointer;
+
+			&:last-of-type {
+				margin-right: 10px;
+			}
+
+			&.--logout {
+				color: color(orange);
+			}
+		}
+	}
+
 	&__list {
 		padding: 32px 20px;
 	}

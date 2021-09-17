@@ -1,6 +1,11 @@
 <template lang="pug">
 .menu.container
-	.menu__title {{ title }}
+	.flex.justify-between.items-center
+		.menu__title
+			slot(name="title")
+				| {{ title }}
+		slot
+
 </template>
 
 <script>
