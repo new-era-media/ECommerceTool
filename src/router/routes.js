@@ -89,6 +89,11 @@ export default [
 						component: _import('Brand/Item'),
 					},
 				]
+			},
+			{
+				path: '/profile',
+				name: 'Profile',
+				component: _import('Profile'),
 			}
 		]
 	},
