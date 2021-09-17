@@ -1,6 +1,12 @@
 <template lang="pug">
 .dashboard
 	Menu(title="Дашборд")
+		nav.dashboard__nav.flex.items-center
+			.dashboard__nav-item Наши бренды
+			.dashboard__nav-item Близкие конкуренты
+			.dashboard__nav-item Другие бренды
+			.dashboard__nav-item Ритейлеры
+			.dashboard__nav-item 16 мар. 2021 – 23 мар. 2021
 	.dashboard__wrap.container
 		.dashboard__section.flex.justify-between.items-center
 			.flex.items-center
@@ -236,6 +242,17 @@ export default {
 
 	&__wrap {
 		padding: 12px 24px;
+	}
+
+	&__nav {
+		&-item {
+			margin-right: 32px;
+			color: color(white);
+
+			&:last-of-type {
+				margin-right: 0;
+			}
+		}
 	}
 
 	&__title {
