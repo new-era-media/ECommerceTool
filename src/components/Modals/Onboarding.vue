@@ -39,7 +39,7 @@ ModalBase.onboarding(
 
 <script>
 import ModalBase from '@/components/Layout/ModalBase.vue'
-import IdeaIcon from '@/assets/svg/idea.svg';
+import IdeaIcon from '@/assets/svg/idea.svg'
 import Button from '@/components/Button/Button.vue'
 
 export default {

@@ -2,7 +2,9 @@
 	.checkbox.flex.items-center(:class="classNames" @click="change")
 		.checkbox__icon.flex.justify-around.items-center
 			CheckIcon.checkbox__icon-check(:size="18" fillColor="#5744D6")
-		.checkbox__label {{label}}
+		.checkbox__label
+			slot
+				| {{label}}
 
 </template>
 
@@ -62,16 +64,12 @@ export default {
 	}
 
 	&.--active {
-		background-color: rgba(color(violet), 0.05);
 		.checkbox__icon {
 			border-color: color(violet);
 
 			&-check {
 				display: block;
 			}
-		}
-		.checkbox__label {
-			color: color(violet);
 		}
 	}
 	&.--disabled {

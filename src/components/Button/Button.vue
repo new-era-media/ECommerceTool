@@ -15,6 +15,10 @@ export default {
 				'violet', 'violet-outline', 'empty',
 			].indexOf(value),
 		},
+		size: {
+			default: 'md',
+			validator: value => ~['sm', 'md', 'lg'].indexOf(value),
+		},
 	},
 	computed: {
 		listeners() {
@@ -25,6 +29,7 @@ export default {
 		classNames() {
 			const cn = [
 				'button',
+				`--size-${this.size}`,
 				`--type-${this.type}`,
 			]
 
@@ -36,16 +41,31 @@ export default {
 
 <style lang="scss" scoped>
 .button {
-	height: 40px;
-	padding: 0 18px;
 	font-weight: 600;
-	font-size: 14px;
-	line-height: 24px;
+	line-height: 1.72;
 	border-radius: 20px;
 
 	&:active,
 	&:focus {
 		outline: none;
+	}
+
+	&.--size {
+		&-sm {
+			height: 32px;
+			padding: 0 14px;
+			font-size: 12px;
+		}
+
+		&-md {
+			height: 40px;
+			padding: 0 18px;
+			font-size: 14px;
+		}
+
+		&-lg {
+
+		}
 	}
 
 	&.--type {

@@ -35,37 +35,3 @@
 	font-weight: 700;
 	font-style: normal;
 }
-
-/*
-	Material Design icons
-*/
-.fa,
-.fas,
-.far,
-.fal,
-.fab,
-.fas-before:before {
-	-moz-osx-font-smoothing: grayscale;
-	-webkit-font-smoothing: antialiased;
-	display: inline-block;
-	font-style: normal;
-	font-variant: normal;
-	text-rendering: auto;
-	line-height: 1;
-}
-
-@font-face {
-	font-family: 'MaterialDesignIcons';
-	src: url('~@/assets/fonts/materialdesignicons-webfont.eot');
-	src: url('~@/assets/fonts/materialdesignicons-webfont.eot') format('embedded-opentype'),
-		url('~@/assets/fonts/materialdesignicons-webfont.woff2') format('woff2'),
-		url('~@/assets/fonts/materialdesignicons-webfont.woff') format('woff'),
-		url('~@/assets/fonts/materialdesignicons-webfont.ttf') format('truetype');
-	font-weight: 400;
-	font-style: normal;
-}
-
-.far {
-	font-family: 'MaterialDesignIcons';
-	font-weight: 400;
-}

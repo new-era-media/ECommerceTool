@@ -196,6 +196,16 @@ export default {
 		}
 		&-list {
 			margin-top: 4px;
+
+			/deep/ .checkbox {
+				&.--active {
+					background-color: rgba(color(violet), 0.05);
+
+					.checkbox__label {
+						color: color(violet);
+					}
+				}
+			}
 		}
 		&-item {
 			padding: 12px;

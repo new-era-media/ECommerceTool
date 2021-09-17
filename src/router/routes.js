@@ -67,6 +67,11 @@ export default [
 				name: 'Category',
 				component: _import('Category'),
 			},
+			{
+				path: '/dashboard',
+				name: 'Dashboard',
+				component: _import('Dashboard'),
+			}
 		]
 	},
 	{ path: '*', redirect: { name: 'PageNotFound' } },

@@ -2,7 +2,7 @@
 	main.layout
 		.layout__header
 			Header(:nav="nav")
-			Menu(title="Настройки категории Кофе в зернах")
+			Menu(:title="title")
 		.layout__content
 			RouterView
 		.layout__footer
@@ -27,7 +27,9 @@ export default {
 		}
 	},
 	computed: {
-
+		title() {
+			return this.$route.name.toLowerCase() === 'dashboard' ? 'Дашборд' : 'Настройки категории Кофе в зернах'
+		}
 	}
 }
 </script>
