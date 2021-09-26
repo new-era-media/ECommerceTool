@@ -50,17 +50,30 @@
 					PlusIcon(:size="18")
 			.flex.flex-wrap.justify-between
 				ChartItem.dashboard__chart(title="Доля полки сегодня, %")
+					BarChart(:chartData="barChartData" :options="barChartOptions" style="height: 384px")
 				ChartItem.dashboard__chart(title="Доля полки, Nespresso, %")
-					LineChart(:chartData="chartData" :options="chartOptions")
+					LineChart(:chartData="chartData" :options="chartOptions" style="height: 384px")
 				ChartItem.dashboard__chart(title="Доля полки, OZON, %")
+					LineChart(:chartData="chartData2" :options="chartOptions" style="height: 384px")
 				ChartItem.dashboard__chart(title="Количество SKU, Nespresso")
+					LineChart(:chartData="chartData" :options="chartOptions" style="height: 384px")
 				ChartItem.dashboard__chart(title="Количество SKU, OZON")
+					LineChart(:chartData="chartData2" :options="chartOptions" style="height: 384px")
 				ChartItem.dashboard__chart(title="Минимальные и максимальные цены, OZON")
 				ChartItem.dashboard__chart(title="Доступность SKU сегодня, наши бренды")
+					BarChart(:chartData="stackedBarChartData" :options="stackedBarChartOptions" style="height: 384px")
 				ChartItem.dashboard__chart(title="Доступность SKU сегодня, OZON")
+					BarChart(:chartData="stackedBarChartData" :options="stackedBarChartOptions" style="height: 384px")
+				ChartItem.dashboard__chart(title="Средняя динамика доступности, Nespresso")
+					LineChart(:chartData="chartData" :options="chartOptions" style="height: 384px")
+				ChartItem.dashboard__chart(title="Премиальная выдача в поисковой выдаче, %")
+					BarChart(:chartData="barChartData" :options="barChartOptions" style="height: 384px")
 				ChartItem.dashboard__chart(title="Премиальная выдача в категорийной выдаче, %")
-				ChartItem.dashboard__chart(title="Премиальная выдача в категорийной выдаче, %")
+					BarChart(:chartData="barChartData" :options="barChartOptions" style="height: 384px")
+				ChartItem.dashboard__chart(title="Количество отзывов на конец периода, OZON")
+					BarChart(:chartData="barChartData" :options="barChartOptions" style="height: 384px")
 				ChartItem.dashboard__chart(title="Количество комментариев на конец периода, OZON")
+					BarChart(:chartData="barChartData2" :options="barChartOptions" style="height: 384px")
 	.dashboard__onboard(v-if="onboardShow")
 		OnboardTooltip(@close="onboardClose")
 
@@ -79,6 +92,7 @@ import OnboardTooltip from '@/components/Onboard/Onboard.vue'
 import MarkItem from '@/components/Elements/MarkItem.vue'
 import ChartItem from '@/components/Chart/ChartItem'
 import LineChart from '@/components/Chart/LineChart'
+import BarChart from '@/components/Chart/BarChart'
 
 export default {
 	components: {
@@ -94,6 +108,7 @@ export default {
 		MarkItem,
 		ChartItem,
 		LineChart,
+		BarChart,
 	},
 	data() {
 		return {
@@ -216,13 +231,21 @@ export default {
 				scales: {
 					x: {
 						type: 'time',
+						time: {
+							displayFormats: {
+								'day': 'DD.MM.YY',
+							}
+						},
 						offset: true,
+						grid: {
+							display: false,
+						}
 					},
 					y: {
-						title: {
-							display: false,
-						},
 						min: 0,
+						grid: {
+							display: false,
+						}
 					},
 				},
 			}
@@ -431,6 +454,303 @@ export default {
 							},
 						]
 					}]
+			}
+		},
+		chartData2() {
+			return {
+				datasets: [
+					{
+						label: 'Близкие конкуренты',
+						borderColor: '#FB8C00',
+						backgroundColor: '#FB8C00',
+						data: [
+							{
+								x: new Date('09-01-2021'),
+								y: 10,
+							},
+							{
+								x: new Date('09-02-2021'),
+								y: 20,
+							},
+							{
+								x: new Date('09-03-2021'),
+								y: 23,
+							},
+							{
+								x: new Date('09-04-2021'),
+								y: 25,
+							},
+							{
+								x: new Date('09-05-2021'),
+								y: 28,
+							},
+							{
+								x: new Date('09-06-2021'),
+								y: 20,
+							},
+							{
+								x: new Date('09-07-2021'),
+								y: 31,
+							},
+							{
+								x: new Date('09-08-2021'),
+								y: 42,
+							},
+							{
+								x: new Date('09-09-2021'),
+								y: 60,
+							},
+							{
+								x: new Date('09-10-2021'),
+								y: 37,
+							},
+							{
+								x: new Date('09-11-2021'),
+								y: 30,
+							},
+							{
+								x: new Date('09-12-2021'),
+								y: 32,
+							},
+							{
+								x: new Date('09-13-2021'),
+								y: 18,
+							},
+							{
+								x: new Date('09-14-2021'),
+								y: 25,
+							},
+							{
+								x: new Date('09-15-2021'),
+								y: 35,
+							},
+						]
+					},
+					{
+						label: 'Наши бренды',
+						borderColor: '#2196F3',
+						backgroundColor: '#2196F3',
+						data: [
+							{
+								x: new Date('09-01-2021'),
+								y: 20,
+							},
+							{
+								x: new Date('09-02-2021'),
+								y: 26,
+							},
+							{
+								x: new Date('09-03-2021'),
+								y: 20,
+							},
+							{
+								x: new Date('09-04-2021'),
+								y: 25,
+							},
+							{
+								x: new Date('09-05-2021'),
+								y: 31,
+							},
+							{
+								x: new Date('09-06-2021'),
+								y: 48,
+							},
+							{
+								x: new Date('09-07-2021'),
+								y: 50,
+							},
+							{
+								x: new Date('09-08-2021'),
+								y: 48,
+							},
+							{
+								x: new Date('09-09-2021'),
+								y: 37,
+							},
+							{
+								x: new Date('09-10-2021'),
+								y: 35,
+							},
+							{
+								x: new Date('09-11-2021'),
+								y: 28,
+							},
+							{
+								x: new Date('09-12-2021'),
+								y: 40,
+							},
+							{
+								x: new Date('09-13-2021'),
+								y: 42,
+							},
+							{
+								x: new Date('09-14-2021'),
+								y: 44,
+							},
+							{
+								x: new Date('09-15-2021'),
+								y: 48,
+							},
+						]
+					},
+					{
+						label: 'Другие',
+						borderColor: '#757575',
+						backgroundColor: '#757575',
+						data: [
+							{
+								x: new Date('09-01-2021'),
+								y: 18,
+							},
+							{
+								x: new Date('09-02-2021'),
+								y: 25,
+							},
+							{
+								x: new Date('09-03-2021'),
+								y: 26,
+							},
+							{
+								x: new Date('09-04-2021'),
+								y: 30,
+							},
+							{
+								x: new Date('09-05-2021'),
+								y: 27,
+							},
+							{
+								x: new Date('09-06-2021'),
+								y: 36,
+							},
+							{
+								x: new Date('09-07-2021'),
+								y: 38,
+							},
+							{
+								x: new Date('09-08-2021'),
+								y: 44,
+							},
+							{
+								x: new Date('09-09-2021'),
+								y: 52,
+							},
+							{
+								x: new Date('09-10-2021'),
+								y: 48,
+							},
+							{
+								x: new Date('09-11-2021'),
+								y: 48,
+							},
+							{
+								x: new Date('09-12-2021'),
+								y: 46,
+							},
+							{
+								x: new Date('09-13-2021'),
+								y: 50,
+							},
+							{
+								x: new Date('09-14-2021'),
+								y: 53,
+							},
+							{
+								x: new Date('09-15-2021'),
+								y: 59,
+							},
+						]
+					}]
+			}
+		},
+		barChartOptions() {
+			return {
+				indexAxis: 'y',
+				scales: {
+					x: {
+						position: 'right',
+						grid: {
+							display: false
+						},
+						beginAtZero: true,
+					},
+					y: {
+						grid: {
+							display: false
+						},
+					},
+				},
+			}
+		},
+		barChartData() {
+			return {
+				labels: ['Впрок', 'Wildbwrries', 'Утконос', 'OZON', 'Азбука Вкуса'],
+				datasets: [
+					{
+						borderColor: '#FB8C00',
+						backgroundColor: '#FB8C00',
+						data: [12, 15, 17, 32, 34]
+					},
+					{
+						borderColor: '#2196F3',
+						backgroundColor: '#2196F3',
+						data: [5, 10, 15, 20, 25]
+					},
+					{
+						borderColor: '#757575',
+						backgroundColor: '#757575',
+						data: [14, 18, 22, 28, 30]
+					}
+
+				]
+			}
+		},
+		barChartData2() {
+			return {
+				labels: ['LG', 'Nokia', 'Бренд', 'Бренд', 'Бренд', 'Бренд', 'Бренд', 'Бренд', 'Бренд', 'Бренд', 'Бренд'],
+				datasets: [
+					{
+						borderColor: '#2196F3',
+						backgroundColor: '#2196F3',
+						data: [61, 53, 47, 46, 45, 38, 33, 32, 29, 15, 10]
+					},
+				]
+			}
+		},
+		stackedBarChartOptions () {
+			return {
+				indexAxis: 'y',
+				responsive: true,
+				scales: {
+					x: {
+						stacked: true,
+						grid: {
+							display: false,
+						}
+					},
+					y: {
+						stacked: true,
+						grid: {
+							display: false,
+						}
+					}
+				}
+			}
+		},
+		stackedBarChartData() {
+			return {
+				labels: ['Бренд', 'Бренд', 'Бренд', 'Бренд', 'Бренд', 'Бренд', 'Бренд', 'Бренд', 'Бренд', 'Бренд', 'Бренд'],
+				datasets: [
+					{
+						borderColor: '#4CAF50',
+						backgroundColor: '#4CAF50',
+						data: [60, 54, 52, 48, 44, 42, 40, 38, 35, 30, 25]
+					},
+					{
+						borderColor: '#DC2F23',
+						backgroundColor: '#DC2F23',
+						data: [40, 46, 48, 52, 56, 58, 60, 62, 65, 70, 75]
+					},
+				]
 			}
 		}
 	},

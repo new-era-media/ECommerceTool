@@ -1,6 +1,6 @@
 <template lang="pug">
 .chart-item
-	.chart-item__title Доля полки сегодня, %
+	.chart-item__title {{title}}
 	.chart-item__content
 		slot
 </template>

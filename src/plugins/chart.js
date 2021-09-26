@@ -53,6 +53,7 @@ Chart.overrides.doughnut.borderWidth = 0
 let d = Chart.defaults
 d.color = '#A0AEC0'
 d.font.family = 'OpenSans'
+d.font.size = 10
 d.animation = false
 d.maintainAspectRatio = false
 d.locale = 'en'
@@ -81,7 +82,6 @@ e.line.fill = false
 e.line.borderWidth = 2.5
 e.line.backgroundColor = defaultColor
 e.line.borderColor = defaultColor
-e.bar.borderRadius = 6
 e.bar.backgroundColor = defaultColor
 
 d.plugins.legend = false
