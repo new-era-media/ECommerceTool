@@ -54,6 +54,7 @@
 				.product-card__img.relative
 					img(src="~@/assets/img/products/product-card-3.png")
 		.index__request.container.flex.items-center.justify-between
+			.index__request-blur-bg.relative
 			a(name="request")
 			.index__request-title.relative
 				h1 Оставьте заявку и получите доступ одними из первых
@@ -74,8 +75,6 @@ import EllipseItem from '@/components/Elements/EllipseItem.vue'
 import LoupeIcon from '@/assets/svg/loupe.svg'
 import PriceIcon from '@/assets/svg/price.svg'
 import ChartIcon from '@/assets/svg/chart.svg'
-
-
 
 export default {
 	components: {
@@ -173,6 +172,14 @@ export default {
 	&__request {
 		margin-top: 190px;
 
+		&-blur-bg {
+			@include radialBg(#FBE6BE, 1500px);
+			&:before {
+				left: -400px;
+				bottom: -800px;
+			}
+		}
+
 		&-title {
 			width: 36.5%;
 			margin-left: 190px;
@@ -221,6 +228,12 @@ export default {
 		}
 	}
 	&:nth-of-type(1) {
+		@include radialBg(#DFD3F2, 1500px);
+
+		&:before {
+			left: -400px;
+		}
+
 		.product-card__bg {
 			top: 50%;
 			left: 50%;
@@ -229,6 +242,8 @@ export default {
 		}
 	}
 	&:nth-of-type(2) {
+		@include radialBg(#D4E7F6, 1500px);
+
 		.product-card__bg {
 			top: 50%;
 			left: 50%;

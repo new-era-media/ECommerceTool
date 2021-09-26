@@ -45,10 +45,22 @@
 			Widget.dashboard__widget(v-for="(item, index) of list" :key="index" :widget="item" type="percent")
 		.dashboard__section
 			.flex.justify-between.items-center
-					.dashboard__title Графики
-					Button.dashboard__settings(type="violet-outline" size="sm" @click="newChart")
-						PlusIcon(:size="18")
-
+				.dashboard__title Графики
+				Button.dashboard__settings(type="violet-outline" size="sm" @click="newChart")
+					PlusIcon(:size="18")
+			.flex.flex-wrap.justify-between
+				ChartItem.dashboard__chart(title="Доля полки сегодня, %")
+				ChartItem.dashboard__chart(title="Доля полки, Nespresso, %")
+					LineChart(:chartData="chartData" :options="chartOptions")
+				ChartItem.dashboard__chart(title="Доля полки, OZON, %")
+				ChartItem.dashboard__chart(title="Количество SKU, Nespresso")
+				ChartItem.dashboard__chart(title="Количество SKU, OZON")
+				ChartItem.dashboard__chart(title="Минимальные и максимальные цены, OZON")
+				ChartItem.dashboard__chart(title="Доступность SKU сегодня, наши бренды")
+				ChartItem.dashboard__chart(title="Доступность SKU сегодня, OZON")
+				ChartItem.dashboard__chart(title="Премиальная выдача в категорийной выдаче, %")
+				ChartItem.dashboard__chart(title="Премиальная выдача в категорийной выдаче, %")
+				ChartItem.dashboard__chart(title="Количество комментариев на конец периода, OZON")
 	.dashboard__onboard(v-if="onboardShow")
 		OnboardTooltip(@close="onboardClose")
 
@@ -65,6 +77,8 @@ import ComparisonIcon from '@/assets/svg/comparison.svg'
 import Widget from '@/components/Widget/Widget.vue'
 import OnboardTooltip from '@/components/Onboard/Onboard.vue'
 import MarkItem from '@/components/Elements/MarkItem.vue'
+import ChartItem from '@/components/Chart/ChartItem'
+import LineChart from '@/components/Chart/LineChart'
 
 export default {
 	components: {
@@ -78,6 +92,8 @@ export default {
 		Widget,
 		OnboardTooltip,
 		MarkItem,
+		ChartItem,
+		LineChart,
 	},
 	data() {
 		return {
@@ -194,6 +210,230 @@ export default {
 			onboardShow: true,
 		}
 	},
+	computed: {
+		chartOptions() {
+			return {
+				scales: {
+					x: {
+						type: 'time',
+						offset: true,
+					},
+					y: {
+						title: {
+							display: false,
+						},
+						min: 0,
+					},
+				},
+			}
+		},
+		chartData() {
+			return {
+				datasets: [
+					{
+						label: 'OZON',
+						borderColor: '#0060EA',
+						backgroundColor: '#0060EA',
+						data: [
+							{
+								x: new Date('09-01-2021'),
+								y: 10,
+							},
+							{
+								x: new Date('09-02-2021'),
+								y: 20,
+							},
+							{
+								x: new Date('09-03-2021'),
+								y: 23,
+							},
+							{
+								x: new Date('09-04-2021'),
+								y: 25,
+							},
+							{
+								x: new Date('09-05-2021'),
+								y: 28,
+							},
+							{
+								x: new Date('09-06-2021'),
+								y: 20,
+							},
+							{
+								x: new Date('09-07-2021'),
+								y: 31,
+							},
+							{
+								x: new Date('09-08-2021'),
+								y: 42,
+							},
+							{
+								x: new Date('09-09-2021'),
+								y: 60,
+							},
+							{
+								x: new Date('09-10-2021'),
+								y: 37,
+							},
+							{
+								x: new Date('09-11-2021'),
+								y: 30,
+							},
+							{
+								x: new Date('09-12-2021'),
+								y: 32,
+							},
+							{
+								x: new Date('09-13-2021'),
+								y: 18,
+							},
+							{
+								x: new Date('09-14-2021'),
+								y: 25,
+							},
+							{
+								x: new Date('09-15-2021'),
+								y: 35,
+							},
+						]
+					},
+					{
+						label: 'Wildberries',
+						borderColor: '#FF70A7',
+						backgroundColor: '#FF70A7',
+						data: [
+							{
+								x: new Date('09-01-2021'),
+								y: 20,
+							},
+							{
+								x: new Date('09-02-2021'),
+								y: 26,
+							},
+							{
+								x: new Date('09-03-2021'),
+								y: 20,
+							},
+							{
+								x: new Date('09-04-2021'),
+								y: 25,
+							},
+							{
+								x: new Date('09-05-2021'),
+								y: 31,
+							},
+							{
+								x: new Date('09-06-2021'),
+								y: 48,
+							},
+							{
+								x: new Date('09-07-2021'),
+								y: 50,
+							},
+							{
+								x: new Date('09-08-2021'),
+								y: 48,
+							},
+							{
+								x: new Date('09-09-2021'),
+								y: 37,
+							},
+							{
+								x: new Date('09-10-2021'),
+								y: 35,
+							},
+							{
+								x: new Date('09-11-2021'),
+								y: 28,
+							},
+							{
+								x: new Date('09-12-2021'),
+								y: 40,
+							},
+							{
+								x: new Date('09-13-2021'),
+								y: 42,
+							},
+							{
+								x: new Date('09-14-2021'),
+								y: 44,
+							},
+							{
+								x: new Date('09-15-2021'),
+								y: 48,
+							},
+						]
+					},
+					{
+						label: 'Сбер Маркет',
+						borderColor: '#01B516',
+						backgroundColor: '#01B516',
+						data: [
+							{
+								x: new Date('09-01-2021'),
+								y: 18,
+							},
+							{
+								x: new Date('09-02-2021'),
+								y: 25,
+							},
+							{
+								x: new Date('09-03-2021'),
+								y: 26,
+							},
+							{
+								x: new Date('09-04-2021'),
+								y: 30,
+							},
+							{
+								x: new Date('09-05-2021'),
+								y: 27,
+							},
+							{
+								x: new Date('09-06-2021'),
+								y: 36,
+							},
+							{
+								x: new Date('09-07-2021'),
+								y: 38,
+							},
+							{
+								x: new Date('09-08-2021'),
+								y: 44,
+							},
+							{
+								x: new Date('09-09-2021'),
+								y: 52,
+							},
+							{
+								x: new Date('09-10-2021'),
+								y: 48,
+							},
+							{
+								x: new Date('09-11-2021'),
+								y: 48,
+							},
+							{
+								x: new Date('09-12-2021'),
+								y: 46,
+							},
+							{
+								x: new Date('09-13-2021'),
+								y: 50,
+							},
+							{
+								x: new Date('09-14-2021'),
+								y: 53,
+							},
+							{
+								x: new Date('09-15-2021'),
+								y: 59,
+							},
+						]
+					}]
+			}
+		}
+	},
 	methods: {
 		onboardClose() {
 			this.onboardShow = false
@@ -239,7 +479,6 @@ export default {
 
 <style lang="scss" scoped>
 .dashboard {
-
 	&__wrap {
 		padding: 12px 24px;
 	}
@@ -311,5 +550,9 @@ export default {
 		right: 20px;
 	}
 
+	&__chart {
+		width: 49%;
+		margin-top: 24px;
+	}
 }
 </style>
