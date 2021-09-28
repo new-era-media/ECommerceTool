@@ -1,0 +1,76 @@
+stages:
+    - precheck
+    - compile
+    - deploy
+
+image: docker:18-git
+services:
+    - docker:18-dind
+
+compile_cli:
+    stage: compile
+    image: node:14
+    services: []
+    script:
+        - npm install
+        - npm run build
+    artifacts:
+        paths:
+            - public/
+        expire_in: 1 days
+    cache:
+        key: ${CI_PROJECT_PATH_SLUG}
+        policy: push
+        paths:
+            - public/
+
+#upload_s3:
+#    stage: deploy
+#    image: amazon/aws-cli:2.2
+#    script:
+#    cache:
+#        key: ${CI_PROJECT_PATH_SLUG}
+#        policy: pull
+#        paths:
+#            - public/
+#
+#build_cli:
+#    stage: build
+#    before_script:
+#        - cat $YC_CR_JSON_KEY | docker login --username json_key --password-stdin cr.yandex
+#    script:
+#        - docker build -f ./.docker/cli/Dockerfile -t $CONTAINER_IMAGE .
+#        - docker push $CONTAINER_IMAGE
+#    cache:
+#        key: ${CI_PROJECT_PATH_SLUG}_cli
+#        policy: pull
+#        paths:
+#            - vendor/
+#    only:
+#        - master
+#        - stag
+#
+#.deploy:
+#    stage: yandex cloud
+#    image: alpine/k8s:1.20.4
+#    services: [ ]
+#    before_script:
+#        - kubectl config set-cluster k8s --server="$KUBE_URL" --insecure-skip-tls-verify=true
+#        - kubectl config set-credentials admin --token="$KUBE_TOKEN"
+#        - kubectl config set-context default --cluster=k8s --user=admin
+#        - kubectl config use-context default
+#    cache: {}
+#
+#deploy_stag:
+#    extends: .deploy
+#    script:
+#        - kubectl rollout restart deployment --namespace staging mongodb-writer-stag
+#    only:
+#        - stag
+#
+#deploy_prod:
+#    extends: .deploy
+#    script:
+#        - kubectl rollout restart deployment --namespace production mongodb-writer-prod
+#    only:
+#        - master
