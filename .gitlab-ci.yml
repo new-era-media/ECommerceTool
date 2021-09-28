@@ -1,6 +1,6 @@
 stages:
-    - precheck
     - compile
+    - build
     - deploy
 
 variables:
@@ -36,9 +36,9 @@ build_cli:
         policy: pull
         paths:
             - dist/
-    only:
-        - master
-        - stag
+#    only:
+#        - master
+#        - stag
 #
 #.deploy:
 #    stage: yandex cloud
