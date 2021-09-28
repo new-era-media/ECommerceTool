@@ -1,0 +1,11 @@
+@mixin radialBg($color: default, $radius: 1000px) {
+	&:before {
+		content: '';
+		position: absolute;
+		bottom: -530px;
+		left: 0;
+		width: $radius;
+		height: $radius;
+		background: radial-gradient(circle, $color, transparent, transparent);
+	}
+}
