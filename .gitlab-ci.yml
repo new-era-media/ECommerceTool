@@ -1,7 +1,7 @@
 stages:
     - compile
     - build
-    - deploy
+    - yandex cloud
 
 variables:
     REGISTRY_HOST: cr.yandex/crpv0h5hvf1nqjp7ptf1
@@ -42,25 +42,26 @@ build_cli:
     only:
         - master
         - stag
-#
-#.deploy:
-#    stage: yandex cloud
-#    image: alpine/k8s:1.20.4
-#    services: [ ]
-#    before_script:
-#        - kubectl config set-cluster k8s --server="$KUBE_URL" --insecure-skip-tls-verify=true
-#        - kubectl config set-credentials admin --token="$KUBE_TOKEN"
-#        - kubectl config set-context default --cluster=k8s --user=admin
-#        - kubectl config use-context default
-#    cache: {}
-#
-#deploy_stag:
-#    extends: .deploy
-#    script:
-#        - kubectl rollout restart deployment --namespace staging mongodb-writer-stag
-#    only:
-#        - stag
-#
+
+.deploy:
+    stage: yandex cloud
+    image: alpine/k8s:1.20.4
+    services: [ ]
+    before_script:
+        - kubectl config set-cluster k8s --server="$KUBE_URL" --insecure-skip-tls-verify=true
+        - kubectl config set-credentials admin --token="$KUBE_TOKEN"
+        - kubectl config set-context default --cluster=k8s --user=admin
+        - kubectl config use-context default
+    cache: {}
+
+deploy_stag:
+    extends: .deploy
+    script:
+        - kubectl rollout restart deployment --namespace staging dashboard-frontend-stag
+    only:
+        - stag
+        - master
+
 #deploy_prod:
 #    extends: .deploy
 #    script:
