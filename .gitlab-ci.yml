@@ -23,6 +23,9 @@ compile_cli:
         policy: push
         paths:
             - dist/
+    only:
+        - master
+        - stag
 
 build_cli:
     stage: build
@@ -36,9 +39,9 @@ build_cli:
         policy: pull
         paths:
             - dist/
-#    only:
-#        - master
-#        - stag
+    only:
+        - master
+        - stag
 #
 #.deploy:
 #    stage: yandex cloud
