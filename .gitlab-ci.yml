@@ -16,13 +16,13 @@ compile_cli:
         - npm run build
     artifacts:
         paths:
-            - public/
+            - dist/
         expire_in: 1 days
     cache:
         key: ${CI_PROJECT_PATH_SLUG}
         policy: push
         paths:
-            - public/
+            - dist/
 
 #upload_s3:
 #    stage: deploy
