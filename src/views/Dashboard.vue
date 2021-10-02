@@ -816,6 +816,7 @@ export default {
 		&-item {
 			margin-right: 32px;
 			color: color(white);
+			cursor: pointer;
 
 			&:last-of-type {
 				margin-right: 0;
