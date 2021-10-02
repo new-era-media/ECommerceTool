@@ -53,9 +53,9 @@
 					.product-card__text Описание ждем от Саши/Наташи. Анализ цен конкурентов позволит выстроить ценообразование основываясь на текущей ситуации рынка и максимизировать доход.
 				.product-card__img.relative
 					img(src="~@/assets/img/products/product-card-3.png")
+		a(name="request")
 		.index__request.container.flex.items-center.justify-between
 			.index__request-blur-bg.relative
-			a(name="request")
 			.index__request-title.relative
 				h1 Оставьте заявку и получите доступ одними из первых
 				.index__request-title-bg
