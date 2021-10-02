@@ -6,7 +6,12 @@
 			.dashboard__nav-item Близкие конкуренты
 			.dashboard__nav-item Другие бренды
 			.dashboard__nav-item Ритейлеры
-			.dashboard__nav-item 16 мар. 2021 – 23 мар. 2021
+			.dashboard__nav-item
+				Tooltip(trigger="clickToToggle")
+					template(slot="reference")
+						div 16 мар. 2021 – 23 мар. 2021
+					Period
+
 	.dashboard__wrap.container
 		.dashboard__section.flex.justify-between.items-center
 			.flex.items-center
@@ -93,6 +98,8 @@ import MarkItem from '@/components/Elements/MarkItem.vue'
 import ChartItem from '@/components/Chart/ChartItem'
 import LineChart from '@/components/Chart/LineChart'
 import BarChart from '@/components/Chart/BarChart'
+import Tooltip from '@/components/Elements/Tooltip.vue'
+import Period from '@/components/Period/Period.vue'
 
 export default {
 	components: {
@@ -109,6 +116,8 @@ export default {
 		ChartItem,
 		LineChart,
 		BarChart,
+		Tooltip,
+		Period,
 	},
 	data() {
 		return {

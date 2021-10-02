@@ -3,6 +3,11 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
+// pluguins
+import VCalendar from 'v-calendar'
+
+Vue.use(VCalendar)
+
 Vue.config.productionTip = false
 
 import '@/plugins/modal'
