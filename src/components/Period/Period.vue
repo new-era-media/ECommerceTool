@@ -6,14 +6,16 @@
 			v-model="form.date_from"
 			:min-date="period.from.min"
 			:max-date="period.to.max"
-			:inputProps="{ placeholder: 'From' }"
+			:inputProps="{ placeholder: 'От' }"
+			@popoverWillShow="hidePreviousDatepicker"
 		)
 		.period__date-sep —
 		DatePicker(
 			v-model="form.date_to"
 			:min-date="period.from.min"
 			:max-date="period.to.max"
-			:inputProps="{ placeholder: 'To' }"
+			:inputProps="{ placeholder: 'До' }"
+			@popoverWillShow="hidePreviousDatepicker"
 		)
 		Button.period__date-apply(type="violet-outline" @click="apply") Применить
 
@@ -63,6 +65,7 @@ export default {
 				date_from: dayjs().subtract(30, 'days').toDate(),
 				date_to: dayjs().subtract(1, 'days').toDate(),
 			},
+			openedDatepicker: null,
 		}
 	},
 	computed: {
@@ -121,6 +124,12 @@ export default {
 				}
 				break;
 			}
+		},
+		hidePreviousDatepicker (el) {
+			if (this.openedDatepicker) {
+				this.openedDatepicker.style.display = 'none'
+			}
+			this.openedDatepicker = el
 		},
 	},
 }
