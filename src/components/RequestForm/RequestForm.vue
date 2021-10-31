@@ -39,12 +39,45 @@ export default {
 		}
 	},
 	methods: {
+		validate() {
+			let obj = {
+				isValid: true,
+				error: '',
+			}
+			let regExp = /^[^\s@]+@[^\s@]+$/
+
+			if (this.form.name.length < 3) {
+				obj.isValid = false
+				obj.error = 'Введите имя'
+				return obj
+			}
+			if (!regExp.test(this.form.email)) {
+				obj.isValid = false
+				if (!this.form.email) {
+					obj.error = 'Введите адрес эл. почты'
+				} else {
+					obj.error = 'Неверный адрес эл. почты'
+				}
+				return obj
+			}
+			if (!this.form.company) {
+				obj.isValid = false
+				obj.error = 'Введите компанию'
+				return obj
+			}
+			return obj
+		},
 		async request() {
+			let valid = this.validate()
+			if (!valid.isValid) {
+				this.$toast.error(valid.error)
+				return false
+			}
 			try {
 				const resp = await this.$api.common.request(this.form)
 				console.log(resp)
 			} catch (error) {
-				console.log(error)
+				this.$toast.error(error)
 			}
 		}
 	},
