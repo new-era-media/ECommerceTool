@@ -60,7 +60,7 @@ export default {
 	components: { ModalBase, Radio, Button },
 	data() {
 		return {
-			shelfShareModel: 0,
+			shelfShareModel: -1,
 			shelfShareOptions: [
 				{
 					value: 0,
@@ -78,7 +78,7 @@ export default {
 					text: 'Динамика по датам',
 				}
 			],
-			amountSKUModel: 0,
+			amountSKUModel: -1,
 			amountSKUOptions: [
 				{
 					value: 0,
@@ -96,7 +96,7 @@ export default {
 					text: 'Динамика по датам',
 				}
 			],
-			availabilitySKUModel: 0,
+			availabilitySKUModel: -1,
 			availabilitySKUOptions: [
 				{
 					value: 0,
@@ -114,7 +114,7 @@ export default {
 					text: 'Динамика по датам',
 				}
 			],
-			premiumModel: 0,
+			premiumModel: -1,
 			premiumOptions: [
 				{
 					value: 0,
@@ -127,7 +127,7 @@ export default {
 					text: 'Сейчас',
 				},
 			],
-			feedbackModel: 0,
+			feedbackModel: -1,
 			feedbackOptions: [
 				{
 					value: 0,

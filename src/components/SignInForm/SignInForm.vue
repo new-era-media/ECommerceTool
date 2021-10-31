@@ -3,9 +3,9 @@
 	.sign__title Вход в Ecomm monitor
 	.sign__form
 		.sign__item
-			Input(placeholder="Эл. почта")
+			Input(placeholder="Эл. почта" v-model="form.email")
 		.sign__item
-			InputPassword(placeholder="Пароль" type="password")
+			InputPassword(placeholder="Пароль" type="password" v-model="form.password")
 			.sign__sub(@click="forgotPass") Забыли пароль?
 		.sign__btn
 			Button(@click="signin") Войти
@@ -18,9 +18,24 @@ import Button from '@/components/Button/Button.vue'
 
 export default {
 	components: { Input, InputPassword, Button },
+	data() {
+		return {
+			form: {
+				email: '',
+				password: '',
+			}
+		}
+	},
 	methods: {
-		signin() {
-			console.log('signin')
+		async signin() {
+			try {
+				let resp = await this.$api.common.login(this.form)
+				if (resp.success) {
+					console.log('login success')
+				}
+			} catch (error) {
+				console.log(error)
+			}
 		},
 		forgotPass() {
 			console.log('forgotPass')

@@ -1,9 +1,8 @@
+import api from '@/api'
+
 export default {
 	state: {
-		// user: null,
-		user: {
-			name: 'Test Test'
-		}
+		user: null,
 	},
 	getters: {
 	},
@@ -14,9 +13,11 @@ export default {
 		},
 	},
 	actions: {
-		// async init({ state, dispatch, commit }) {
-		// 	const user = await api.common.getUserInfo()
-		// 	commit('setUser', user)
-		// },
+		// eslint-disable-next-line no-unused-vars
+		async prepare({ state, dispatch, commit }) {
+			debugger
+			const user = await api.common.getUserInfo()
+			commit('setUser', user)
+		},
 	},
 }

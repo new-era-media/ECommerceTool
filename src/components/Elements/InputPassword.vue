@@ -1,6 +1,11 @@
 <template lang="pug">
 	.input__wrap.relative
-		Input(v-bind="$props" :type="inputType")
+		Input(
+			v-bind="$props"
+			:type="inputType"
+			v-model="currValue"
+			@input="input"
+			)
 		.input__icon(@click="togglePass")
 			EyeOffIcon(v-if="showPass")
 			EyeIcon(v-else)
@@ -20,17 +25,21 @@ export default {
 	data() {
 		return {
 			showPass: false,
+			currValue: this.$props.value || '',
 		}
 	},
 	computed: {
 		inputType() {
 			return this.showPass ? 'text' : 'password'
-		}
+		},
 	},
 	methods: {
 		togglePass() {
 			this.showPass = !this.showPass
-		}
+		},
+		input() {
+			this.$emit('input', this.currValue)
+		},
 	}
 }
 </script>
