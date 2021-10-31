@@ -69,7 +69,7 @@ export default {
 				const resp = this.$api.common.getCategoryList()
 				console.log(resp)
 			} catch(error) {
-				console.log(error)
+				this.$toast.error(error)
 			}
 		},
 		chooseProduct(product) {
