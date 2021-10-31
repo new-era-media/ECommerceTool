@@ -1,7 +1,7 @@
 <template lang="pug">
 WelcomePage.singin
 	template(#bottom)
-		Link.singin__btn(:to="Request" unstyled)
+		Link.singin__btn(:to="{name: 'Request'}" unstyled)
 			Button(type="violet-outline") Заявка на доступ
 	template(#form)
 		SignInForm
