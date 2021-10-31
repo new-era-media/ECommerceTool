@@ -75,7 +75,7 @@ export default {
 		close() {
 			this.$emit('close')
 		},
-		next(step) {
+		next() {
 			if(this.activeSlide < 3) {
 				this.activeSlide++
 			}
