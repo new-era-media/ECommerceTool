@@ -27,14 +27,21 @@ export default {
 		}
 	},
 	methods: {
+		validate() {
+			return this.form.email && this.form.password
+		},
 		async signin() {
+			if (!this.validate()) {
+				this.$toast.error('Не указан адрес эл. почты или пароль')
+				return false
+			}
 			try {
 				let resp = await this.$api.common.login(this.form)
 				if (resp.success) {
 					console.log('login success')
 				}
 			} catch (error) {
-				console.log(error)
+				this.$toast.error(error)
 			}
 		},
 		forgotPass() {
@@ -65,6 +72,12 @@ export default {
 
 		&:last-of-type {
 			margin-bottom: 0;
+		}
+
+		&.--invalid {
+			/deep/ .input {
+				border: 1px solid color(orange);
+			}
 		}
 	}
 	&__sub {

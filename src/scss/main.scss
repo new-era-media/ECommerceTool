@@ -88,3 +88,25 @@ p {
 .relative {
 	position: relative;
 }
+.ecomm-toast {
+	&.Vue-Toastification__toast {
+		display: flex;
+		align-items: center;
+		max-width: 380px;
+	}
+
+	&.Vue-Toastification__toast--error {
+		background-color: color(red);
+	}
+
+	.Vue-Toastification__icon {
+		margin: 0 10px 0 0;
+	}
+	button {
+		margin-top: -4px;
+
+		&:focus {
+			outline: none;
+		}
+	}
+}
