@@ -1,5 +1,6 @@
 <template lang="pug">
 	input(
+		ref="input"
 		:class="classNames"
 		:type="type",
 		:placeholder="placeholder"
@@ -45,6 +46,11 @@ export default {
 				...omit(this.$listeners, ['input']),
 			}
 		}
+	},
+	methods: {
+		setFocus() {
+			this.$refs.input.focus()
+		},
 	}
 }
 </script>

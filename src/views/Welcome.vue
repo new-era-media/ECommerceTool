@@ -60,7 +60,18 @@ export default {
 			]
 		}
 	},
+	mounted() {
+		this.fetch()
+	},
 	methods: {
+		async fetch() {
+			try {
+				const resp = this.$api.common.getCategoryList()
+				console.log(resp)
+			} catch(error) {
+				this.$toast.error(error)
+			}
+		},
 		chooseProduct(product) {
 			console.log('chooseProduct:', product.title)
 		}

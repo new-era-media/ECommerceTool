@@ -1,7 +1,7 @@
 <template lang="pug">
 .entry
 	h1 О Вас
-	InputPlaceholder.entry__input(:value="value" :placeholder="placeholder")
+	InputPlaceholder.entry__input(ref="input" :value="value" :placeholder="placeholder")
 	Button.entry__btn(@click="save" :disabled="isEmpty") Сохранить
 
 </template>
@@ -22,6 +22,11 @@ export default {
 		isEmpty() {
 			return !this.value
 		},
+	},
+	mounted() {
+		this.$nextTick(() => {
+			this.$refs.input.setFocus()
+		})
 	},
 	methods: {
 		save() {

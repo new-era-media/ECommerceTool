@@ -1,6 +1,6 @@
 <template lang="pug">
 	.input__wrap.relative(:class="{'--focus': isFocus}")
-		Input(:value="value" @focus="onFocus" @blur="onBlur")
+		Input(ref="input" :value="value" @focus="onFocus" @blur="onBlur")
 		.input__placeholder {{ placeholder }}
 
 </template>
@@ -19,6 +19,9 @@ export default {
 		}
 	},
 	methods: {
+		setFocus() {
+			this.$refs.input.setFocus()
+		},
 		onFocus() {
 			this.isFocus = true
 		},
