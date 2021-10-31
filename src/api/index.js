@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export default new class Api {
 	instance = axios.create({
-		baseURL: '/',
+		baseURL: '/api/v1',
 		responseType: 'json',
 		headers: {
 			'Content-Type': 'application/json',
