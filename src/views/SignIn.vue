@@ -1,7 +1,7 @@
 <template lang="pug">
 WelcomePage.singin
 	template(#bottom)
-		.singin__btn(@click="request")
+		Link.singin__btn(:to="Request" unstyled)
 			Button(type="violet-outline") Заявка на доступ
 	template(#form)
 		SignInForm
@@ -10,12 +10,19 @@ WelcomePage.singin
 
 <script>
 import Button from '@/components/Button/Button.vue'
+import Link from '@/components/Link/Link.vue'
 import WelcomePage from '@/components/WelcomePage/WelcomePage.vue'
 import EllipseItem from '@/components/Elements/EllipseItem.vue'
 import SignInForm from '@/components/SignInForm/SignInForm.vue'
 
 export default {
-	components: { Button, WelcomePage, EllipseItem, SignInForm },
+	components: {
+		Button,
+		Link,
+		WelcomePage,
+		EllipseItem,
+		SignInForm
+	},
 	methods: {
 		request() {
 			console.log('request')

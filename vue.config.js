@@ -28,4 +28,7 @@ module.exports = {
 				.end()
 		});
 	},
+	devServer: {
+		proxy: 'https://stag.dashboard.emonit.ru/'
+	}
 };

@@ -19,7 +19,7 @@ export default {
 				return this.value
 			},
 			set(value) {
-				this.$emit('textarea', value)
+				this.$emit('input', value)
 			},
 		},
 		classNames() {
@@ -33,7 +33,7 @@ export default {
 		},
 		listeners() {
 			return {
-				...omit(this.$listeners, ['textarea']),
+				...omit(this.$listeners, ['input']),
 			}
 		}
 	}
