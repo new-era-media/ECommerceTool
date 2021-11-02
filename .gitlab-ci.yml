@@ -33,7 +33,6 @@ build_cli:
     before_script:
         - cat $YC_CR_JSON_KEY | docker login --username json_key --password-stdin cr.yandex
     script:
-        - cat $YC_CR_JSON_KEY
         - docker build -f ./.docker/Dockerfile -t $CONTAINER_IMAGE .
         - docker push $CONTAINER_IMAGE
     cache:
