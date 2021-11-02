@@ -34,6 +34,8 @@ build_cli:
     script:
         - docker build -f ./.docker/Dockerfile -t $CONTAINER_IMAGE .
         - docker push $CONTAINER_IMAGE
+        - echo ${CI_PROJECT_PATH_SLUG}
+        - echo $CI_BUILD_REF_NAME
     cache:
         key: ${CI_PROJECT_PATH_SLUG}
         policy: pull
