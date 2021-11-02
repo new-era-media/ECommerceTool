@@ -18,11 +18,6 @@ compile_cli:
     script:
         - npm install
         - npm run build
-    cache:
-        key: ${CI_PROJECT_PATH_SLUG}
-        policy: push
-        paths:
-            - dist/
     only:
         - master
         - stag
@@ -34,13 +29,6 @@ build_cli:
     script:
         - docker build -f ./.docker/Dockerfile -t $CONTAINER_IMAGE .
         - docker push $CONTAINER_IMAGE
-        - echo ${CI_PROJECT_PATH_SLUG}
-        - echo $CI_BUILD_REF_NAME
-    cache:
-        key: ${CI_PROJECT_PATH_SLUG}
-        policy: pull
-        paths:
-            - dist/
     only:
         - master
         - stag
