@@ -18,6 +18,11 @@ compile_cli:
     script:
         - npm install
         - npm run build
+    cache:
+        key: ${CI_PROJECT_PATH_SLUG}
+        policy: push
+        paths:
+            - dist/
     only:
         - master
         - stag
@@ -29,28 +34,30 @@ build_cli:
     script:
         - docker build -f ./.docker/Dockerfile -t $CONTAINER_IMAGE .
         - docker push $CONTAINER_IMAGE
+    cache:
+        key: ${CI_PROJECT_PATH_SLUG}
+        policy: pull
+        paths:
+            - dist/
     only:
         - master
         - stag
-
-.deploy:
+          
+deploy_stag:
     stage: yandex cloud
     image: alpine/k8s:1.20.4
-    services: [ ]
+    services: []
     before_script:
         - kubectl config set-cluster k8s --server="$KUBE_URL" --insecure-skip-tls-verify=true
         - kubectl config set-credentials admin --token="$KUBE_TOKEN"
         - kubectl config set-context default --cluster=k8s --user=admin
         - kubectl config use-context default
-    cache: {}
-
-deploy_stag:
-    extends: .deploy
     script:
-        - kubectl rollout restart deployment --namespace staging dashboard-frontend-stag
+        - kubectl rollout restart deployment --namespace staging dashboard-backend-stag
+    cache: {}
     only:
+        - master #временно, до релиза
         - stag
-        - master
 
 #deploy_prod:
 #    extends: .deploy
