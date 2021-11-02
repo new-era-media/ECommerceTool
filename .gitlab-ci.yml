@@ -23,6 +23,7 @@ compile_cli:
         policy: push
         paths:
             - dist/
+            - test/
     only:
         - master
         - stag
@@ -39,10 +40,11 @@ build_cli:
         policy: pull
         paths:
             - dist/
+            - test/
     only:
         - master
         - stag
-          
+
 deploy_stag:
     stage: yandex cloud
     image: alpine/k8s:1.20.4
@@ -53,7 +55,7 @@ deploy_stag:
         - kubectl config set-context default --cluster=k8s --user=admin
         - kubectl config use-context default
     script:
-        - kubectl rollout restart deployment --namespace staging dashboard-backend-stag
+        - kubectl rollout restart deployment --namespace staging dashboard-frontend-stag
     cache: {}
     only:
         - master #временно, до релиза
