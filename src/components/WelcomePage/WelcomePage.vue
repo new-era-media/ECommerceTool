@@ -11,7 +11,7 @@
 						h1.page__title
 							| Система мониторинга
 							br
-							| рынка электронной торговли1
+							| рынка электронной торговли
 						slot(name="bottom")
 			.page__form.relative.flex.justify-around.items-center
 				slot(name="form")

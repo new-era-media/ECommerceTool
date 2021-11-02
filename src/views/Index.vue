@@ -6,7 +6,7 @@
 					h1
 						| Система мониторинга
 						br
-						| рынка электронной торговли2
+						| рынка электронной торговли
 					.index__system-request
 						a(href="#request")
 							Button(@click="request") Заявка на доступ

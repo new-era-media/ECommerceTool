@@ -23,7 +23,6 @@ compile_cli:
         policy: push
         paths:
             - dist/
-            - test/
     only:
         - master
         - stag
@@ -40,7 +39,6 @@ build_cli:
         policy: pull
         paths:
             - dist/
-            - test/
     only:
         - master
         - stag
