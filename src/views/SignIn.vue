@@ -23,11 +23,6 @@ export default {
 		EllipseItem,
 		SignInForm
 	},
-	methods: {
-		request() {
-			console.log('request')
-		}
-	}
 }
 </script>
 

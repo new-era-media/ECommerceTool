@@ -33,7 +33,7 @@ export default {
 				name: '',
 				email: '',
 				company: '',
-				// position: '',
+				position: '',
 				extra: '',
 			}
 		}
@@ -77,7 +77,8 @@ export default {
 				const resp = await this.$api.common.request(this.form)
 				console.log(resp)
 			} catch (error) {
-				this.$toast.error(error)
+				let err = error ? error.data.message : 'Произошла ошибка, попробуйте позже'
+				this.$toast.error(err)
 			}
 		}
 	},
