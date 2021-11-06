@@ -67,7 +67,17 @@ export default {
 		border-top-left-radius: 100px;
 		border-bottom-left-radius: 100px;
 		background-color: color(white);
-		overflow: hidden;
+		//overflow: hidden;
+
+		&:after {
+			content: '';
+			position: absolute;
+			top: 0;
+			right: -100%;
+			width: 100%;
+			height: 100%;
+			background-color: color(white);
+		}
 	}
 }
 </style>

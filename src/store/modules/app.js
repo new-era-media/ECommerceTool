@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import api from '@/api'
 
 export default {
@@ -16,8 +17,8 @@ export default {
 	actions: {
 		// eslint-disable-next-line no-unused-vars
 		async prepare({ state, dispatch, commit }) {
-			const user = await api.common.getUserInfo()
-			commit('setUser', user)
+			// const user = await api.common.getUserInfo()
+			// commit('setUser', user)
 		},
 	},
 }

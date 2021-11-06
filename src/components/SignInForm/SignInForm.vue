@@ -36,12 +36,15 @@ export default {
 				return false
 			}
 			try {
-				let resp = await this.$api.common.login(this.form)
-				if (resp.success) {
-					console.log('login success')
+				let { token } = await this.$api.common.login(this.form)
+				if (token) {
+					localStorage.setItem('userToken', token)
+					this.$router.push({name: 'Welcome'})
 				}
 			} catch (error) {
-				this.$toast.error(error)
+				console.log(error)
+				let err = error ? error.data.message : 'Неверный email или пароль'
+				this.$toast.error(err)
 			}
 		},
 		forgotPass() {
