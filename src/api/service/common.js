@@ -2,6 +2,9 @@ export default ({ get, post, put }) => ({
 	getUserInfo() {
 		return get('/account')
 	},
+	editUserInfo(params) {
+		return put('/account', params)
+	},
 	login(params) {
 		return post('/security/login', params)
 	},
