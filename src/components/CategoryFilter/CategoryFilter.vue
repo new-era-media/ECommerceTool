@@ -15,16 +15,16 @@
 							.category-filter__group-label {{group.label}}
 							.category-filter__group-list
 								Checkbox.category-filter__group-item(v-for="item in group.options"
-									:key="item.label"
-									:label="item.label"
+									:key="item.name"
+									:label="item.name"
 									:value="item.value"
 									@change="change(item)"
 								)
 					template(v-else)
 						div Не удалось ничего найти
 		.category-filter__chosen.flex.flex-wrap.items-center
-			.category-filter__chosen-item.flex(v-for="item in checkedOptions" :key="item.label")
-				.category-filter__chosen-label {{item.label}}
+			.category-filter__chosen-item.flex(v-for="item in checkedOptions" :key="item.name")
+				.category-filter__chosen-label {{item.name}}
 				.category-filter__chosen-remove(@click="removeItem(item)")
 	template(v-else)
 		.category-filter__empty
@@ -48,81 +48,84 @@ export default {
 			search: '',
 			checked: [],
 			// options: [],
-			options: [
-				{
-					value: false,
-					label: 'ACRNM',
-				},
-				{
-					value: false,
-					label: 'Adfsdfsdf',
-				},
-				{
-					value: false,
-					label: 'Adsdsfgsdg',
-				},
-				{
-					value: false,
-					label: 'Afghh',
-				},
-				{
-					value: false,
-					label: 'Abmnm',
-				},
-				{
-					value: false,
-					label: 'Barilla',
-				},
-				{
-					value: false,
-					label: 'Bdfsdfsdf',
-				},
-				{
-					value: false,
-					label: 'Bdsdsfgsdg',
-				},
-				{
-					value: false,
-					label: 'Bfghh',
-				},
-				{
-					value: false,
-					label: 'Bbmnm',
-				},
-				{
-					value: false,
-					label: 'CCRNM',
-				},
-				{
-					value: false,
-					label: 'Cdfsdfsdf',
-				},
-				{
-					value: false,
-					label: 'Cdsdsfgsdg',
-				},
-				{
-					value: false,
-					label: 'Cfghh',
-				},
-				{
-					value: false,
-					label: 'Cbmnm',
-				}
-			]
+			// options: [
+			// 	{
+			// 		value: false,
+			// 		label: 'ACRNM',
+			// 	},
+			// 	{
+			// 		value: false,
+			// 		label: 'Adfsdfsdf',
+			// 	},
+			// 	{
+			// 		value: false,
+			// 		label: 'Adsdsfgsdg',
+			// 	},
+			// 	{
+			// 		value: false,
+			// 		label: 'Afghh',
+			// 	},
+			// 	{
+			// 		value: false,
+			// 		label: 'Abmnm',
+			// 	},
+			// 	{
+			// 		value: false,
+			// 		label: 'Barilla',
+			// 	},
+			// 	{
+			// 		value: false,
+			// 		label: 'Bdfsdfsdf',
+			// 	},
+			// 	{
+			// 		value: false,
+			// 		label: 'Bdsdsfgsdg',
+			// 	},
+			// 	{
+			// 		value: false,
+			// 		label: 'Bfghh',
+			// 	},
+			// 	{
+			// 		value: false,
+			// 		label: 'Bbmnm',
+			// 	},
+			// 	{
+			// 		value: false,
+			// 		label: 'CCRNM',
+			// 	},
+			// 	{
+			// 		value: false,
+			// 		label: 'Cdfsdfsdf',
+			// 	},
+			// 	{
+			// 		value: false,
+			// 		label: 'Cdsdsfgsdg',
+			// 	},
+			// 	{
+			// 		value: false,
+			// 		label: 'Cfghh',
+			// 	},
+			// 	{
+			// 		value: false,
+			// 		label: 'Cbmnm',
+			// 	}
+			// ]
 		}
 	},
 	computed: {
+		options() {
+			return this.filter.options
+		},
 		filterOptions() {
-			return this.search ? this.options.filter((item) => item.label.toLowerCase().indexOf(this.search.toLowerCase()) >= 0 ) : this.options
+			return this.search ? this.options.filter((item) => item.name.toLowerCase().indexOf(this.search.toLowerCase()) >= 0 ) : this.options
 		},
 		groupedOptions() {
-			let arr = this.filterOptions.map((item) => item.label[0])
+			let arr = this.filterOptions.map((item) => item.name[0])
 			let letters = uniq(arr)
 			let groupedArr = letters.map((letter) => {
 				return {
 					label: letter,
-					options: this.filterOptions.filter((item) => item.label[0].toLowerCase() === letter.toLowerCase())
+					options: this.filterOptions.filter((item) => item.name[0].toLowerCase() === letter.toLowerCase())
 				}
 			})
 			return groupedArr
@@ -133,18 +136,19 @@ export default {
 	},
 	methods: {
 		change(item) {
-			let index = this.filterOptions.findIndex((el) => el.label === item.label)
+			let index = this.filterOptions.findIndex((el) => el.name === item.name)
 			let newItem = {
-				label: item.label,
+				name: item.name,
 				value: !item.value,
+				id: item.id,
 			}
 			this.$set(this.options, index, newItem)
 			this.$emit('change', {filter: this.filter, checked: this.checkedOptions})
 		},
 		removeItem(item) {
-			let index = this.filterOptions.findIndex((el) => el.label === item.label)
+			let index = this.filterOptions.findIndex((el) => el.name === item.name)
 			let newItem = {
-				label: item.label,
+				name: item.name,
 				value: false,
 			}
 			this.$set(this.options, index, newItem)

@@ -42,7 +42,6 @@ export default {
 					this.$router.push({name: 'Welcome'})
 				}
 			} catch (error) {
-				console.log(error)
 				let err = error ? error.data.message : 'Неверный email или пароль'
 				this.$toast.error(err)
 			}
