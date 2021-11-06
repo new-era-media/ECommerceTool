@@ -29,6 +29,6 @@ module.exports = {
 		});
 	},
 	devServer: {
-		proxy: 'https://stag.dashboard.emonit.ru/'
+		proxy: 'https://stag.rest-api.cluster.emonit.ru/'
 	}
 };

@@ -1,12 +1,18 @@
 import axios from 'axios'
+const token = localStorage.getItem('userToken')
+
+let headers = {
+	'Content-Type': 'application/json'
+}
+if (token) {
+	headers['Authorization'] = `Bearer ${token}`
+}
 
 export default new class Api {
 	instance = axios.create({
-		baseURL: '/api/v1',
+		baseURL: 'https://stag.rest-api.cluster.emonit.ru/api/v1',
 		responseType: 'json',
-		headers: {
-			'Content-Type': 'application/json',
-		},
+		headers: headers,
 	})
 
 	constructor () {
