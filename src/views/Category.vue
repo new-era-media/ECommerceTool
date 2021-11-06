@@ -34,68 +34,6 @@ export default {
 	data() {
 		return {
 			loading: true,
-			options: [
-				{
-					value: false,
-					label: 'ACRNM',
-				},
-				{
-					value: false,
-					label: 'Adfsdfsdf',
-				},
-				{
-					value: false,
-					label: 'Adsdsfgsdg',
-				},
-				{
-					value: false,
-					label: 'Afghh',
-				},
-				{
-					value: false,
-					label: 'Abmnm',
-				},
-				{
-					value: false,
-					label: 'BCRNM',
-				},
-				{
-					value: false,
-					label: 'Bdfsdfsdf',
-				},
-				{
-					value: false,
-					label: 'Bdsdsfgsdg',
-				},
-				{
-					value: false,
-					label: 'Bfghh',
-				},
-				{
-					value: false,
-					label: 'Bbmnm',
-				},
-				{
-					value: false,
-					label: 'CCRNM',
-				},
-				{
-					value: false,
-					label: 'Cdfsdfsdf',
-				},
-				{
-					value: false,
-					label: 'Cdsdsfgsdg',
-				},
-				{
-					value: false,
-					label: 'Cfghh',
-				},
-				{
-					value: false,
-					label: 'Cbmnm',
-				}
-			],
 			brandsDefault: {
 				slug: 'brands',
 				title: 'Наши бренды',
@@ -163,7 +101,6 @@ export default {
 			}
 		},
 		change(data) {
-			// this.filters[data.filter.slug] = data.checked.length
 			this.filters[data.filter.slug] = data.checked.length ? data.checked.map((el) => {
 				return {id: el.id}
 			}) : false
@@ -172,10 +109,11 @@ export default {
 			try {
 				let resp = await this.$api.common.editCategorySettings(this.id, this.filters)
 				if (resp) {
-					console.log('success')
+					this.$toast.success('Настройки категории сохранены')
 				}
 			} catch (error) {
-				console.log('save error')
+				let err = error ? error.data.message : 'Произошла ошибка, попробуйте позже'
+				this.$toast.error(err)
 			}
 		}
 	}
