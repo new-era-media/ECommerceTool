@@ -39,13 +39,13 @@ export default [
 		]
 	},
 	{
-		path: '/entry',
+		path: '/',
 		name: 'LayoutFullPage',
 		component: LayoutFullPage,
 		redirect: { name: 'Entry' },
 		children: [
 			{
-				path: '/',
+				path: '/entry',
 				name: 'Entry',
 				component: _import('Entry'),
 			},
@@ -57,20 +57,20 @@ export default [
 		]
 	},
 	{
-		path: '/category',
+		path: '/',
 		name: 'Layout',
 		component: Layout,
-		redirect: { name: 'Category' },
+		redirect: { name: 'Dashboard' },
 		children: [
-			{
-				path: '/',
-				name: 'Category',
-				component: _import('Category'),
-			},
 			{
 				path: '/dashboard',
 				name: 'Dashboard',
 				component: _import('Dashboard'),
+			},
+			{
+				path: '/category/:id',
+				name: 'Category',
+				component: _import('Category'),
 			},
 			{
 				path: '/brand',

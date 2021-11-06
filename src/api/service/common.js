@@ -1,4 +1,4 @@
-export default ({ get, post }) => ({
+export default ({ get, post, put }) => ({
 	getUserInfo() {
 		return get('/account')
 	},
@@ -14,5 +14,10 @@ export default ({ get, post }) => ({
 	getCategory(categoryId) {
 		return get(`/category/${categoryId}`)
 	},
-
+	getCategorySettings(categoryId) {
+		return get(`/settings/category/${categoryId}`)
+	},
+	editCategorySettings(categoryId, params) {
+		return put(`/settings/category/${categoryId}`, params)
+	},
 })

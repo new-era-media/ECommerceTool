@@ -8,7 +8,7 @@
 			.welcome__item-content.flex.flex-wrap.justify-center
 				Button.welcome__item-product(v-for="product of products" :key="product.id"
 					type="violet-outline" @click="chooseProduct(product)"
-				) {{product.title}}
+				) {{product.name}}
 			ArrowIcon.welcome__item-next
 		.welcome__item
 			.welcome__item-icon
@@ -36,28 +36,7 @@ export default {
 	components: { PointerIcon, SettingsIcon, CalendarIcon, ArrowIcon, Button },
 	data() {
 		return {
-			products: [
-				{
-					id: 1,
-					title: 'Кофейные капсулы',
-				},
-				{
-					id: 2,
-					title: 'Кофе в зернах',
-				},
-				{
-					id: 3,
-					title: 'Собачий корм',
-				},
-				{
-					id: 4,
-					title: 'Кошачий корм',
-				},
-				{
-					id: 5,
-					title: 'Сладкие батончики',
-				}
-			]
+			products: [],
 		}
 	},
 	mounted() {
@@ -66,14 +45,17 @@ export default {
 	methods: {
 		async fetch() {
 			try {
-				const resp = this.$api.common.getCategoryList()
-				console.log(resp)
+				const resp = await this.$api.common.getCategoryList()
+				if (resp) {
+					this.products = resp
+				}
 			} catch(error) {
-				this.$toast.error(error)
+				let err = error ? error.data.message : 'Произошла ошибка, попробуйте позже'
+				this.$toast.error(err)
 			}
 		},
 		chooseProduct(product) {
-			console.log('chooseProduct:', product.title)
+			this.$router.push({name: 'Category', params: {id: product.id}})
 		}
 	}
 }
