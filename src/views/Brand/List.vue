@@ -1,6 +1,5 @@
 <template lang="pug">
 	.brands
-		Header(:nav="nav")
 		Menu(title="SKU брендов")
 		.container
 			Table.brands__table(v-bind="tableOptions")
@@ -15,37 +14,24 @@
 					| {{item}}
 </template>
 <script>
-import Header from '@/components/Layout/Header.vue'
 import Menu from '@/components/Menu/Menu.vue'
 import Table from '@/components/Table/Table.vue'
 import MarkItem from '@/components/Elements/MarkItem.vue'
 
 export default {
 	components: {
-		Header,
 		Menu,
 		Table,
 		MarkItem,
 	},
+	props: {
+		categories: {
+			type: Array,
+			default: () => [],
+		}
+	},
 	data() {
 		return {
-			nav: [
-				{
-					page: 'dashboard',
-					title: 'Дашборд',
-					active: false,
-				},
-				{
-					page: 'brand',
-					title: ' SKU брендов',
-					active: true,
-				},
-				{
-					page: 'category',
-					title: 'Настройки категории',
-					active: false,
-				},
-			],
 		}
 	},
 	computed: {

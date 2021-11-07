@@ -1,5 +1,6 @@
 <template lang="pug">
 .profile
+	Header(:nav="[]")
 	Menu(:title="title")
 		template(#title)
 			.flex.items-baseline
@@ -38,9 +39,14 @@
 				.profile__item - Детское питание
 </template>
 <script>
+import Header from '@/components/Layout/Header.vue'
 import Menu from '@/components/Menu/Menu.vue'
+
 export default {
-	components: { Menu },
+	components: {
+		Header,
+		Menu,
+	},
 	data() {
 		return {
 			title: 'Иванов И • Клиент'

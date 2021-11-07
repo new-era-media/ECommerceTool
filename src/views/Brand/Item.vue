@@ -1,6 +1,5 @@
 <template lang="pug">
 .brand
-	Header(:nav="nav")
 	Menu(title="Jardin")
 	.container
 		Table.brand__table(v-bind="tableOptions")
@@ -21,7 +20,6 @@
 				| {{item}}
 </template>
 <script>
-import Header from '@/components/Layout/Header.vue'
 import Menu from '@/components/Menu/Menu.vue'
 import Table from '@/components/Table/Table.vue'
 import CheckIcon from 'vue-material-design-icons/Check.vue'
@@ -31,7 +29,6 @@ import CommentIcon from 'vue-material-design-icons/MessageTextOutline.vue'
 
 export default {
 	components: {
-		Header,
 		Menu,
 		Table,
 		CheckIcon,
@@ -39,25 +36,15 @@ export default {
 		PackageIcon,
 		CommentIcon,
 	},
+	props: {
+		categories: {
+			type: Array,
+			default: () => [],
+		}
+	},
 	data() {
 		return {
-			nav: [
-				{
-					page: 'dashboard',
-					title: 'Дашборд',
-					active: false,
-				},
-				{
-					page: 'brand',
-					title: ' SKU брендов',
-					active: true,
-				},
-				{
-					page: 'category',
-					title: 'Настройки категории',
-					active: false,
-				},
-			],
+
 		}
 	},
 	computed: {
