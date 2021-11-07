@@ -10,8 +10,10 @@
 							.header__nav-label {{item.title}}
 						Link(v-else :to="item.link") {{item.title}}
 				slot
-					Profile
-					//Button(@click="logout" label="Выйти" type="empty")
+					Button(v-if="noUser" @click="logout" label="Выйти" type="empty")
+					Link(v-else :to="{name: 'Profile'}" unstyled)
+						Profile
+
 
 
 </template>
@@ -26,6 +28,10 @@ export default {
 		nav: {
 			type: Array,
 			default: () => [],
+		},
+		noUser: {
+			type: Boolean,
+			default: false,
 		}
 	},
 	data() {
