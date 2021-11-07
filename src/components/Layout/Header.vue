@@ -12,7 +12,7 @@
 					.header__nav-item(v-for="item of nav" :key="item.page")
 						template(v-if="item.active")
 							.header__nav-label {{item.title}}
-						Link(v-else :to="`/${item.page}`")
+						Link(v-else :to="`/${item.page}`") {{item.title}}
 				slot
 					Profile
 					//Button(@click="logout" label="Выйти" type="empty")
@@ -94,6 +94,7 @@ export default {
 		}
 
 		&-item {
+			margin-left: 24px;
 			margin-right: 10px;
 		}
 		&-label {

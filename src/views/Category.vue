@@ -3,6 +3,7 @@
 	template(v-if="loading")
 		.container Loading...
 	template(v-else)
+		Header(:nav="nav")
 		Menu(:title="categoryTitle")
 		.container
 			.category__wrap
@@ -25,12 +26,18 @@
 </template>
 
 <script>
+import Header from '@/components/Layout/Header.vue'
 import Menu from '@/components/Menu/Menu.vue'
 import Button from '@/components/Button/Button.vue'
 import CategoryFilter from '@/components/CategoryFilter/CategoryFilter.vue'
 
 export default {
-	components: { Menu, Button, CategoryFilter },
+	components: {
+		Header,
+		Menu,
+		Button,
+		CategoryFilter
+	},
 	data() {
 		return {
 			loading: true,
@@ -67,7 +74,15 @@ export default {
 				competitors: false,
 				retailers: false,
 				search: false,
-			}
+			},
+			nav: [
+				{
+					page: 'category',
+					title: 'Настройки категории',
+					active: true,
+				}
+			],
+			categories: [],
 		}
 	},
 	mounted() {
@@ -75,11 +90,11 @@ export default {
 	},
 	computed: {
 		id() {
-			return this.$route.params.id
+			return parseInt(this.$route.params.id)
 		},
 		categoryTitle() {
-			// return `Настройки категории Кофе в зернах`
-			return `Настройки категории id: ${this.id}`
+			let category = this.categories.find((el) => el.id === this.id)
+			return `Настройки категории ${category.name}`
 		},
 		isEmpty() {
 			return !(this.filters.brands || this.filters.competitors) || !this.filters.retailers
@@ -88,11 +103,16 @@ export default {
 	methods: {
 		async fetch() {
 			try {
-				let { brands, competitors, retailers, search } = await this.$api.common.getCategory(this.id)
-				this.brands = { ...this.brandsDefault, options: brands}
-				this.competitors = { ...this.competitorsDefault, options: competitors}
-				this.retailers = { ...this.retailersDefault, options: retailers}
-				this.search = { ...this.searchDefault, options: search}
+				let [listResp, categoryResp] = await Promise.all([
+					this.$api.common.getCategoryList(),
+					this.$api.common.getCategory(this.id),
+				])
+				this.categories = listResp
+
+				this.brands = { ...this.brandsDefault, options: categoryResp.brands}
+				this.competitors = { ...this.competitorsDefault, options: categoryResp.competitors}
+				this.retailers = { ...this.retailersDefault, options: categoryResp.retailers}
+				this.search = { ...this.searchDefault, options: categoryResp.search}
 
 				this.loading = false
 			} catch (error) {

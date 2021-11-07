@@ -1,5 +1,6 @@
 <template lang="pug">
 .dashboard
+	Header(:nav="nav")
 	Menu(title="Дашборд")
 		nav.dashboard__nav.flex.items-center
 			.dashboard__nav-item Наши бренды
@@ -85,6 +86,7 @@
 </template>
 
 <script>
+import Header from '@/components/Layout/Header.vue'
 import Menu from '@/components/Menu/Menu.vue'
 import Tabs from '@/components/Tabs/Tabs.vue'
 import TabItem from '@/components/Tabs/TabItem.vue'
@@ -103,6 +105,7 @@ import Period from '@/components/Period/Period.vue'
 
 export default {
 	components: {
+		Header,
 		Menu,
 		Tabs,
 		TabItem,
@@ -232,6 +235,23 @@ export default {
 				}
 			],
 			onboardShow: true,
+			nav: [
+				{
+					page: 'dashboard',
+					title: 'Дашборд',
+					active: true,
+				},
+				{
+					page: 'brand',
+					title: ' SKU брендов',
+					active: false,
+				},
+				{
+					page: 'category',
+					title: 'Настройки категории',
+					active: false,
+				},
+			],
 		}
 	},
 	computed: {
