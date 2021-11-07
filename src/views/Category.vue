@@ -8,7 +8,8 @@
 			@change="change"
 			)
 	template(v-if="loading")
-		| Loading...
+		.container
+			| Loading...
 	template(v-else)
 		RouterView(:key="id" :categories="categories")
 </template>
@@ -91,8 +92,12 @@ export default {
 				}
 				this.loading = false
 			} catch(error) {
-				let err = error ? error.data.message : 'Произошла ошибка, попробуйте позже'
-				this.$toast.error(err)
+				if (error.data?.code === 401) {
+					this.$router.push({name: 'SignIn'})
+				} else {
+					let err = error ? error.data.message : 'Произошла ошибка, попробуйте позже'
+					this.$toast.error(err)
+				}
 			}
 		},
 		change(item) {
