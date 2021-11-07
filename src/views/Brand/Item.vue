@@ -4,18 +4,36 @@
 	.container
 		Table.brand__table(v-bind="tableOptions")
 			template(#availabilityIcon)
-				PackageIcon(:size="22")
+				Tooltip(type="dark" placement="bottom")
+					template(#reference)
+						.brand__icon
+							PackageIcon(:size="22")
+					div(style="width: 180px;")
+						| Наличие SKU у ритейлера
 			template(#commentIcon)
-				CommentIcon(:size="18")
-
+				Tooltip(type="dark" placement="bottom")
+					template(#reference)
+						.brand__icon
+							CommentIcon(:size="18")
+					| Комментарии
 			template(#retailer="{item, index}")
 				.brand__item-retailer {{item.retailer}}
 			template(#title="{item, index}")
 				.brand__item-title {{item.title}}
 			template(#availability="{item, index}")
 				.brand__item-availability(v-if="typeof(item.availability) !== 'undefined'")
-					CheckIcon(v-if="item.availability" :size="18")
-					CloseIcon.brand__item-not-available(v-else :size="18")
+					Tooltip(v-if="item.availability" type="dark" placement="bottom")
+						template(#reference)
+							.brand__icon
+								CheckIcon(v-if="item.availability" :size="18")
+						| В наличии
+
+					Tooltip(v-else type="dark" placement="bottom")
+						template(#reference)
+							.brand__icon
+								CloseIcon.brand__item-not-available( :size="18")
+						| Не в наличии
+
 			template(#custom="{item, index}")
 				| {{item}}
 </template>
@@ -26,6 +44,7 @@ import CheckIcon from 'vue-material-design-icons/Check.vue'
 import CloseIcon from 'vue-material-design-icons/Close.vue'
 import PackageIcon from 'vue-material-design-icons/PackageVariantClosed.vue'
 import CommentIcon from 'vue-material-design-icons/MessageTextOutline.vue'
+import Tooltip from '@/components/Elements/Tooltip.vue'
 
 export default {
 	components: {
@@ -35,6 +54,7 @@ export default {
 		CloseIcon,
 		PackageIcon,
 		CommentIcon,
+		Tooltip,
 	},
 	props: {
 		categories: {
@@ -272,6 +292,12 @@ export default {
 		&-not-available {
 			color: color(gray-600);
 		}
+	}
+
+	&__icon {
+		width: 22px;
+		height: 22px;
+		cursor: pointer;
 	}
 }
 </style>
