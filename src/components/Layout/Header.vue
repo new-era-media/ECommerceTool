@@ -2,21 +2,18 @@
 	header.header.container
 		.flex.justify-between.items-center
 			Link(:to="{name: 'Index'}" unstyled)
-				.header__logo.flex.items-center
-					.header__logo-icon L
-					.header__logo-title
-						span Ecomm
-						| monitor
+				img.header__logo(src="~@/assets/img/logo.png")
 			.header__content.flex.items-center
+				slot
+
 				nav.header__nav.flex.items-center(v-if="nav.length")
 					.header__nav-item(v-for="item of nav" :key="item.page")
 						template(v-if="item.active")
 							.header__nav-label {{item.title}}
-						Link(v-else :to="`/${item.page}`")
-				slot
+						Link(v-else :to="item.link") {{item.title}}
+				Button(v-if="noUser" @click="logout" label="Выйти" type="empty")
+				Link(v-else :to="{name: 'Profile'}" unstyled)
 					Profile
-					//Button(@click="logout" label="Выйти" type="empty")
-
 
 </template>
 <script>
@@ -30,6 +27,10 @@ export default {
 		nav: {
 			type: Array,
 			default: () => [],
+		},
+		noUser: {
+			type: Boolean,
+			default: false,
 		}
 	},
 	data() {
@@ -49,37 +50,14 @@ export default {
 	padding: 22px;
 
 	&__logo {
-
-		&-icon {
-			width: 32px;
-			height: 32px;
-			margin-right: 6px;
-			text-align: center;
-			color: color(white);
-			font-weight: 600;
-			font-size: 20px;
-			background-color: color(violet-light);
-			border-radius: 4px;
-		}
-		&-title {
-			color: color(violet-dark);
-			font-size: 24px;
-			line-height: 1.08;
-
-			span {
-				display: inline-block;
-				margin-right: 4px;
-				font-weight: 700;
-			}
-		}
-
+		width: 221px;
 	}
 	&__profile {
 		margin-right: 12px;
 	}
 	&__nav {
 		position: relative;
-		margin: 0 48px;
+		margin: 0 48px 0 8px;
 
 		&:after {
 			content: '';
@@ -94,6 +72,7 @@ export default {
 		}
 
 		&-item {
+			margin-left: 24px;
 			margin-right: 10px;
 		}
 		&-label {

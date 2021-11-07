@@ -28,9 +28,23 @@ import PackageIcon from 'vue-material-design-icons/PackageVariantClosed.vue'
 import CommentIcon from 'vue-material-design-icons/MessageTextOutline.vue'
 
 export default {
-	components: { Menu, Table, CheckIcon, CloseIcon, PackageIcon, CommentIcon },
+	components: {
+		Menu,
+		Table,
+		CheckIcon,
+		CloseIcon,
+		PackageIcon,
+		CommentIcon,
+	},
+	props: {
+		categories: {
+			type: Array,
+			default: () => [],
+		}
+	},
 	data() {
 		return {
+
 		}
 	},
 	computed: {

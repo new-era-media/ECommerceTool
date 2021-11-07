@@ -6,9 +6,18 @@
 		@submit.prevent="validate"
 	)
 		.sign__item
-			Input(placeholder="Эл. почта" v-model="form.email")
+			Input(
+				placeholder="Эл. почта"
+				v-model="form.email"
+				autocomplete="disabled"
+				)
 		.sign__item
-			InputPassword(placeholder="Пароль" type="password" v-model="form.password")
+			InputPassword(
+				placeholder="Пароль"
+				type="password"
+				v-model="form.password"
+				autocomplete="disabled"
+				)
 			.sign__sub(@click="forgotPass") Забыли пароль?
 		.sign__btn
 			VueRecaptcha(
@@ -19,7 +28,7 @@
 				@expired="onCaptchaExpired"
 			)
 			button(type="submit")
-				Button Войти
+				Button(:disabled="isEmpty") Войти
 </template>
 
 <script>
@@ -44,16 +53,16 @@ export default {
 			sitekey: '6LfPuBwdAAAAACG_x3i-gzS4p_yjrjfX0B1jfgMa',
 		}
 	},
+	computed: {
+		isEmpty() {
+			return !this.form.email || !this.form.password
+		}
+	},
 	methods: {
 		validate() {
 			this.$refs.recaptcha.execute()
-			return this.form.email && this.form.password
 		},
 		async signin(recaptchaToken) {
-			if (!this.validate()) {
-				this.$toast.error('Не указан адрес эл. почты или пароль')
-				return false
-			}
 			try {
 				let params = { ...this.form, recaptchaToken}
 				let { token } = await this.$api.common.login(params)

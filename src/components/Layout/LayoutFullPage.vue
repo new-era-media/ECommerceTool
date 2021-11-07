@@ -1,7 +1,7 @@
 <template lang="pug">
 	main.layout.flex.flex-col.justify-between
 		.layout__header
-			Header
+			Header(:noUser="noUser")
 		.layout__content.container.flex.justify-around.items-center
 			RouterView
 		.layout__footer
@@ -14,7 +14,9 @@ import Footer from '@/components/Layout/Footer.vue'
 export default {
 	components: { Header, Footer },
 	computed: {
-
+		noUser() {
+			return this.$route.name === 'Entry'
+		}
 	}
 }
 </script>

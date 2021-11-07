@@ -119,6 +119,12 @@ export default {
 		Tooltip,
 		Period,
 	},
+	props: {
+		categories: {
+			type: Array,
+			default: () => [],
+		}
+	},
 	data() {
 		return {
 			tabs: [

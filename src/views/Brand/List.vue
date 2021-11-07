@@ -19,7 +19,17 @@ import Table from '@/components/Table/Table.vue'
 import MarkItem from '@/components/Elements/MarkItem.vue'
 
 export default {
-	components: { Menu, Table, MarkItem },
+	components: {
+		Menu,
+		Table,
+		MarkItem,
+	},
+	props: {
+		categories: {
+			type: Array,
+			default: () => [],
+		}
+	},
 	data() {
 		return {
 		}

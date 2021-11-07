@@ -62,33 +62,41 @@ export default [
 		path: '/',
 		name: 'Layout',
 		component: Layout,
-		redirect: { name: 'Dashboard' },
+		redirect: { name: 'Category' },
 		children: [
 			{
-				path: '/dashboard',
-				name: 'Dashboard',
-				component: _import('Dashboard'),
-			},
-			{
-				path: '/category/:id',
+				path: 'category/:id',
 				name: 'Category',
 				component: _import('Category'),
-			},
-			{
-				path: '/brand',
-				name: 'Brand',
-				component: _import('Brand'),
-				redirect: { name: 'Brand.List' },
+				redirect: { name: 'Category.Settings' },
 				children: [
 					{
-						path: 'list',
-						name: 'Brand.List',
-						component: _import('Brand/List'),
+						path: 'settings',
+						name: 'Category.Settings',
+						component: _import('Settings'),
 					},
 					{
-						path: 'item',
-						name: 'Brand.Item',
-						component: _import('Brand/Item'),
+						path: 'dashboard',
+						name: 'Category.Dashboard',
+						component: _import('Dashboard'),
+					},
+					{
+						path: 'brand',
+						name: 'Category.Brand',
+						component: _import('Brand'),
+						redirect: { name: 'Category.Brand.List' },
+						children: [
+							{
+								path: 'list',
+								name: 'Category.Brand.List',
+								component: _import('Brand/List'),
+							},
+							{
+								path: 'item',
+								name: 'Category.Brand.Item',
+								component: _import('Brand/Item'),
+							},
+						]
 					},
 				]
 			},

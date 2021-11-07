@@ -11,5 +11,8 @@ export const guid = () => {
 Vue.prototype.$utils = {
 	formatNumber(num) {
 		return (num).toLocaleString('ru')
+	},
+	isENV(env) {
+		return process.env.NODE_ENV === env
 	}
 }
