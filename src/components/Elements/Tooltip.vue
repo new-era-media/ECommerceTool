@@ -107,7 +107,6 @@ export default {
 
 	.popper {
 		min-width: 80px;
-		//max-width: 450px;
 		box-shadow: none;
 		border: none;
 	}
