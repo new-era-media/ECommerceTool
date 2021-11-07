@@ -2,6 +2,8 @@ import LayoutLanding from '../components/Layout/LayoutLanding.vue'
 import LayoutFullPage from '../components/Layout/LayoutFullPage.vue'
 import Layout from '../components/Layout/Layout.vue'
 const _import = name => () => import('@/views/' + name + '.vue')
+// eslint-disable-next-line no-unused-vars
+import store from '@/store'
 
 export default [
 	{
@@ -42,7 +44,7 @@ export default [
 		path: '/',
 		name: 'LayoutFullPage',
 		component: LayoutFullPage,
-		redirect: { name: 'Entry' },
+		redirect: { name: 'Welcome' },
 		children: [
 			{
 				path: '/entry',

@@ -193,7 +193,7 @@ export default {
 			background-color: color(white);
 			//overflow: hidden;
 
-			&:after {
+			&:before {
 				content: '';
 				position: absolute;
 				width: 100%;

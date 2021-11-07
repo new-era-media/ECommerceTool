@@ -4,6 +4,7 @@ import api from '@/api'
 export default {
 	namespaced: true,
 	state: {
+		userToken: '',
 		user: null,
 	},
 	getters: {
@@ -13,6 +14,9 @@ export default {
 		setUser(state, user) {
 			state.user = user
 		},
+		setToken(state, userToken) {
+			state.userToken = userToken
+		}
 	},
 	actions: {
 		// eslint-disable-next-line no-unused-vars
