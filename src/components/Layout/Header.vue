@@ -4,17 +4,16 @@
 			Link(:to="{name: 'Index'}" unstyled)
 				img.header__logo(src="~@/assets/img/logo.png")
 			.header__content.flex.items-center
+				slot
+
 				nav.header__nav.flex.items-center(v-if="nav.length")
 					.header__nav-item(v-for="item of nav" :key="item.page")
 						template(v-if="item.active")
 							.header__nav-label {{item.title}}
 						Link(v-else :to="item.link") {{item.title}}
-				slot
-					Button(v-if="noUser" @click="logout" label="Выйти" type="empty")
-					Link(v-else :to="{name: 'Profile'}" unstyled)
-						Profile
-
-
+				Button(v-if="noUser" @click="logout" label="Выйти" type="empty")
+				Link(v-else :to="{name: 'Profile'}" unstyled)
+					Profile
 
 </template>
 <script>
@@ -58,7 +57,7 @@ export default {
 	}
 	&__nav {
 		position: relative;
-		margin: 0 48px;
+		margin: 0 48px 0 8px;
 
 		&:after {
 			content: '';

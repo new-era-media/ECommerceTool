@@ -1,6 +1,12 @@
 <template lang="pug">
 .category
 	Header(:nav="nav")
+		CategorySelect(
+			v-if="!loading"
+			:list="categories"
+			:currentId="id"
+			@change="change"
+			)
 	template(v-if="loading")
 		| Loading...
 	template(v-else)
@@ -8,10 +14,12 @@
 </template>
 <script>
 import Header from '@/components/Layout/Header.vue'
+import CategorySelect from '@/components/CategorySelect/CategorySelect.vue'
 
 export default {
 	components: {
 		Header,
+		CategorySelect,
 	},
 	data() {
 		return {
@@ -86,6 +94,9 @@ export default {
 				let err = error ? error.data.message : 'Произошла ошибка, попробуйте позже'
 				this.$toast.error(err)
 			}
+		},
+		change(item) {
+			this.$router.push({name: this.$route.name, params: {id: item.id}})
 		},
 	}
 }
