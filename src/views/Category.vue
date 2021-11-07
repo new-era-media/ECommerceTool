@@ -92,7 +92,7 @@ export default {
 				}
 				this.loading = false
 			} catch(error) {
-				if (error.data?.code === 401) {
+				if (error?.data?.code === 401) {
 					this.$router.push({name: 'SignIn'})
 				} else {
 					let err = error ? error.data.message : 'Произошла ошибка, попробуйте позже'
