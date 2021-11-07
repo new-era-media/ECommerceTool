@@ -1,6 +1,12 @@
 <template lang="pug">
 	.input__wrap.relative(:class="{'--focus': isFocus}")
-		Input(ref="input" :value="value" @focus="onFocus" @blur="onBlur")
+		Input(
+			ref="input"
+			v-model="currValue"
+			@focus="onFocus"
+			@blur="onBlur"
+			@input="input"
+			)
 		.input__placeholder {{ placeholder }}
 
 </template>
@@ -16,6 +22,7 @@ export default {
 	data() {
 		return {
 			isFocus: false,
+			currValue: this.$props.value || '',
 		}
 	},
 	methods: {
@@ -27,7 +34,10 @@ export default {
 		},
 		onBlur() {
 			this.isFocus = false
-		}
+		},
+		input() {
+			this.$emit('input', this.currValue)
+		},
 	}
 }
 </script>

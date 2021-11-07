@@ -1,42 +1,62 @@
 <template lang="pug">
 .sign
 	.sign__title Вход в Ecomm monitor
-	.sign__form
+	form.sign__form(
+		method="post"
+		@submit.prevent="validate"
+	)
 		.sign__item
 			Input(placeholder="Эл. почта" v-model="form.email")
 		.sign__item
 			InputPassword(placeholder="Пароль" type="password" v-model="form.password")
 			.sign__sub(@click="forgotPass") Забыли пароль?
 		.sign__btn
-			Button(@click="signin") Войти
+			VueRecaptcha(
+				ref="recaptcha"
+				size="invisible"
+				:sitekey="sitekey"
+				@verify="signin"
+				@expired="onCaptchaExpired"
+			)
+			button(type="submit")
+				Button Войти
 </template>
 
 <script>
 import Input from '@/components/Elements/Input.vue'
 import InputPassword from '@/components/Elements/InputPassword.vue'
 import Button from '@/components/Button/Button.vue'
+import VueRecaptcha from 'vue-recaptcha'
 
 export default {
-	components: { Input, InputPassword, Button },
+	components: {
+		Input,
+		InputPassword,
+		Button,
+		VueRecaptcha,
+	},
 	data() {
 		return {
 			form: {
 				email: '',
 				password: '',
-			}
+			},
+			sitekey: '6LfPuBwdAAAAACG_x3i-gzS4p_yjrjfX0B1jfgMa',
 		}
 	},
 	methods: {
 		validate() {
+			this.$refs.recaptcha.execute()
 			return this.form.email && this.form.password
 		},
-		async signin() {
+		async signin(recaptchaToken) {
 			if (!this.validate()) {
 				this.$toast.error('Не указан адрес эл. почты или пароль')
 				return false
 			}
 			try {
-				let { token } = await this.$api.common.login(this.form)
+				let params = { ...this.form, recaptchaToken}
+				let { token } = await this.$api.common.login(params)
 				if (token) {
 					localStorage.setItem('userToken', token)
 					this.$router.push({name: 'Welcome'})
@@ -48,6 +68,9 @@ export default {
 		},
 		forgotPass() {
 			console.log('forgotPass')
+		},
+		onCaptchaExpired () {
+			this.$refs.recaptcha.reset()
 		}
 	}
 }

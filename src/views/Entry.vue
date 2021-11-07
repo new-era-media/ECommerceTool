@@ -1,8 +1,15 @@
 <template lang="pug">
 .entry
 	h1 О Вас
-	InputPlaceholder.entry__input(ref="input" :value="value" :placeholder="placeholder")
-	Button.entry__btn(@click="save" :disabled="isEmpty") Сохранить
+	InputPlaceholder.entry__input(
+		ref="input"
+		v-model="name"
+		:placeholder="placeholder"
+		)
+	Button.entry__btn(
+		@click="save"
+		:disabled="isEmpty"
+		) Сохранить
 
 </template>
 
@@ -14,13 +21,13 @@ export default {
 	components: { InputPlaceholder, Button },
 	data() {
 		return {
-			value: '',
+			name: '',
 			placeholder: 'Имя и фамилия'
 		}
 	},
 	computed: {
 		isEmpty() {
-			return !this.value
+			return !this.name
 		},
 	},
 	mounted() {
@@ -29,8 +36,16 @@ export default {
 		})
 	},
 	methods: {
-		save() {
-			console.log('save')
+		async save() {
+			try {
+				let resp = await this.$api.common.editUserInfo({name: this.name})
+				if (resp) {
+					console.log('save')
+				}
+			} catch (error) {
+				let err = error ? error.data.message : 'Произошла ошибка, попробуйте позже'
+				this.$toast.error(err)
+			}
 		}
 	}
 }
