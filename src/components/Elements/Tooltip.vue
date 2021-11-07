@@ -103,7 +103,16 @@ export default {
 }
 
 .tooltip--dark {
-	@include popper-type(gray-800, white)
+	@include popper-type(black-80, white);
+
+	.popper {
+		min-width: 80px;
+		box-shadow: none;
+		border: none;
+	}
+	.popper__arrow {
+		display: none;
+	}
 }
 
 .tooltip--light {
