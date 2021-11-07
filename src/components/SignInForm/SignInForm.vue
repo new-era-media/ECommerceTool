@@ -3,7 +3,7 @@
 	.sign__title Вход в Ecomm monitor
 	form.sign__form(
 		method="post"
-		@submit.prevent="validate"
+		@submit.prevent="validateCaptcha"
 	)
 		.sign__item
 			Input(placeholder="Эл. почта" v-model="form.email")
@@ -45,8 +45,10 @@ export default {
 		}
 	},
 	methods: {
-		validate() {
+		validateCaptcha() {
 			this.$refs.recaptcha.execute()
+		},
+		validate() {
 			return this.form.email && this.form.password
 		},
 		async signin(recaptchaToken) {
