@@ -241,6 +241,9 @@ export default {
 		}
 	},
 	computed: {
+		id() {
+			return parseInt(this.$route.params.id)
+		},
 		chartOptions() {
 			return {
 				scales: {
@@ -793,7 +796,21 @@ export default {
 			}
 		}
 	},
+	mounted() {
+		this.fetch()
+	},
 	methods: {
+		async fetch() {
+			try {
+				const resp = await this.$api.common.editCategorySettings(this.id)
+				if (resp.success) {
+					console.log(resp)
+				}
+			} catch (error) {
+				let err = error ? error.data.message : 'Произошла ошибка, попробуйте позже'
+				this.$toast.error(err)
+			}
+		},
 		onboardClose() {
 			this.onboardShow = false
 		},

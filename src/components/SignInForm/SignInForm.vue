@@ -39,14 +39,14 @@
 import Input from '@/components/Elements/Input.vue'
 import InputPassword from '@/components/Elements/InputPassword.vue'
 import Button from '@/components/Button/Button.vue'
-import VueRecaptcha from 'vue-recaptcha'
+// import VueRecaptcha from 'vue-recaptcha'
 
 export default {
 	components: {
 		Input,
 		InputPassword,
 		Button,
-		VueRecaptcha,
+		// VueRecaptcha,
 	},
 	data() {
 		return {

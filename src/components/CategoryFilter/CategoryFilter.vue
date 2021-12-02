@@ -18,6 +18,7 @@
 									:key="item.name"
 									:label="item.name"
 									:value="item.value"
+									:disabled="item.disabled"
 									@change="change(item)"
 								)
 					template(v-else)
@@ -47,69 +48,6 @@ export default {
 		return {
 			search: '',
 			checked: [],
-			// options: [],
-			// options: [
-			// 	{
-			// 		value: false,
-			// 		label: 'ACRNM',
-			// 	},
-			// 	{
-			// 		value: false,
-			// 		label: 'Adfsdfsdf',
-			// 	},
-			// 	{
-			// 		value: false,
-			// 		label: 'Adsdsfgsdg',
-			// 	},
-			// 	{
-			// 		value: false,
-			// 		label: 'Afghh',
-			// 	},
-			// 	{
-			// 		value: false,
-			// 		label: 'Abmnm',
-			// 	},
-			// 	{
-			// 		value: false,
-			// 		label: 'Barilla',
-			// 	},
-			// 	{
-			// 		value: false,
-			// 		label: 'Bdfsdfsdf',
-			// 	},
-			// 	{
-			// 		value: false,
-			// 		label: 'Bdsdsfgsdg',
-			// 	},
-			// 	{
-			// 		value: false,
-			// 		label: 'Bfghh',
-			// 	},
-			// 	{
-			// 		value: false,
-			// 		label: 'Bbmnm',
-			// 	},
-			// 	{
-			// 		value: false,
-			// 		label: 'CCRNM',
-			// 	},
-			// 	{
-			// 		value: false,
-			// 		label: 'Cdfsdfsdf',
-			// 	},
-			// 	{
-			// 		value: false,
-			// 		label: 'Cdsdsfgsdg',
-			// 	},
-			// 	{
-			// 		value: false,
-			// 		label: 'Cfghh',
-			// 	},
-			// 	{
-			// 		value: false,
-			// 		label: 'Cbmnm',
-			// 	}
-			// ]
 		}
 	},
 	computed: {
@@ -141,9 +79,10 @@ export default {
 				name: item.name,
 				value: !item.value,
 				id: item.id,
+				disabled: item.disabled,
 			}
 			this.$set(this.options, index, newItem)
-			this.$emit('change', {filter: this.filter, checked: this.checkedOptions})
+			this.$emit('change', {filter: this.filter, checked: this.checkedOptions, item: newItem})
 		},
 		removeItem(item) {
 			let index = this.filterOptions.findIndex((el) => el.name === item.name)
