@@ -3,10 +3,7 @@
 		.flex.justify-between.items-center
 			Link(:to="{name: 'Index'}" unstyled)
 				img.header__logo(src="~@/assets/img/logo.png")
-			nav.header__nav.flex.justify-between.items-center
-				Link.header__nav-item(native) Возможности
-				Link.header__nav-item(native) Площадки
-				Link.header__nav-item(native) Метрики
+			nav.header__nav.flex.justify-end.items-center
 				Link(:to="{name: 'SignIn'}" unstyled)
 					Button(label="Войти" type="violet-outline")
 

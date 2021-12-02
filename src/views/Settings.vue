@@ -29,6 +29,8 @@ import Menu from '@/components/Menu/Menu.vue'
 import Button from '@/components/Button/Button.vue'
 import CategoryFilter from '@/components/CategoryFilter/CategoryFilter.vue'
 
+import { findIndex, forEach } from 'lodash'
+
 export default {
 	components: {
 		Menu,
@@ -72,7 +74,7 @@ export default {
 			competitors: null,
 			retailers: null,
 			search: null,
-			filters: {
+			filters1: {
 				brands: false,
 				competitors: false,
 				retailers: false,
@@ -88,6 +90,34 @@ export default {
 			let category = this.categories.find((el) => el.id === this.id)
 			return `Настройки категории ${category.name}`
 		},
+		brandsOptions() {
+			return this.brands ? this.brands.options : null
+		},
+		competitorsOptions() {
+			return this.competitors ? this.competitors.options : null
+		},
+		retailersOptions() {
+			return this.retailers ? this.retailers.options : null
+		},
+		searchOptions() {
+			return this.brands ? this.search.options : null
+		},
+		filters() {
+			return {
+				brands: this.brandsOptions ? this.brandsOptions.filter((item) => item.value).map((item) => {
+					return { id: item.id }
+				}) : false,
+				competitors: this.competitorsOptions ? this.competitorsOptions.filter((item) => item.value).map((item) => {
+					return { id: item.id }
+				}) : false,
+				retailers: this.retailersOptions ? this.retailersOptions.filter((item) => item.value).map((item) => {
+					return { id: item.id }
+				}) : false,
+				search: this.searchOptions ? this.searchOptions.filter((item) => item.value).map((item) => {
+					return { id: item.id }
+				}) : false,
+			}
+		},
 		isEmpty() {
 			return !(this.filters.brands || this.filters.competitors) || !this.filters.retailers
 		},
@@ -98,11 +128,21 @@ export default {
 	methods: {
 		async fetch() {
 			try {
-				const { brands, competitors, retailers, search } = await this.$api.common.getCategory(this.id)
-				this.brands = { ...this.brandsDefault, options: brands}
-				this.competitors = { ...this.competitorsDefault, options: competitors}
-				this.retailers = { ...this.retailersDefault, options: retailers}
-				this.search = { ...this.searchDefault, options: search}
+				const { brands, competitors, retailers, search } = await this.$api.common.getCategorySettings(this.id)
+				this.brands = { ...this.brandsDefault, options: brands.map((item) => {
+						return { ...item, value: item.selected, disabled: false }
+					})}
+				this.competitors = { ...this.competitorsDefault, options: competitors.map((item) => {
+						return { ...item, value: item.selected, disabled: false }
+					})}
+				this.retailers = { ...this.retailersDefault, options: retailers.map((item) => {
+						return { ...item, value: item.selected }
+					})}
+				this.search = { ...this.searchDefault, options: search.map((item) => {
+						return { ...item, value: item.selected }
+					})}
+
+				this.setDisabledItems()
 
 				this.loading = false
 			} catch (error) {
@@ -110,16 +150,58 @@ export default {
 				this.$toast.error(err)
 			}
 		},
+		setDisabledBrands(newItem) {
+			let index = findIndex(this.brands.options, (item) => item.id === newItem.id)
+			if (typeof(index) === 'number') {
+				this.$set(this.brands.options, index, { ...this.brands.options[index], disabled: newItem.value })
+			}
+		},
+		setDisabledCompetitors(newItem) {
+			let index = findIndex(this.competitors.options, (item) => item.id === newItem.id)
+			if (typeof(index) === 'number') {
+				this.$set(this.competitors.options, index, { ...this.competitors.options[index], disabled: newItem.value })
+			}
+		},
+		setDisabledItems(filter, newItem) {
+			if (filter && newItem) {
+				switch(filter) {
+					case 'brands':
+						this.setDisabledCompetitors(newItem)
+						break
+
+					case 'competitors':
+						this.setDisabledBrands(newItem)
+						break
+				}
+			} else {
+				let brands = this.brands.options.filter((item) => item.value)
+				let competitors = this.competitors.options.filter((item) => item.value)
+
+				forEach(brands, (item) => {
+					this.setDisabledCompetitors(item)
+				})
+				forEach(competitors, (item) => {
+					this.setDisabledBrands(item)
+				})
+			}
+		},
 		change(data) {
-			this.filters[data.filter.slug] = data.checked.length ? data.checked.map((el) => {
-				return {id: el.id}
-			}) : false
+			let filter = data.filter.slug
+			if (['brands', 'competitors'].includes(filter)) {
+				this.setDisabledItems(filter, data.item)
+			}
+
+			// this.filters[data.filter.slug] = data.checked.length ? data.checked.map((el) => {
+			// 	return {id: el.id}
+			// }) : false
 		},
 		async save() {
+			console.log(this.filters)
 			try {
-				let resp = await this.$api.common.editCategorySettings(this.id, this.filters)
+				const resp = await this.$api.common.editCategorySettings(this.id, this.filters)
 				if (resp) {
-					this.$toast.success('Настройки категории сохранены')
+					// this.$toast.success('Настройки категории сохранены')
+					this.$router.push({name: 'Category.Dashboard', params: {id: this.id}})
 				}
 			} catch (error) {
 				let err = error ? error.data.message : 'Произошла ошибка, попробуйте позже'

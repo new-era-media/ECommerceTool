@@ -125,7 +125,7 @@ export default {
 	}
 	&__item {
 		width: 980px;
-		height: 456px;
+		height: 460px;
 		text-align: center;
 
 		&:nth-of-type(2) {

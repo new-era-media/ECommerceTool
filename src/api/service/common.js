@@ -23,4 +23,7 @@ export default ({ get, post, put }) => ({
 	editCategorySettings(categoryId, params) {
 		return put(`/settings/category/${categoryId}`, params)
 	},
+	getWidgetList(categoryId) {
+		return get(`/category/${categoryId}`)
+	}
 })
