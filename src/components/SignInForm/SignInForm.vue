@@ -1,9 +1,13 @@
 <template lang="pug">
 .sign
 	.sign__title Вход в Ecomm monitor
+	//form.sign__form(
+	//	method="post"
+	//	@submit.prevent="validate"
+	//)
 	form.sign__form(
 		method="post"
-		@submit.prevent="validate"
+		@submit.prevent="signin"
 	)
 		.sign__item
 			Input(
@@ -20,13 +24,13 @@
 				)
 			.sign__sub(@click="forgotPass") Забыли пароль?
 		.sign__btn
-			VueRecaptcha(
-				ref="recaptcha"
-				size="invisible"
-				:sitekey="sitekey"
-				@verify="signin"
-				@expired="onCaptchaExpired"
-			)
+			//VueRecaptcha(
+			//	ref="recaptcha"
+			//	size="invisible"
+			//	:sitekey="sitekey"
+			//	@verify="signin"
+			//	@expired="onCaptchaExpired"
+			//)
 			button(type="submit")
 				Button(:disabled="isEmpty") Войти
 </template>
@@ -62,13 +66,16 @@ export default {
 		validate() {
 			this.$refs.recaptcha.execute()
 		},
-		async signin(recaptchaToken) {
+		// async signin(recaptchaToken) {
+		async signin() {
 			try {
-				let params = { ...this.form, recaptchaToken}
+				// let params = { ...this.form, recaptchaToken}
+				let params = this.form
 				let { token } = await this.$api.common.login(params)
 				if (token) {
 					localStorage.setItem('userToken', token)
-					this.$router.push({name: 'Welcome'})
+					// this.$router.push({name: 'Welcome'})
+					location.href = '/welcome'
 				}
 			} catch (error) {
 				let err = error ? error.data.message : 'Неверный email или пароль'
