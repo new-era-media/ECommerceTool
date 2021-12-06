@@ -23,7 +23,16 @@ export default ({ get, post, put }) => ({
 	editCategorySettings(categoryId, params) {
 		return put(`/settings/category/${categoryId}`, params)
 	},
-	getWidgetList(categoryId) {
-		return get(`/category/${categoryId}`)
-	}
+	getSettingsWidgetList(categoryId) {
+		return get(`/settings/category/${categoryId}/widgets`)
+	},
+	editSettingsWidgetList(categoryId, params) {
+		return put(`/settings/category/${categoryId}/widgets`, params)
+	},
+	getWidgetSpecific(widgetId, categoryId) {
+		return get(`/widget/${widgetId}/category/${categoryId}/brands/specific`)
+	},
+	getWidgetComparison(widgetId, categoryId) {
+		return get(`/widget/${widgetId}/category/${categoryId}/brands/comparison`)
+	},
 })

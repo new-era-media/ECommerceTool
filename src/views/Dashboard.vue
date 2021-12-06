@@ -46,6 +46,11 @@
 			Button.dashboard__settings(type="violet-outline" size="sm" @click="settings")
 				SettingsIcon(:size="18")
 		.dashboard__widgets.flex.flex-wrap
+			Widget.dashboard__widget(
+				:widget="widget"
+				:loading="widgetLoading"
+				:type="widget ? widget.type : 'count'"
+				)
 			Widget.dashboard__widget(:widget="sku")
 			Widget.dashboard__widget(v-for="(item, index) of list" :key="index" :widget="item" type="percent")
 		.dashboard__section
@@ -238,6 +243,9 @@ export default {
 				}
 			],
 			onboardShow: true,
+			widgetId: 'someWidgetUniqueName',
+			widget: null,
+			widgetLoading: true,
 		}
 	},
 	computed: {
@@ -802,24 +810,42 @@ export default {
 	methods: {
 		async fetch() {
 			try {
-				const resp = await this.$api.common.editCategorySettings(this.id)
-				if (resp.success) {
+				const resp = await this.$api.common.getWidgetComparison(this.widgetId, this.id)
+				if (resp) {
 					console.log(resp)
+					let widg = resp[0]
+					this.widget = {
+						title: widg.nameRu,
+						type:  widg.brandValue.type,
+						counters: {
+							brand: {
+								value: widg.brandValue.value,
+								// trend: -1,
+							},
+							competitor: {
+								value: widg.competitorValue.value,
+							},
+							other: {
+								value: widg.otherValue.value,
+							}
+						}
+					}
 				}
 			} catch (error) {
 				let err = error ? error.data.message : 'Произошла ошибка, попробуйте позже'
 				this.$toast.error(err)
+			} finally {
+				this.widgetLoading = false
 			}
 		},
 		onboardClose() {
 			this.onboardShow = false
 		},
 		settings() {
-			console.log('widgets settings')
 			this.$modal({
 				component: 'WidgetSettings',
 				props: {
-
+					categoryId: this.id,
 				},
 				on: {
 					cancel: () => {

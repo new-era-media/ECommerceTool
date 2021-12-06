@@ -1,18 +1,24 @@
 <template lang="pug">
 .widget
 	.widget__content
-		.widget__title.flex.items-center.justify-end {{widget.title}}
-		.widget__list
-			.widget__item.--brand
-				| {{brandValue}}
-				ArrowUpIcon.widget__item-trend.--positive(v-if="counters.brand.trend === 1" :size="18")
-				ArrowDownIcon.widget__item-trend.--negative(v-if="counters.brand.trend === -1" :size="18")
-			.widget__item.--competitor {{competitorValue}}
-			.widget__item.--other {{otherValue}}
-		.widget__progress.flex.justify-start
-			.widget__progress-brand(:style="{width: `${getPrecent(counters.brand.value, total)}%`}")
-			.widget__progress-competitor(:style="{width: `${getPrecent(counters.competitor.value, total)}%`}")
-			.widget__progress-other(:style="{width: `${getPrecent(counters.other.value, total)}%`}")
+		template(v-if="loading")
+			PuSkeleton.widget__skeleton(width="220px" color="#E0E0E0")
+			PuSkeleton.widget__skeleton(width="180px" color="#E0E0E0")
+			PuSkeleton.widget__skeleton(width="74px" color="#E0E0E0")
+			PuSkeleton.widget__skeleton(width="84px" color="#E0E0E0")
+		template(v-else)
+			.widget__title.flex.items-center.justify-end {{widget.title}}
+			.widget__list
+				.widget__item.--brand
+					| {{brandValue}}
+					ArrowUpIcon.widget__item-trend.--positive(v-if="counters.brand.trend === 1" :size="18")
+					ArrowDownIcon.widget__item-trend.--negative(v-if="counters.brand.trend === -1" :size="18")
+				.widget__item.--competitor {{competitorValue}}
+				.widget__item.--other {{otherValue}}
+			.widget__progress.flex.justify-start
+				.widget__progress-brand(:style="{width: `${getPrecent(counters.brand.value, total)}%`}")
+				.widget__progress-competitor(:style="{width: `${getPrecent(counters.competitor.value, total)}%`}")
+				.widget__progress-other(:style="{width: `${getPrecent(counters.other.value, total)}%`}")
 </template>
 
 <script>
@@ -21,6 +27,10 @@ import ArrowDownIcon from 'vue-material-design-icons/ArrowDownThick.vue'
 
 export default {
 	props: {
+		loading: {
+			type: Boolean,
+			default: false,
+		},
 		widget: Object,
 		type: {
 			default: 'count',
@@ -135,6 +145,14 @@ export default {
 			/*min-width: 10%;*/
 			height: 100%;
 			background-color: color(gray-700);
+		}
+	}
+	&__skeleton {
+		display: block;
+		margin-top: 10px;
+
+		/deep/ span {
+			border-radius: 12px;
 		}
 	}
 }
