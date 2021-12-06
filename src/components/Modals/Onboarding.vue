@@ -111,14 +111,14 @@ export default {
 	}
 	&__container {
 		width: 980px;
-		height: 456px;
+		height: 460px;
 		margin-top: 62px;
 		margin-bottom: 40px;
 		overflow: hidden;
 	}
 	&__slider {
 		width: 2940px;
-		height: 456px;
+		height: 460px;
 		display: flex;
 		overflow: hidden;
 		transition: all .3s ease;
