@@ -3,13 +3,16 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import Api from './api'
-import Toast from 'vue-toastification'
 import 'vue-toastification/dist/index.css'
 
 // pluguins
+import Skelenton from 'vue-loading-skeleton'
 import VCalendar from 'v-calendar'
+import Toast from 'vue-toastification'
 
 Vue.use(Api)
+
+Vue.use(Skelenton)
 Vue.use(VCalendar)
 Vue.use(Toast, {
 	transition: 'Vue-Toastification__fade',

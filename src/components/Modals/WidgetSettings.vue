@@ -4,15 +4,15 @@ ModalBase.widgets(
 	@close="close"
 	title="Управление виджетами"
 	)
-	.widgets__list
-		Checkbox.widgets__checkbox(v-for="(item, index) of list" :key="index"
-			:label="item.title"
+	.widgets__list(v-if="list")
+		Checkbox.widgets__checkbox(v-for="item of list" :key="item.id"
+			:label="item.nameRu"
 			:value="item.value"
 			@change="change(item)"
 			)
 			template(#default)
-				.widgets__item-title {{item.title}}
-				.widgets__item-text {{item.text}}
+				.widgets__item-title {{item.nameRu}}
+				.widgets__item-text {{item.description}}
 
 	template(#footer)
 		Button.widgets__save(@click="save") Сохранить
@@ -26,9 +26,16 @@ import Button from '@/components/Button/Button.vue'
 
 export default {
 	components: { ModalBase, Checkbox, Button },
+	props: {
+		categoryId: {
+			type: Number,
+			default: 0,
+		},
+	},
 	data() {
 		return {
-			list: [
+			list: null,
+			list2: [
 				{
 					title: 'Количество SKU',
 					text: 'Наших брендов / ближайших конкурентов / всей категории',
@@ -69,24 +76,48 @@ export default {
 	},
 	computed: {
 		checkedWidgets() {
-			return this.list.filter((item) => item.value)
+			let checked = this.list.filter((item) => item.value)
+			return checked.map((item) => {
+				return { id: item.id }
+			})
 		}
 	},
+	mounted() {
+		this.fetch()
+	},
 	methods: {
+		async fetch() {
+			try {
+				const resp = await this.$api.common.getSettingsWidgetList(this.categoryId)
+				if (resp) {
+					console.log(resp)
+					this.list = resp.data.map((item) => {
+						return { ...item, value: item.selected }
+					})
+				}
+			} catch (error) {
+				console.log(error)
+			}
+		},
 		close() {
 			this.$emit('close')
 		},
 		change(item) {
-			let index = this.list.findIndex((el) => el.title === item.title)
-			let newItem = {
-				title: item.title,
-				text: item.text,
-				value: !item.value,
-			}
+			let index = this.list.findIndex((el) => el.nameRu === item.nameRu)
+			let newItem = { ...item, value: !item.value}
 			this.$set(this.list, index, newItem)
 		},
-		save() {
-			console.log('save')
+		async save() {
+			try {
+				const resp = await this.$api.common.editSettingsWidgetList(this.categoryId, { data: this.checkedWidgets })
+				if (resp?.status === 'success') {
+					this.$toast.success('Настройки виджетов сохранены')
+					this.$emit('save')
+					this.close()
+				}
+			} catch (error) {
+				console.log(error)
+			}
 		}
 	}
 }

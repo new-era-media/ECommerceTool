@@ -119,7 +119,7 @@ export default {
 			}
 		},
 		isEmpty() {
-			return !(this.filters.brands || this.filters.competitors) || !this.filters.retailers
+			return !(this.filters.brands?.length || this.filters.competitors?.length) || !this.filters.retailers?.length
 		},
 	},
 	mounted() {

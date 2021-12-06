@@ -22,7 +22,9 @@
 									@change="change(item)"
 								)
 					template(v-else)
-						div Не удалось ничего найти
+						.flex.category-filter__not-found.items-center
+							Icon
+							.category-filter__not-found-text Ничего не найдено
 		.category-filter__chosen.flex.flex-wrap.items-center
 			.category-filter__chosen-item.flex(v-for="item in checkedOptions" :key="item.name")
 				.category-filter__chosen-label {{item.name}}
@@ -35,12 +37,19 @@
 
 <script>
 import Input from '@/components/Elements/Input.vue'
-import Magnify from 'vue-material-design-icons/Magnify.vue'
 import Checkbox from '@/components/Elements/Checkbox.vue'
+import Magnify from 'vue-material-design-icons/Magnify.vue'
+import Icon from 'vue-material-design-icons/EmoticonSadOutline.vue'
+
 import { uniq } from 'lodash'
 
 export default {
-	components: { Input, Magnify, Checkbox },
+	components: {
+		Input,
+		Checkbox,
+		Magnify,
+		Icon,
+	},
 	props: {
 		filter: Object,
 	},
@@ -199,6 +208,13 @@ export default {
 		margin-top: 16px;
 		width: 90%;
 		color: color(gray-700);
+	}
+	&__not-found {
+		padding: 15px 12px;
+
+		&-text {
+			margin-left: 10px;
+		}
 	}
 }
 </style>
