@@ -48,7 +48,7 @@ ModalBase.new-chart(
 
 			.new-chart__item(v-for="item of list" :key="item.id")
 				.new-chart__item-title
-					| !!! {{ item.groupName }}
+					| [API] {{ item.groupName }}
 				Radio(v-model='listModel' @input='changeOptions' :options='list')
 					template(#default="{option}")
 						.new-chart__checkbox-title {{option.name}}
