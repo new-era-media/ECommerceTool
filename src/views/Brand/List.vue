@@ -7,9 +7,9 @@
 					MarkItem.brands__item-mark
 
 				template(#mark="{item, index}")
-					MarkItem.brands__item-mark(:color="item.mark === 'our' ? 'blue' : 'orange'")
+					MarkItem.brands__item-mark(:color="item.type === 'brand' ? 'blue' : 'orange'")
 				template(#title="{item, index}")
-					.brands__item-title {{item.title}}
+					.brands__item-title(@click="openBrand(item)") {{ item.brandName }}
 				template(#custom="{item, index}")
 					| {{item}}
 </template>
@@ -32,9 +32,13 @@ export default {
 	},
 	data() {
 		return {
+			list: [],
 		}
 	},
 	computed: {
+		id() {
+			return parseInt(this.$route.params.id)
+		},
 		tableColumns() {
 			return [
 				{
@@ -53,7 +57,7 @@ export default {
 					width: 90,
 					alignRight: true,
 					value: item => {
-						return `${item.share}%`
+						return `${item.shelfShare.value}%`
 					}
 				},
 				{
@@ -61,7 +65,7 @@ export default {
 					width: 130,
 					alignRight: true,
 					value: item => {
-						return item.sku_avg
+						return item.skuAvgPerDay
 					}
 				},
 				{
@@ -69,7 +73,7 @@ export default {
 					width: 85,
 					alignRight: true,
 					value: item => {
-						return item.sku_count
+						return item.skuCount
 					}
 				},
 				{
@@ -77,7 +81,7 @@ export default {
 					width: 75,
 					alignRight: true,
 					value: item => {
-						return `${item.share_promo}%`
+						return `${item.promo.value}%`
 					}
 				},
 				{
@@ -85,7 +89,7 @@ export default {
 					width: 110,
 					alignRight: true,
 					value: item => {
-						return `${item.discount_avg}%`
+						return `${item.discountAverage.value}%`
 					}
 				},
 				{
@@ -93,7 +97,7 @@ export default {
 					width: 80,
 					alignRight: true,
 					value: item => {
-						return `${item.discount_max}%`
+						return `${item.discountMax.value}%`
 					}
 				},
 				{
@@ -101,7 +105,7 @@ export default {
 					width: 100,
 					alignRight: true,
 					value: item => {
-						return `${item.price_avg}₽`
+						return `${item.priceAvgPerGram.value}₽`
 					}
 				},
 				{
@@ -109,134 +113,327 @@ export default {
 					width: 100,
 					alignRight: true,
 					value: item => {
-						return `${item.price_sku}₽`
+						return `${item.skuAvgPrice.value}₽`
 					}
 				},
 			]
 		},
-		tableData() {
+		tableDataDefault() {
 			return [
 				{
-					title: 'Черная карта',
-					mark: 'our',
-					share: 5,
-					sku_avg: 5,
-					sku_count: 5,
-					share_promo: 5,
-					discount_avg: 5,
-					discount_max: 5,
-					price_avg: 5,
-					price_sku: 5,
+					brandId: 2,
+					brandName: 'Черная карта',
+					type: 'brand',
+					shelfShare: {
+						value: 5,
+						type: 'percent',
+					},
+					skuAvgPerDay: 5,
+					skuCount: 5,
+					promo: {
+						value: 5,
+						type: 'percent',
+					},
+					discountAverage: {
+						value: 5,
+						type: 'percent'
+					},
+					discountMax: {
+						value: 5,
+						type: 'percent'
+					},
+					priceAvgPerGram:  {
+						value: 5,
+						type: 'rub'
+					},
+					skuAvgPrice: {
+						value: 5,
+						type: 'rub'
+					},
 				},
 				{
-					title: 'Pauiling',
-					mark: 'our',
-					share: 10,
-					sku_avg: 10,
-					sku_count: 10,
-					share_promo: 10,
-					discount_avg: 10,
-					discount_max: 10,
-					price_avg: 10,
-					price_sku: 10,
+					brandId: 3,
+					brandName: 'Pauiling',
+					type: 'brand',
+					shelfShare: {
+						value: 10,
+						type: 'percent',
+					},
+					skuAvgPerDay: 10,
+					skuCount: 10,
+					promo: {
+						value: 10,
+						type: 'percent'
+					},
+					discountAverage: {
+						value: 10,
+						type: 'percent'
+					},
+					discountMax: {
+						value: 10,
+						type: 'percent'
+					},
+					priceAvgPerGram:  {
+						value: 10,
+						type: 'rub'
+					},
+					skuAvgPrice: {
+						value: 10,
+						type: 'rub'
+					},
 				},
 				{
-					title: 'Lavazza',
-					mark: 'our',
-					share: 45,
-					sku_avg: 45,
-					sku_count: 45,
-					share_promo: 45,
-					discount_avg: 45,
-					discount_max: 45,
-					price_avg: 45,
-					price_sku: 45,
+					brandId: 4,
+					brandName: 'Lavazza',
+					type: 'brand',
+					shelfShare: {
+						value: 45,
+						type: 'percent',
+					},
+					skuAvgPerDay: 45,
+					skuCount: 45,
+					promo: {
+						value: 45,
+						type: 'percent'
+					},
+					discountAverage: {
+						value: 45,
+						type: 'percent'
+					},
+					discountMax: {
+						value: 45,
+						type: 'percent'
+					},
+					priceAvgPerGram:  {
+						value: 45,
+						type: 'rub'
+					},
+					skuAvgPrice: {
+						value: 45,
+						type: 'rub'
+					},
 				},
 				{
-					title: 'Jardin',
-					mark: 'our',
-					share: 1,
-					sku_avg: 1,
-					sku_count: 1,
-					share_promo: 1,
-					discount_avg: 1,
-					discount_max: 1,
-					price_avg: 1,
-					price_sku: 1,
+					brandId: 5,
+					brandName: 'Jardin',
+					type: 'brand',
+					shelfShare: {
+						value: 1,
+						type: 'percent',
+					},
+					skuAvgPerDay: 1,
+					skuCount: 1,
+					promo: {
+						value: 1,
+						type: 'percent'
+					},
+					discountAverage: {
+						value: 1,
+						type: 'percent'
+					},
+					discountMax: {
+						value: 1,
+						type: 'percent'
+					},
+					priceAvgPerGram:  {
+						value: 1,
+						type: 'rub'
+					},
+					skuAvgPrice: {
+						value: 1,
+						type: 'rub'
+					},
 				},
 				{
-					title: 'Жоккей',
-					mark: 'our',
-					share: 5,
-					sku_avg: 5,
-					sku_count: 5,
-					share_promo: 5,
-					discount_avg: 5,
-					discount_max: 5,
-					price_avg: 5,
-					price_sku: 5,
+					brandId: 6,
+					brandName: 'Жоккей',
+					type: 'brand',
+					shelfShare: {
+						value: 5,
+						type: 'percent',
+					},
+					skuAvgPerDay: 5,
+					skuCount: 5,
+					promo: {
+						value: 5,
+						type: 'percent'
+					},
+					discountAverage: {
+						value: 5,
+						type: 'percent'
+					},
+					discountMax: {
+						value: 5,
+						type: 'percent'
+					},
+					priceAvgPerGram:  {
+						value: 5,
+						type: 'rub'
+					},
+					skuAvgPrice: {
+						value: 5,
+						type: 'rub'
+					},
 				},
 				{
-					title: 'Woseba',
-					mark: 'competitor',
-					share: 5,
-					sku_avg: 5,
-					sku_count: 5,
-					share_promo: 5,
-					discount_avg: 5,
-					discount_max: 5,
-					price_avg: 5,
-					price_sku: 5,
+					brandId: 7,
+					brandName: 'Woseba',
+					type: 'competitor',
+					shelfShare: {
+						value: 5,
+						type: 'percent',
+					},
+					skuAvgPerDay: 5,
+					skuCount: 5,
+					promo: {
+						value: 5,
+						type: 'percent'
+					},
+					discountAverage: {
+						value: 5,
+						type: 'percent'
+					},
+					discountMax: {
+						value: 5,
+						type: 'percent'
+					},
+					priceAvgPerGram:  {
+						value: 5,
+						type: 'rub'
+					},
+					skuAvgPrice: {
+						value: 5,
+						type: 'rub'
+					},
 				},
 				{
-					title: 'Jacobs',
-					mark: 'competitor',
-					share: 4,
-					sku_avg: 4,
-					sku_count: 4,
-					share_promo: 4,
-					discount_avg: 4,
-					discount_max: 4,
-					price_avg: 4,
-					price_sku: 4,
+					brandId: 8,
+					brandName: 'Jacobs',
+					type: 'competitor',
+					shelfShare: {
+						value: 4,
+						type: 'percent',
+					},
+					skuAvgPerDay: 4,
+					skuCount: 4,
+					promo: {
+						value: 4,
+						type: 'percent'
+					},
+					discountAverage: {
+						value: 4,
+						type: 'percent'
+					},
+					discountMax: {
+						value: 4,
+						type: 'percent'
+					},
+					priceAvgPerGram:  {
+						value: 4,
+						type: 'rub'
+					},
+					skuAvgPrice: {
+						value: 4,
+						type: 'rub'
+					},
 				},
 				{
-					title: 'Egoiste',
-					mark: 'competitor',
-					share: 2,
-					sku_avg: 2,
-					sku_count: 2,
-					share_promo: 2,
-					discount_avg: 2,
-					discount_max: 2,
-					price_avg: 2,
-					price_sku: 2,
+					brandId: 9,
+					brandName: 'Egoiste',
+					type: 'competitor',
+					shelfShare: {
+						value: 2,
+						type: 'percent',
+					},
+					skuAvgPerDay: 2,
+					skuCount: 2,
+					promo: {
+						value: 2,
+						type: 'percent'
+					},
+					discountAverage: {
+						value: 2,
+						type: 'percent'
+					},
+					discountMax: {
+						value: 2,
+						type: 'percent'
+					},
+					priceAvgPerGram:  {
+						value: 2,
+						type: 'rub'
+					},
+					skuAvgPrice: {
+						value: 2,
+						type: 'rub'
+					},
 				},
 				{
-					title: 'Ambassador',
-					mark: 'competitor',
-					share: 7,
-					sku_avg: 7,
-					sku_count: 7,
-					share_promo: 7,
-					discount_avg: 7,
-					discount_max: 7,
-					price_avg: 7,
-					price_sku: 7,
+					brandId: 10,
+					brandName: 'Ambassador',
+					type: 'competitor',
+					shelfShare: {
+						value: 7,
+						type: 'percent',
+					},
+					skuAvgPerDay: 7,
+					skuCount: 7,
+					promo: {
+						value: 7,
+						type: 'percent'
+					},
+					discountAverage: {
+						value: 7,
+						type: 'percent'
+					},
+					discountMax: {
+						value: 7,
+						type: 'percent'
+					},
+					priceAvgPerGram:  {
+						value: 7,
+						type: 'rub'
+					},
+					skuAvgPrice: {
+						value: 7,
+						type: 'rub'
+					},
 				},
 				{
-					title: 'Bushido',
-					mark: 'competitor',
-					share: 75,
-					sku_avg: 75,
-					sku_count: 75,
-					share_promo: 75,
-					discount_avg: 75,
-					discount_max: 75,
-					price_avg: 75,
-					price_sku: 75,
+					brandId: 11,
+					brandName: 'Bushido',
+					type: 'competitor',
+					shelfShare: {
+						value: 75,
+						type: 'percent',
+					},
+					skuAvgPerDay: 75,
+					skuCount: 75,
+					promo: {
+						value: 75,
+						type: 'percent'
+					},
+					discountAverage: {
+						value: 75,
+						type: 'percent'
+					},
+					discountMax: {
+						value: 75,
+						type: 'percent'
+					},
+					priceAvgPerGram:  {
+						value: 75,
+						type: 'rub'
+					},
+					skuAvgPrice: {
+						value: 75,
+						type: 'rub'
+					},
 				},
 			]
+		},
+		tableData() {
+			return this.list.concat(this.tableDataDefault)
 		},
 		tableOptions() {
 			return {
@@ -244,8 +441,27 @@ export default {
 				columns: this.tableColumns,
 				data: this.tableData,
 			}
-		}
-	}
+		},
+	},
+	mounted() {
+		this.fetch()
+	},
+	methods: {
+		async fetch() {
+			try {
+				const resp = await this.$api.common.getBrandList(this.id)
+				if (resp) {
+					this.list = resp
+				}
+			} catch (error) {
+				let err = error ? error.data?.message : 'Произошла ошибка, попробуйте позже'
+				this.$toast.error(err)
+			}
+		},
+		openBrand(item) {
+			this.$router.push({name: 'Category.Brand.Item', params: {id: this.id, brandId: item.brandId}})
+		},
+	},
 }
 </script>
 <style lang="scss" scoped>

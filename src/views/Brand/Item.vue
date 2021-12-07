@@ -64,10 +64,16 @@ export default {
 	},
 	data() {
 		return {
-
+			list: [],
 		}
 	},
 	computed: {
+		id() {
+			return parseInt(this.$route.params.id)
+		},
+		brandId() {
+			return parseInt(this.$route.params.id)
+		},
 		tableColumns() {
 			return [
 				{
@@ -267,7 +273,23 @@ export default {
 				data: this.tableData,
 			}
 		}
-	}
+	},
+	mounted() {
+		this.fetch()
+	},
+	methods: {
+		async fetch() {
+			try {
+				const resp = await this.$api.common.getBrandItem(this.id, this.brandId)
+				if (resp) {
+					this.list = resp
+				}
+			} catch (error) {
+				let err = error ? error.data?.message : 'Произошла ошибка, попробуйте позже'
+				this.$toast.error(err)
+			}
+		},
+	},
 }
 </script>
 <style lang="scss" scoped>

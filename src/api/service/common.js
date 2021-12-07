@@ -47,4 +47,10 @@ export default ({ get, post, put }) => ({
 	getChartComparison(chartId, categoryId) {
 		return get(`/chart/${chartId}/category/${categoryId}/brands/comparison`)
 	},
+	getBrandList(categoryId) {
+		return get(`/sku/brand/all/category/${categoryId}`)
+	},
+	getBrandItem(categoryId) {
+		return get(`/sku/brand/category/${categoryId}`)
+	}
 })
