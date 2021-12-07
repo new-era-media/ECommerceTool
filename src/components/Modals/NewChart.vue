@@ -165,7 +165,6 @@ export default {
 		async fetch() {
 			const resp = await this.$api.common.getSettingsChartList(this.id)
 			if (resp) {
-				debugger
 				this.list = resp.data.map((item) => {
 					return { ...item, value: item.selected }
 				})
