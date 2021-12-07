@@ -92,7 +92,7 @@ export default [
 								component: _import('Brand/List'),
 							},
 							{
-								path: 'item',
+								path: 'item/:brandId',
 								name: 'Category.Brand.Item',
 								component: _import('Brand/Item'),
 							},

@@ -47,8 +47,9 @@
 				SettingsIcon(:size="18")
 		.dashboard__widgets.flex.flex-wrap
 			Widget.dashboard__widget(
+				v-for="widget of widgetList"
 				:widget="widget"
-				:loading="widgetLoading"
+				:loading="widget.loading"
 				:type="widget ? widget.type : 'count'"
 				)
 			Widget.dashboard__widget(:widget="sku")
@@ -243,9 +244,8 @@ export default {
 				}
 			],
 			onboardShow: true,
-			widgetId: 'someWidgetUniqueName',
-			widget: null,
-			widgetLoading: true,
+			widgetList: [],
+			chartList: [],
 		}
 	},
 	computed: {
@@ -808,13 +808,52 @@ export default {
 		this.fetch()
 	},
 	methods: {
-		async fetch() {
+		fetch() {
+			this.fetchWidgets()
+			this.fetchCharts()
+		},
+		async fetchWidgets() {
 			try {
-				const resp = await this.$api.common.getWidgetComparison(this.widgetId, this.id)
+				const resp = await this.$api.common.getSettingsWidgetList(this.id)
 				if (resp) {
-					console.log(resp)
-					let widg = resp[0]
-					this.widget = {
+					this.widgetList = resp.data.filter((item) => item.selected).map((item) => {
+						return { ...item, loading: true }
+					})
+					const widgetResp = await Promise.allSettled(this.widgetList.map((item) => {
+						return this.$api.common.getWidgetComparison(item.id, this.id)
+					}))
+					console.log(widgetResp)
+					this.setWidgetList(widgetResp)
+				}
+			} catch (error) {
+				let err = error ? error.data?.message : 'Произошла ошибка, попробуйте позже'
+				this.$toast.error(err)
+			}
+		},
+		async fetchCharts() {
+			try {
+				const resp = await this.$api.common.getSettingsChartList(this.id)
+				if (resp) {
+					this.chartList = resp.data.filter((item) => item.selected).map((item) => {
+						return { ...item, loading: true }
+					})
+					const chartResp = await Promise.allSettled(this.chartList.map((item) => {
+						return this.$api.common.getChartComparison(item.id, this.id)
+					}))
+					console.log(chartResp)
+					this.setChartList(chartResp)
+				}
+			} catch (error) {
+				let err = error ? error.data?.message : 'Произошла ошибка, попробуйте позже'
+				this.$toast.error(err)
+			}
+		},
+		setWidgetList(widgetResp) {
+			this.widgetList = widgetResp.map((item) => {
+				let widg = item.value[0]
+				let data = null
+				if (item.status === 'fulfilled') {
+					data = {
 						title: widg.nameRu,
 						type:  widg.brandValue.type,
 						counters: {
@@ -828,15 +867,18 @@ export default {
 							other: {
 								value: widg.otherValue.value,
 							}
-						}
+						},
+					}
+				} else {
+					data = {
+						error: true
 					}
 				}
-			} catch (error) {
-				let err = error ? error.data.message : 'Произошла ошибка, попробуйте позже'
-				this.$toast.error(err)
-			} finally {
-				this.widgetLoading = false
-			}
+				return data
+			})
+		},
+		setChartList(chartResp) {
+			console.log(chartResp)
 		},
 		onboardClose() {
 			this.onboardShow = false
@@ -863,7 +905,7 @@ export default {
 			this.$modal({
 				component: 'NewChart',
 				props: {
-
+					categoryId: this.id,
 				},
 				on: {
 					cancel: () => {
