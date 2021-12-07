@@ -46,6 +46,14 @@ ModalBase.new-chart(
 						.new-chart__checkbox-title {{option.title}}
 						.new-chart__checkbox-text(v-if="option.text") {{option.text}}
 
+			.new-chart__item(v-for="item of list" :key="item.id")
+				.new-chart__item-title
+					| !!! {{ item.groupName }}
+				Radio(v-model='listModel' @input='changeOptions' :options='list')
+					template(#default="{option}")
+						.new-chart__checkbox-title {{option.name}}
+						.new-chart__checkbox-text(v-if="option.period") {{option.period}}
+
 	template(#footer)
 		Button.new-chart__save(:disabled="true" @click="addChart") Добавить график
 
@@ -58,6 +66,12 @@ import Button from '@/components/Button/Button.vue'
 
 export default {
 	components: { ModalBase, Radio, Button },
+	props: {
+		categoryId: {
+			type: Number,
+			default: 0,
+		},
+	},
 	data() {
 		return {
 			shelfShareModel: -1,
@@ -139,11 +153,24 @@ export default {
 					title: 'Количество комментариев',
 					text: 'Сейчас',
 				},
-			]
-
+			],
+			list: [],
+			listModel: -1,
 		}
 	},
+	mounted() {
+		this.fetch()
+	},
 	methods: {
+		async fetch() {
+			const resp = await this.$api.common.getSettingsChartList(this.id)
+			if (resp) {
+				debugger
+				this.list = resp.data.map((item) => {
+					return { ...item, value: item.selected }
+				})
+			}
+		},
 		close() {
 			this.$emit('close')
 		},

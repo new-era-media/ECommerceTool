@@ -35,4 +35,16 @@ export default ({ get, post, put }) => ({
 	getWidgetComparison(widgetId, categoryId) {
 		return get(`/widget/${widgetId}/category/${categoryId}/brands/comparison`)
 	},
+	getSettingsChartList(categoryId) {
+		return get(`/settings/category/${categoryId}/charts`)
+	},
+	editSettingsChartList(categoryId, params) {
+		return put(`/settings/category/${categoryId}/charts`, params)
+	},
+	getChartSpecific(chartId, categoryId) {
+		return get(`/chart/${chartId}/category/${categoryId}/brands/specific`)
+	},
+	getChartComparison(chartId, categoryId) {
+		return get(`/chart/${chartId}/category/${categoryId}/brands/comparison`)
+	},
 })
