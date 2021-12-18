@@ -118,6 +118,631 @@ export default {
 				},
 			]
 		},
+		tableDataPagination() {
+			return [
+				{
+					brandId: 12,
+					brandName: 'Черная карта1',
+					type: 'brand',
+					shelfShare: {
+						value: 5,
+						type: 'percent',
+					},
+					skuAvgPerDay: 5,
+					skuCount: 5,
+					promo: {
+						value: 5,
+						type: 'percent',
+					},
+					discountAverage: {
+						value: 5,
+						type: 'percent'
+					},
+					discountMax: {
+						value: 5,
+						type: 'percent'
+					},
+					priceAvgPerGram:  {
+						value: 5,
+						type: 'rub'
+					},
+					skuAvgPrice: {
+						value: 5,
+						type: 'rub'
+					},
+				},
+				{
+					brandId: 13,
+					brandName: 'Pauiling1',
+					type: 'brand',
+					shelfShare: {
+						value: 10,
+						type: 'percent',
+					},
+					skuAvgPerDay: 10,
+					skuCount: 10,
+					promo: {
+						value: 10,
+						type: 'percent'
+					},
+					discountAverage: {
+						value: 10,
+						type: 'percent'
+					},
+					discountMax: {
+						value: 10,
+						type: 'percent'
+					},
+					priceAvgPerGram:  {
+						value: 10,
+						type: 'rub'
+					},
+					skuAvgPrice: {
+						value: 10,
+						type: 'rub'
+					},
+				},
+				{
+					brandId: 14,
+					brandName: 'Lavazza1',
+					type: 'brand',
+					shelfShare: {
+						value: 45,
+						type: 'percent',
+					},
+					skuAvgPerDay: 45,
+					skuCount: 45,
+					promo: {
+						value: 45,
+						type: 'percent'
+					},
+					discountAverage: {
+						value: 45,
+						type: 'percent'
+					},
+					discountMax: {
+						value: 45,
+						type: 'percent'
+					},
+					priceAvgPerGram:  {
+						value: 45,
+						type: 'rub'
+					},
+					skuAvgPrice: {
+						value: 45,
+						type: 'rub'
+					},
+				},
+				{
+					brandId: 15,
+					brandName: 'Jardin1',
+					type: 'brand',
+					shelfShare: {
+						value: 1,
+						type: 'percent',
+					},
+					skuAvgPerDay: 1,
+					skuCount: 1,
+					promo: {
+						value: 1,
+						type: 'percent'
+					},
+					discountAverage: {
+						value: 1,
+						type: 'percent'
+					},
+					discountMax: {
+						value: 1,
+						type: 'percent'
+					},
+					priceAvgPerGram:  {
+						value: 1,
+						type: 'rub'
+					},
+					skuAvgPrice: {
+						value: 1,
+						type: 'rub'
+					},
+				},
+				{
+					brandId: 16,
+					brandName: 'Жоккей1',
+					type: 'brand',
+					shelfShare: {
+						value: 5,
+						type: 'percent',
+					},
+					skuAvgPerDay: 5,
+					skuCount: 5,
+					promo: {
+						value: 5,
+						type: 'percent'
+					},
+					discountAverage: {
+						value: 5,
+						type: 'percent'
+					},
+					discountMax: {
+						value: 5,
+						type: 'percent'
+					},
+					priceAvgPerGram:  {
+						value: 5,
+						type: 'rub'
+					},
+					skuAvgPrice: {
+						value: 5,
+						type: 'rub'
+					},
+				},
+				{
+					brandId: 17,
+					brandName: 'Woseba1',
+					type: 'competitor',
+					shelfShare: {
+						value: 5,
+						type: 'percent',
+					},
+					skuAvgPerDay: 5,
+					skuCount: 5,
+					promo: {
+						value: 5,
+						type: 'percent'
+					},
+					discountAverage: {
+						value: 5,
+						type: 'percent'
+					},
+					discountMax: {
+						value: 5,
+						type: 'percent'
+					},
+					priceAvgPerGram:  {
+						value: 5,
+						type: 'rub'
+					},
+					skuAvgPrice: {
+						value: 5,
+						type: 'rub'
+					},
+				},
+				{
+					brandId: 18,
+					brandName: 'Jacobs1',
+					type: 'competitor',
+					shelfShare: {
+						value: 4,
+						type: 'percent',
+					},
+					skuAvgPerDay: 4,
+					skuCount: 4,
+					promo: {
+						value: 4,
+						type: 'percent'
+					},
+					discountAverage: {
+						value: 4,
+						type: 'percent'
+					},
+					discountMax: {
+						value: 4,
+						type: 'percent'
+					},
+					priceAvgPerGram:  {
+						value: 4,
+						type: 'rub'
+					},
+					skuAvgPrice: {
+						value: 4,
+						type: 'rub'
+					},
+				},
+				{
+					brandId: 19,
+					brandName: 'Egoiste1',
+					type: 'competitor',
+					shelfShare: {
+						value: 2,
+						type: 'percent',
+					},
+					skuAvgPerDay: 2,
+					skuCount: 2,
+					promo: {
+						value: 2,
+						type: 'percent'
+					},
+					discountAverage: {
+						value: 2,
+						type: 'percent'
+					},
+					discountMax: {
+						value: 2,
+						type: 'percent'
+					},
+					priceAvgPerGram:  {
+						value: 2,
+						type: 'rub'
+					},
+					skuAvgPrice: {
+						value: 2,
+						type: 'rub'
+					},
+				},
+				{
+					brandId: 20,
+					brandName: 'Ambassador1',
+					type: 'competitor',
+					shelfShare: {
+						value: 7,
+						type: 'percent',
+					},
+					skuAvgPerDay: 7,
+					skuCount: 7,
+					promo: {
+						value: 7,
+						type: 'percent'
+					},
+					discountAverage: {
+						value: 7,
+						type: 'percent'
+					},
+					discountMax: {
+						value: 7,
+						type: 'percent'
+					},
+					priceAvgPerGram:  {
+						value: 7,
+						type: 'rub'
+					},
+					skuAvgPrice: {
+						value: 7,
+						type: 'rub'
+					},
+				},
+				{
+					brandId: 21,
+					brandName: 'Bushido1',
+					type: 'competitor',
+					shelfShare: {
+						value: 75,
+						type: 'percent',
+					},
+					skuAvgPerDay: 75,
+					skuCount: 75,
+					promo: {
+						value: 75,
+						type: 'percent'
+					},
+					discountAverage: {
+						value: 75,
+						type: 'percent'
+					},
+					discountMax: {
+						value: 75,
+						type: 'percent'
+					},
+					priceAvgPerGram:  {
+						value: 75,
+						type: 'rub'
+					},
+					skuAvgPrice: {
+						value: 75,
+						type: 'rub'
+					},
+				},
+
+				{
+					brandId: 22,
+					brandName: 'Черная карта2',
+					type: 'brand',
+					shelfShare: {
+						value: 5,
+						type: 'percent',
+					},
+					skuAvgPerDay: 5,
+					skuCount: 5,
+					promo: {
+						value: 5,
+						type: 'percent',
+					},
+					discountAverage: {
+						value: 5,
+						type: 'percent'
+					},
+					discountMax: {
+						value: 5,
+						type: 'percent'
+					},
+					priceAvgPerGram:  {
+						value: 5,
+						type: 'rub'
+					},
+					skuAvgPrice: {
+						value: 5,
+						type: 'rub'
+					},
+				},
+				{
+					brandId: 23,
+					brandName: 'Pauiling2',
+					type: 'brand',
+					shelfShare: {
+						value: 10,
+						type: 'percent',
+					},
+					skuAvgPerDay: 10,
+					skuCount: 10,
+					promo: {
+						value: 10,
+						type: 'percent'
+					},
+					discountAverage: {
+						value: 10,
+						type: 'percent'
+					},
+					discountMax: {
+						value: 10,
+						type: 'percent'
+					},
+					priceAvgPerGram:  {
+						value: 10,
+						type: 'rub'
+					},
+					skuAvgPrice: {
+						value: 10,
+						type: 'rub'
+					},
+				},
+				{
+					brandId: 24,
+					brandName: 'Lavazza2',
+					type: 'brand',
+					shelfShare: {
+						value: 45,
+						type: 'percent',
+					},
+					skuAvgPerDay: 45,
+					skuCount: 45,
+					promo: {
+						value: 45,
+						type: 'percent'
+					},
+					discountAverage: {
+						value: 45,
+						type: 'percent'
+					},
+					discountMax: {
+						value: 45,
+						type: 'percent'
+					},
+					priceAvgPerGram:  {
+						value: 45,
+						type: 'rub'
+					},
+					skuAvgPrice: {
+						value: 45,
+						type: 'rub'
+					},
+				},
+				{
+					brandId: 25,
+					brandName: 'Jardin2',
+					type: 'brand',
+					shelfShare: {
+						value: 1,
+						type: 'percent',
+					},
+					skuAvgPerDay: 1,
+					skuCount: 1,
+					promo: {
+						value: 1,
+						type: 'percent'
+					},
+					discountAverage: {
+						value: 1,
+						type: 'percent'
+					},
+					discountMax: {
+						value: 1,
+						type: 'percent'
+					},
+					priceAvgPerGram:  {
+						value: 1,
+						type: 'rub'
+					},
+					skuAvgPrice: {
+						value: 1,
+						type: 'rub'
+					},
+				},
+				{
+					brandId: 26,
+					brandName: 'Жоккей2',
+					type: 'brand',
+					shelfShare: {
+						value: 5,
+						type: 'percent',
+					},
+					skuAvgPerDay: 5,
+					skuCount: 5,
+					promo: {
+						value: 5,
+						type: 'percent'
+					},
+					discountAverage: {
+						value: 5,
+						type: 'percent'
+					},
+					discountMax: {
+						value: 5,
+						type: 'percent'
+					},
+					priceAvgPerGram:  {
+						value: 5,
+						type: 'rub'
+					},
+					skuAvgPrice: {
+						value: 5,
+						type: 'rub'
+					},
+				},
+				{
+					brandId: 27,
+					brandName: 'Woseba2',
+					type: 'competitor',
+					shelfShare: {
+						value: 5,
+						type: 'percent',
+					},
+					skuAvgPerDay: 5,
+					skuCount: 5,
+					promo: {
+						value: 5,
+						type: 'percent'
+					},
+					discountAverage: {
+						value: 5,
+						type: 'percent'
+					},
+					discountMax: {
+						value: 5,
+						type: 'percent'
+					},
+					priceAvgPerGram:  {
+						value: 5,
+						type: 'rub'
+					},
+					skuAvgPrice: {
+						value: 5,
+						type: 'rub'
+					},
+				},
+				{
+					brandId: 28,
+					brandName: 'Jacobs2',
+					type: 'competitor',
+					shelfShare: {
+						value: 4,
+						type: 'percent',
+					},
+					skuAvgPerDay: 4,
+					skuCount: 4,
+					promo: {
+						value: 4,
+						type: 'percent'
+					},
+					discountAverage: {
+						value: 4,
+						type: 'percent'
+					},
+					discountMax: {
+						value: 4,
+						type: 'percent'
+					},
+					priceAvgPerGram:  {
+						value: 4,
+						type: 'rub'
+					},
+					skuAvgPrice: {
+						value: 4,
+						type: 'rub'
+					},
+				},
+				{
+					brandId: 29,
+					brandName: 'Egoiste2',
+					type: 'competitor',
+					shelfShare: {
+						value: 2,
+						type: 'percent',
+					},
+					skuAvgPerDay: 2,
+					skuCount: 2,
+					promo: {
+						value: 2,
+						type: 'percent'
+					},
+					discountAverage: {
+						value: 2,
+						type: 'percent'
+					},
+					discountMax: {
+						value: 2,
+						type: 'percent'
+					},
+					priceAvgPerGram:  {
+						value: 2,
+						type: 'rub'
+					},
+					skuAvgPrice: {
+						value: 2,
+						type: 'rub'
+					},
+				},
+				{
+					brandId: 30,
+					brandName: 'Ambassador2',
+					type: 'competitor',
+					shelfShare: {
+						value: 7,
+						type: 'percent',
+					},
+					skuAvgPerDay: 7,
+					skuCount: 7,
+					promo: {
+						value: 7,
+						type: 'percent'
+					},
+					discountAverage: {
+						value: 7,
+						type: 'percent'
+					},
+					discountMax: {
+						value: 7,
+						type: 'percent'
+					},
+					priceAvgPerGram:  {
+						value: 7,
+						type: 'rub'
+					},
+					skuAvgPrice: {
+						value: 7,
+						type: 'rub'
+					},
+				},
+				{
+					brandId: 31,
+					brandName: 'Bushido2',
+					type: 'competitor',
+					shelfShare: {
+						value: 75,
+						type: 'percent',
+					},
+					skuAvgPerDay: 75,
+					skuCount: 75,
+					promo: {
+						value: 75,
+						type: 'percent'
+					},
+					discountAverage: {
+						value: 75,
+						type: 'percent'
+					},
+					discountMax: {
+						value: 75,
+						type: 'percent'
+					},
+					priceAvgPerGram:  {
+						value: 75,
+						type: 'rub'
+					},
+					skuAvgPrice: {
+						value: 75,
+						type: 'rub'
+					},
+				},
+			]
+		},
 		tableDataDefault() {
 			return [
 				{
@@ -444,14 +1069,18 @@ export default {
 		},
 	},
 	mounted() {
+		window.addEventListener('scroll', this.handleScroll)
 		this.fetch()
+	},
+	destroyed: function () {
+		window.removeEventListener('scroll', this.handleScroll)
 	},
 	methods: {
 		async fetch() {
 			try {
 				const resp = await this.$api.common.getBrandList(this.id)
 				if (resp) {
-					this.list = resp
+					this.list = this.list.concat(resp, this.tableDataPagination)
 				}
 			} catch (error) {
 				let err = error ? error.data?.message : 'Произошла ошибка, попробуйте позже'
@@ -460,6 +1089,13 @@ export default {
 		},
 		openBrand(item) {
 			this.$router.push({name: 'Category.Brand.Item', params: {id: this.id, brandId: item.brandId}})
+		},
+		handleScroll() {
+			let offsetHeight = document.documentElement.offsetHeight
+			let scrollTop = document.documentElement.scrollTop + window.innerHeight
+			if (scrollTop >= offsetHeight) {
+				this.fetch()
+			}
 		},
 	},
 }

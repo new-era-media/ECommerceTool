@@ -19,7 +19,7 @@
 									:label="item.name"
 									:value="item.value"
 									:disabled="item.disabled"
-									@change="change(item)"
+									@change="changeHandler(item)"
 								)
 					template(v-else)
 						.flex.category-filter__not-found.items-center
@@ -28,7 +28,7 @@
 		.category-filter__chosen.flex.flex-wrap.items-center
 			.category-filter__chosen-item.flex(v-for="item in checkedOptions" :key="item.name")
 				.category-filter__chosen-label {{item.name}}
-				.category-filter__chosen-remove(@click="removeItem(item)")
+				.category-filter__chosen-remove(@click="changeHandler(item, 'remove')")
 	template(v-else)
 		.category-filter__empty
 			| {{filter.empty}}
@@ -82,25 +82,19 @@ export default {
 		}
 	},
 	methods: {
-		change(item) {
-			let index = this.filterOptions.findIndex((el) => el.name === item.name)
-			let newItem = {
-				name: item.name,
-				value: !item.value,
-				id: item.id,
-				disabled: item.disabled,
-			}
+		getIndex(item, filtered = true) {
+			let array = filtered ? this.filterOptions : this.options
+			return array.findIndex((el) => el.name === item.name)
+		},
+		changeHandler(item, type = 'change') {
+			let isChange = type === 'change'
+			let index = this.getIndex(item, isChange)
+			let newVal = isChange ? !item.value : false
+
+			let newItem = { ...item, value: newVal }
 			this.$set(this.options, index, newItem)
 			this.$emit('change', {filter: this.filter, checked: this.checkedOptions, item: newItem})
 		},
-		removeItem(item) {
-			let index = this.filterOptions.findIndex((el) => el.name === item.name)
-			let newItem = {
-				name: item.name,
-				value: false,
-			}
-			this.$set(this.options, index, newItem)
-		}
 	}
 }
 </script>

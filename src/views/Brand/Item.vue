@@ -1,6 +1,6 @@
 <template lang="pug">
 .brand
-	Menu(title="Jardin")
+	Menu(:title="brandTitle")
 	.container
 		Table.brand__table(v-bind="tableOptions")
 			template(#availabilityIcon)
@@ -17,15 +17,15 @@
 							CommentIcon(:size="18")
 					| Комментарии
 			template(#retailer="{item, index}")
-				.brand__item-retailer {{item.retailer}}
+				.brand__item-retailer {{item.retailerName}}
 			template(#title="{item, index}")
-				.brand__item-title {{item.title}}
+				.brand__item-title {{item.skuName}}
 			template(#availability="{item, index}")
-				.brand__item-availability(v-if="typeof(item.availability) !== 'undefined'")
-					Tooltip(v-if="item.availability" type="dark" placement="bottom")
+				.brand__item-availability(v-if="typeof(item.isRetailerHasSku) !== 'undefined'")
+					Tooltip(v-if="item.isRetailerHasSku" type="dark" placement="bottom")
 						template(#reference)
 							.brand__icon
-								CheckIcon(v-if="item.availability" :size="18")
+								CheckIcon(v-if="item.isRetailerHasSku" :size="18")
 						| В наличии
 
 					Tooltip(v-else type="dark" placement="bottom")
@@ -64,6 +64,7 @@ export default {
 	},
 	data() {
 		return {
+			brandTitle: '',
 			list: [],
 		}
 	},
@@ -72,7 +73,7 @@ export default {
 			return parseInt(this.$route.params.id)
 		},
 		brandId() {
-			return parseInt(this.$route.params.id)
+			return parseInt(this.$route.params.brandId)
 		},
 		tableColumns() {
 			return [
@@ -98,7 +99,7 @@ export default {
 					width: 70,
 					alignRight: true,
 					value: item => {
-						return item.position
+						return item.rank
 					}
 				},
 				{
@@ -106,7 +107,7 @@ export default {
 					width: 70,
 					alignRight: true,
 					value: item => {
-						return `${this.$utils.formatNumber(item.price)}₽`
+						return `${this.$utils.formatNumber(item.priceBeforeDiscount.value)}₽`
 					}
 				},
 				{
@@ -114,7 +115,7 @@ export default {
 					width: 80,
 					alignRight: true,
 					value: item => {
-						return `${this.$utils.formatNumber(item.price_discount)}₽`
+						return `${this.$utils.formatNumber(item.priceAfterDiscount.value)}₽`
 					}
 				},
 				{
@@ -122,7 +123,7 @@ export default {
 					width: 60,
 					alignRight: true,
 					value: item => {
-						return `${item.discount_avg}%`
+						return `${item.discountAvg.value}%`
 					}
 				},
 				{
@@ -130,7 +131,7 @@ export default {
 					width: 60,
 					alignRight: true,
 					value: item => {
-						return `${item.discount_max}%`
+						return `${item.discountMax.value}%`
 					}
 				},
 				{
@@ -138,7 +139,7 @@ export default {
 					width: 60,
 					alignRight: true,
 					value: item => {
-						return `${this.$utils.formatNumber(item.price_per)}₽`
+						return `${this.$utils.formatNumber(item.pricePerGram.value)}₽`
 					}
 				},
 				{
@@ -146,7 +147,7 @@ export default {
 					width: 60,
 					alignRight: true,
 					value: item => {
-						return item.rating
+						return item.rating.value
 					}
 				},
 				{
@@ -155,116 +156,513 @@ export default {
 					width: 30,
 					alignRight: true,
 					value: item => {
-						return item.comments
+						return item.commentCount
 					}
 				},
 			]
 		},
-		tableData() {
+		tableDataPagination() {
 			return [
 				{
-					retailer: 'Ozon',
-					title: 'Холодильник Bosch далее очень очень длинное название',
-					availability: true,
-					position: 5,
-					price: 31145,
-					price_discount: 30425,
-					price_per: 34235,
-					discount_avg: 5,
-					discount_max: 15,
-					rating: 5,
-					comments: 5,
+					retailerName: 'Ozon 1',
+					skuName: 'Холодильник Bosch далее очень очень длинное название',
+					isRetailerHasSku: true,
+					rank: 5,
+					priceBeforeDiscount: {
+						type: 'percent',
+						value: 31145,
+					},
+					priceAfterDiscount: {
+						type: 'percent',
+						value: 30425,
+					},
+					pricePerGram: {
+						type: 'percent',
+						value: 34235,
+					},
+					discountAvg: {
+						type: 'percent',
+						value: 5,
+					},
+					discountMax:  {
+						type: 'percent',
+						value: 15,
+					},
+					rating: {
+						type: 'percent',
+						value: 5,
+					},
+					commentCount: 5,
 				},
 				{
-					retailer: 'М.Видео',
-					title: 'Холодильник Bosch далее очень очень длинное название',
-					availability: false,
-					position: 5,
-					price: 31145,
-					price_discount: 30425,
-					price_per: 34235,
-					discount_avg: 5,
-					discount_max: 15,
-					rating: 5,
-					comments: 5,
+					retailerName: 'М.Видео 1',
+					skuName: 'Холодильник Bosch далее очень очень длинное название',
+					isRetailerHasSku: false,
+					rank: 5,
+					priceBeforeDiscount: {
+						type: 'percent',
+						value: 31145,
+					},
+					priceAfterDiscount: {
+						type: 'percent',
+						value: 30425,
+					},
+					pricePerGram: {
+						type: 'percent',
+						value: 34235,
+					},
+					discountAvg: {
+						type: 'percent',
+						value: 5,
+					},
+					discountMax:  {
+						type: 'percent',
+						value: 15,
+					},
+					rating: {
+						type: 'percent',
+						value: 5,
+					},
+					commentCount: 5,
 				},
 				{
-					retailer: 'Сбер М.',
-					title: 'Холодильник Bosch далее очень очень длинное название',
-					position: 5,
-					price: 31145,
-					price_discount: 30425,
-					price_per: 34235,
-					discount_avg: 5,
-					discount_max: 15,
-					rating: 5,
-					comments: 5,
+					retailerName: 'Сбер М. 1',
+					skuName: 'Холодильник Bosch далее очень очень длинное название',
+					rank: 5,
+					priceBeforeDiscount: {
+						type: 'percent',
+						value: 31145,
+					},
+					priceAfterDiscount: {
+						type: 'percent',
+						value: 30425,
+					},
+					pricePerGram: {
+						type: 'percent',
+						value: 34235,
+					},
+					discountAvg: {
+						type: 'percent',
+						value: 5,
+					},
+					discountMax:  {
+						type: 'percent',
+						value: 15,
+					},
+					rating: {
+						type: 'percent',
+						value: 5,
+					},
+					commentCount: 5,
 				},
 				{
-					retailer: 'Эльдорадо',
-					title: 'Холодильник Bosch далее очень очень длинное название',
-					availability: true,
-					position: 5,
-					price: 31145,
-					price_discount: 30425,
-					price_per: 34235,
-					discount_avg: 5,
-					discount_max: 15,
-					rating: 5,
-					comments: 5,
+					retailerName: 'Эльдорадо 1',
+					skuName: 'Холодильник Bosch далее очень очень длинное название',
+					isRetailerHasSku: true,
+					rank: 5,
+					priceBeforeDiscount: {
+						type: 'percent',
+						value: 31145,
+					},
+					priceAfterDiscount: {
+						type: 'percent',
+						value: 30425,
+					},
+					pricePerGram: {
+						type: 'percent',
+						value: 34235,
+					},
+					discountAvg: {
+						type: 'percent',
+						value: 5,
+					},
+					discountMax:  {
+						type: 'percent',
+						value: 15,
+					},
+					rating: {
+						type: 'percent',
+						value: 5,
+					},
+					commentCount: 5,
 				},
 				{
-					retailer: 'Азбука вкуса',
-					title: 'Холодильник Bosch далее очень очень длинное название',
-					availability: false,
-					position: 5,
-					price: 31145,
-					price_discount: 30425,
-					price_per: 34235,
-					discount_avg: 5,
-					discount_max: 15,
-					rating: 5,
-					comments: 5,
+					retailerName: 'Азбука вкуса 1',
+					skuName: 'Холодильник Bosch далее очень очень длинное название',
+					isRetailerHasSku: false,
+					rank: 5,
+					priceBeforeDiscount: {
+						type: 'percent',
+						value: 31145,
+					},
+					priceAfterDiscount: {
+						type: 'percent',
+						value: 30425,
+					},
+					pricePerGram: {
+						type: 'percent',
+						value: 34235,
+					},
+					discountAvg: {
+						type: 'percent',
+						value: 5,
+					},
+					discountMax:  {
+						type: 'percent',
+						value: 15,
+					},
+					rating: {
+						type: 'percent',
+						value: 5,
+					},
+					commentCount: 5,
 				},
 				{
-					retailer: 'Онлайн трейд',
-					title: 'Холодильник Bosch далее очень очень длинное название',
-					availability: true,
-					position: 5,
-					price: 31145,
-					price_discount: 30425,
-					price_per: 34235,
-					discount_avg: 5,
-					discount_max: 15,
-					rating: 5,
-					comments: 5,
+					retailerName: 'Онлайн трейд 1',
+					skuName: 'Холодильник Bosch далее очень очень длинное название',
+					isRetailerHasSku: true,
+					rank: 5,
+					priceBeforeDiscount: {
+						type: 'percent',
+						value: 31145,
+					},
+					priceAfterDiscount: {
+						type: 'percent',
+						value: 30425,
+					},
+					pricePerGram: {
+						type: 'percent',
+						value: 34235,
+					},
+					discountAvg: {
+						type: 'percent',
+						value: 5,
+					},
+					discountMax:  {
+						type: 'percent',
+						value: 15,
+					},
+					rating: {
+						type: 'percent',
+						value: 5,
+					},
+					commentCount: 5,
 				},
 				{
-					retailer: 'Ozon',
-					title: 'Холодильник Bosch xf17',
-					availability: false,
-					position: 5,
-					price: 31145,
-					price_discount: 30425,
-					price_per: 34235,
-					discount_avg: 5,
-					discount_max: 15,
-					rating: 5,
-					comments: 5,
+					retailerName: 'Ozon 1',
+					skuName: 'Холодильник Bosch xf17',
+					isRetailerHasSku: false,
+					rank: 5,
+					priceBeforeDiscount: {
+						type: 'percent',
+						value: 31145,
+					},
+					priceAfterDiscount: {
+						type: 'percent',
+						value: 30425,
+					},
+					pricePerGram: {
+						type: 'percent',
+						value: 34235,
+					},
+					discountAvg: {
+						type: 'percent',
+						value: 5,
+					},
+					discountMax:  {
+						type: 'percent',
+						value: 15,
+					},
+					rating: {
+						type: 'percent',
+						value: 5,
+					},
+					commentCount: 5,
 				},
 				{
-					retailer: 'Ozon',
-					title: 'Холодильник Bosch',
-					position: 5,
-					price: 31145,
-					price_discount: 30425,
-					price_per: 34235,
-					discount_avg: 5,
-					discount_max: 15,
-					rating: 5,
-					comments: 5,
+					retailerName: 'Ozon 1',
+					skuName: 'Холодильник Bosch',
+					rank: 5,
+					priceBeforeDiscount: {
+						type: 'percent',
+						value: 31145,
+					},
+					priceAfterDiscount: {
+						type: 'percent',
+						value: 30425,
+					},
+					pricePerGram: {
+						type: 'percent',
+						value: 34235,
+					},
+					discountAvg: {
+						type: 'percent',
+						value: 5,
+					},
+					discountMax:  {
+						type: 'percent',
+						value: 15,
+					},
+					rating: {
+						type: 'percent',
+						value: 5,
+					},
+					commentCount: 5,
 				},
 			]
+		},
+		tableDataDefault() {
+			return [
+				{
+					retailerName: 'Ozon',
+					skuName: 'Холодильник Bosch далее очень очень длинное название',
+					isRetailerHasSku: true,
+					rank: 5,
+					priceBeforeDiscount: {
+						type: 'percent',
+						value: 31145,
+					},
+					priceAfterDiscount: {
+						type: 'percent',
+						value: 30425,
+					},
+					pricePerGram: {
+						type: 'percent',
+						value: 34235,
+					},
+					discountAvg: {
+						type: 'percent',
+						value: 5,
+					},
+					discountMax:  {
+						type: 'percent',
+						value: 15,
+					},
+					rating: {
+						type: 'percent',
+						value: 5,
+					},
+					commentCount: 5,
+				},
+				{
+					retailerName: 'М.Видео',
+					skuName: 'Холодильник Bosch далее очень очень длинное название',
+					isRetailerHasSku: false,
+					rank: 5,
+					priceBeforeDiscount: {
+						type: 'percent',
+						value: 31145,
+					},
+					priceAfterDiscount: {
+						type: 'percent',
+						value: 30425,
+					},
+					pricePerGram: {
+						type: 'percent',
+						value: 34235,
+					},
+					discountAvg: {
+						type: 'percent',
+						value: 5,
+					},
+					discountMax:  {
+						type: 'percent',
+						value: 15,
+					},
+					rating: {
+						type: 'percent',
+						value: 5,
+					},
+					commentCount: 5,
+				},
+				{
+					retailerName: 'Сбер М.',
+					skuName: 'Холодильник Bosch далее очень очень длинное название',
+					rank: 5,
+					priceBeforeDiscount: {
+						type: 'percent',
+						value: 31145,
+					},
+					priceAfterDiscount: {
+						type: 'percent',
+						value: 30425,
+					},
+					pricePerGram: {
+						type: 'percent',
+						value: 34235,
+					},
+					discountAvg: {
+						type: 'percent',
+						value: 5,
+					},
+					discountMax:  {
+						type: 'percent',
+						value: 15,
+					},
+					rating: {
+						type: 'percent',
+						value: 5,
+					},
+					commentCount: 5,
+				},
+				{
+					retailerName: 'Эльдорадо',
+					skuName: 'Холодильник Bosch далее очень очень длинное название',
+					isRetailerHasSku: true,
+					rank: 5,
+					priceBeforeDiscount: {
+						type: 'percent',
+						value: 31145,
+					},
+					priceAfterDiscount: {
+						type: 'percent',
+						value: 30425,
+					},
+					pricePerGram: {
+						type: 'percent',
+						value: 34235,
+					},
+					discountAvg: {
+						type: 'percent',
+						value: 5,
+					},
+					discountMax:  {
+						type: 'percent',
+						value: 15,
+					},
+					rating: {
+						type: 'percent',
+						value: 5,
+					},
+					commentCount: 5,
+				},
+				{
+					retailerName: 'Азбука вкуса',
+					skuName: 'Холодильник Bosch далее очень очень длинное название',
+					isRetailerHasSku: false,
+					rank: 5,
+					priceBeforeDiscount: {
+						type: 'percent',
+						value: 31145,
+					},
+					priceAfterDiscount: {
+						type: 'percent',
+						value: 30425,
+					},
+					pricePerGram: {
+						type: 'percent',
+						value: 34235,
+					},
+					discountAvg: {
+						type: 'percent',
+						value: 5,
+					},
+					discountMax:  {
+						type: 'percent',
+						value: 15,
+					},
+					rating: {
+						type: 'percent',
+						value: 5,
+					},
+					commentCount: 5,
+				},
+				{
+					retailerName: 'Онлайн трейд',
+					skuName: 'Холодильник Bosch далее очень очень длинное название',
+					isRetailerHasSku: true,
+					rank: 5,
+					priceBeforeDiscount: {
+						type: 'percent',
+						value: 31145,
+					},
+					priceAfterDiscount: {
+						type: 'percent',
+						value: 30425,
+					},
+					pricePerGram: {
+						type: 'percent',
+						value: 34235,
+					},
+					discountAvg: {
+						type: 'percent',
+						value: 5,
+					},
+					discountMax:  {
+						type: 'percent',
+						value: 15,
+					},
+					rating: {
+						type: 'percent',
+						value: 5,
+					},
+					commentCount: 5,
+				},
+				{
+					retailerName: 'Ozon',
+					skuName: 'Холодильник Bosch xf17',
+					isRetailerHasSku: false,
+					rank: 5,
+					priceBeforeDiscount: {
+						type: 'percent',
+						value: 31145,
+					},
+					priceAfterDiscount: {
+						type: 'percent',
+						value: 30425,
+					},
+					pricePerGram: {
+						type: 'percent',
+						value: 34235,
+					},
+					discountAvg: {
+						type: 'percent',
+						value: 5,
+					},
+					discountMax:  {
+						type: 'percent',
+						value: 15,
+					},
+					rating: {
+						type: 'percent',
+						value: 5,
+					},
+					commentCount: 5,
+				},
+				{
+					retailerName: 'Ozon',
+					skuName: 'Холодильник Bosch',
+					rank: 5,
+					priceBeforeDiscount: {
+						type: 'percent',
+						value: 31145,
+					},
+					priceAfterDiscount: {
+						type: 'percent',
+						value: 30425,
+					},
+					pricePerGram: {
+						type: 'percent',
+						value: 34235,
+					},
+					discountAvg: {
+						type: 'percent',
+						value: 5,
+					},
+					discountMax:  {
+						type: 'percent',
+						value: 15,
+					},
+					rating: {
+						type: 'percent',
+						value: 5,
+					},
+					commentCount: 5,
+				},
+			]
+		},
+		tableData() {
+			return this.list.concat(this.tableDataDefault)
 		},
 		tableOptions() {
 			return {
@@ -275,18 +673,36 @@ export default {
 		}
 	},
 	mounted() {
+		window.addEventListener('scroll', this.handleScroll)
 		this.fetch()
+	},
+	destroyed: function () {
+		window.removeEventListener('scroll', this.handleScroll)
 	},
 	methods: {
 		async fetch() {
 			try {
-				const resp = await this.$api.common.getBrandItem(this.id, this.brandId)
+				const [ brands, resp ] = await Promise.all([
+						this.$api.common.getBrandList(this.id),
+						this.$api.common.getBrandItem(this.id, this.brandId)
+					])
+				if (brands.length) {
+					let brand = brands.find((item) => item.brandId === this.brandId)
+					this.brandTitle = brand ? brand.brandName : ''
+				}
 				if (resp) {
-					this.list = resp
+					this.list = this.list.concat(resp, this.tableDataPagination)
 				}
 			} catch (error) {
 				let err = error ? error.data?.message : 'Произошла ошибка, попробуйте позже'
 				this.$toast.error(err)
+			}
+		},
+		handleScroll() {
+			let offsetHeight = document.documentElement.offsetHeight
+			let scrollTop = document.documentElement.scrollTop + window.innerHeight
+			if (scrollTop >= offsetHeight) {
+				this.fetch()
 			}
 		},
 	},
