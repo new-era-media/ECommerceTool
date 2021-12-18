@@ -40,6 +40,7 @@ import Input from '@/components/Elements/Input.vue'
 import InputPassword from '@/components/Elements/InputPassword.vue'
 import Button from '@/components/Button/Button.vue'
 // import VueRecaptcha from 'vue-recaptcha'
+import { mapActions } from 'vuex'
 
 export default {
 	components: {
@@ -63,6 +64,7 @@ export default {
 		}
 	},
 	methods: {
+		...mapActions('app', ['login']),
 		validate() {
 			this.$refs.recaptcha.execute()
 		},
@@ -71,10 +73,8 @@ export default {
 			try {
 				// let params = { ...this.form, recaptchaToken}
 				let params = this.form
-				let { token } = await this.$api.common.login(params)
-				if (token) {
-					localStorage.setItem('userToken', token)
-					// this.$router.push({name: 'Welcome'})
+				let { success } = await this.login(params)
+				if (success) {
 					location.href = '/welcome'
 				}
 			} catch (error) {

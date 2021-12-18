@@ -5,42 +5,38 @@
 		template(#title)
 			.flex.items-baseline
 				| {{title}}
-				.profile__email client@mail.ru
+				.profile__email {{ email }}
 
 		nav.profile__nav.flex
 			.profile__nav-item(@click="change('name')") Изменить имя
 			.profile__nav-item(@click="change('pass')") Сменить пароль
 			.profile__nav-item.--logout(@click="logout") Выйти
 	.profile__list.container.flex.items-start
-		.profile__card.profile__rate
+		.profile__card.profile__rate(v-if="tariff")
 			.flex.justify-between
 				div
 					span.profile__sub Тариф
-					| Базовый
+					| {{ tariff.name }}
 				.color-violet
 					| Все тарифы
 			div
 				.profile__subtitle Описание пакета
-				.profile__item - Сбор ключевых метрик
-				.profile__item - Sell out
-				.profile__item - Настройка виджетов под клиента
-				.profile__item - 15+ маркетплейсов
-				.profile__item - Ретроданные
-				.profile__item - Категорийная выдача
-				.profile__item - Поисковая выдача
+				.profile__item(v-for="(item, index) in tariff.description" :key="`tariff-${index}`")
+					| - {{ item }}
+
 		.profile__card.profile__geo
 			div
 				span.profile__sub Гео
-				| Москва
+				| {{ geo }}
 			div
 				.profile__subtitle Категории
-				.profile__item - Кофе в зернах
-				.profile__item - Макароны
-				.profile__item - Детское питание
+				.profile__item(v-for="(item, index) of category" :key="`category-${index}`")
+					| - {{ item }}
 </template>
 <script>
 import Header from '@/components/Layout/Header.vue'
 import Menu from '@/components/Menu/Menu.vue'
+import { mapActions } from 'vuex'
 
 export default {
 	components: {
@@ -49,16 +45,39 @@ export default {
 	},
 	data() {
 		return {
-			title: 'Иванов И • Клиент'
+			title: '',
+			email: '',
+			tariff: null,
+			geo: '',
+			category: null,
 		}
 	},
+	mounted() {
+		this.fetch()
+	},
 	methods: {
+		...mapActions('app', ['logout']),
+		async fetch() {
+			try {
+				const resp = await this.$api.common.getUserInfo()
+				if (resp) {
+					this.title = `${resp.name} • Клиент`
+					this.email = resp.email
+					this.geo = resp.geo
+					this.category = resp.categoryList
+					this.tariff = {
+						name: resp.tariffName,
+						description: resp.tariffDescription,
+					}
+				}
+			} catch (error) {
+				let err = error ? error.data?.message : 'Произошла ошибка, попробуйте позже'
+				this.$toast.error(err)
+			}
+		},
 		change(item) {
 			console.log('change', item)
 		},
-		logout() {
-			console.log('logout')
-		}
 	}
 }
 </script>

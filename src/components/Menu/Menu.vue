@@ -19,7 +19,7 @@ export default {
 <style lang="scss" scoped>
 .menu {
 	width: 100%;
-	min-heiight: 56px;
+	min-height: 56px;
 	padding: 12px 24px;
 	background-color: color(gray-800);
 
