@@ -82,9 +82,15 @@ export default {
 		}
 	},
 	methods: {
+		getIndex(item, filtered = true) {
+			let array = filtered ? this.filterOptions : this.options
+			return array.findIndex((el) => el.name === item.name)
+		},
 		changeHandler(item, type = 'change') {
-			let index = this.filterOptions.findIndex((el) => el.name === item.name)
-			let newVal = type === 'change' ? !item.value : false
+			let isChange = type === 'change'
+			let index = this.getIndex(item, isChange)
+			let newVal = isChange ? !item.value : false
+
 			let newItem = { ...item, value: newVal }
 			this.$set(this.options, index, newItem)
 			this.$emit('change', {filter: this.filter, checked: this.checkedOptions, item: newItem})
