@@ -19,6 +19,26 @@ export default {
 		}
 	},
 	actions: {
+		async login({ commit }, params) {
+			const { token } = await api.common.login(params)
+			if (token) {
+				localStorage.setItem('userToken', token)
+				commit('setToken', token)
+				return { success: true }
+			} else {
+				return { success: false }
+			}
+		},
+		async logout() {
+			localStorage.removeItem('userToken')
+			location.href = '/'
+		},
+		async fetchUser({ commit }) {
+			const user = await api.common.getUserInfo()
+			if (user) {
+				commit('setUser', user)
+			}
+		},
 		// eslint-disable-next-line no-unused-vars
 		async prepare({ state, dispatch, commit }) {
 			// try  {
