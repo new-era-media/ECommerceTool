@@ -76,6 +76,12 @@ export default {
 			}
 		},
 		change(item) {
+			this.$modal({
+				component: 'Personal',
+				props: {
+
+				},
+			})
 			console.log('change', item)
 		},
 	}

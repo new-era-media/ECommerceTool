@@ -38,7 +38,12 @@ import Radio from '@/components/Elements/Radio.vue'
 import Button from '@/components/Button/Button.vue'
 
 export default {
-	components: { ModalBase, Textarea, Radio, Button },
+	components: {
+		ModalBase,
+		Textarea,
+		Radio,
+		Button
+	},
 	data() {
 		return {
 			reason: 0,
