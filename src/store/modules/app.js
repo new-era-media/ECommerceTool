@@ -29,9 +29,9 @@ export default {
 				return { success: false }
 			}
 		},
-		async logout({ commit }, silent = false) {
+		async logout({ commit }, obj) {
 			localStorage.removeItem('userToken')
-			if (!silent) {
+			if (!obj.silent) {
 				location.href = '/'
 			}
 			commit('setUser', null)

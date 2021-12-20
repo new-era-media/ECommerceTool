@@ -26,7 +26,7 @@ export default {
 		SignInForm
 	},
 	mounted() {
-		this.logout(true)
+		this.logout({ silent: true })
 	},
 	methods: {
 		...mapActions('app', ['logout']),
