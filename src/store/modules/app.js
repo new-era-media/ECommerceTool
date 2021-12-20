@@ -29,9 +29,12 @@ export default {
 				return { success: false }
 			}
 		},
-		async logout() {
+		async logout({ commit }, silent = false) {
 			localStorage.removeItem('userToken')
-			location.href = '/'
+			if (!silent) {
+				location.href = '/'
+			}
+			commit('setUser', null)
 		},
 		async fetchUser({ commit }) {
 			const user = await api.common.getUserInfo()

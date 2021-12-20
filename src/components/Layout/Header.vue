@@ -21,6 +21,8 @@ import Button from '@/components/Button/Button.vue'
 import Link from '@/components/Link/Link.vue'
 import Profile from '@/components/Profile/Profile.vue'
 
+import { mapActions } from 'vuex'
+
 export default {
 	components: { Button, Link, Profile },
 	props: {
@@ -39,9 +41,7 @@ export default {
 		}
 	},
 	methods: {
-		logout() {
-			console.log('logout')
-		}
+		...mapActions('app', ['logout']),
 	}
 }
 </script>
