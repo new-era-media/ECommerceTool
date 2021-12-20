@@ -14,7 +14,7 @@
 import Button from '@/components/Button/Button.vue'
 import Link from '@/components/Link/Link.vue'
 
-import { mapState } from 'vuex'
+import {mapActions, mapState} from 'vuex'
 
 export default {
 	components: { Button, Link },
@@ -27,10 +27,7 @@ export default {
 		...mapState('app', ['user']),
 	},
 	methods: {
-		logout() {
-			console.log('logout')
-		}
-
+		...mapActions('app', ['logout']),
 	},
 }
 </script>

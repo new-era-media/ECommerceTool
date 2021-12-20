@@ -33,6 +33,9 @@ export default new class Api {
 
 				return response.data
 			}, error => {
+				if (error.response.status === 401) {
+					location.href = '/signin'
+				}
 				return Promise.reject(error.response)
 			})
 		})

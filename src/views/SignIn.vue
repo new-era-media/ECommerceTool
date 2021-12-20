@@ -15,6 +15,8 @@ import WelcomePage from '@/components/WelcomePage/WelcomePage.vue'
 import EllipseItem from '@/components/Elements/EllipseItem.vue'
 import SignInForm from '@/components/SignInForm/SignInForm.vue'
 
+import { mapActions } from 'vuex'
+
 export default {
 	components: {
 		Button,
@@ -22,6 +24,12 @@ export default {
 		WelcomePage,
 		EllipseItem,
 		SignInForm
+	},
+	mounted() {
+		this.logout(true)
+	},
+	methods: {
+		...mapActions('app', ['logout']),
 	},
 }
 </script>
