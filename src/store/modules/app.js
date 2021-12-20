@@ -44,14 +44,17 @@ export default {
 		},
 		// eslint-disable-next-line no-unused-vars
 		async prepare({ state, dispatch, commit }) {
-			// try  {
-			// 	const user = await api.common.getUserInfo()
-			// 	commit('setUser', user)
-			// } catch (error) {
-			// 	if (error?.code === 401) {
-			// 		localStorage.removeItem('userToken')
-			// 	}
-			// }
+			try  {
+				this._vm.$progress.start()
+				const user = await api.common.getUserInfo()
+				commit('setUser', user)
+				this._vm.$progress.stop()
+			} catch (error) {
+				if (error?.code === 401) {
+					localStorage.removeItem('userToken')
+				}
+				this._vm.$progress.fail()
+			}
 		},
 	},
 }

@@ -3,13 +3,15 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import Api from './api'
+import VueBus from 'vue-bus'
 import 'vue-toastification/dist/index.css'
 
-// pluguins
+// plugins
 import Skelenton from 'vue-loading-skeleton'
 import VCalendar from 'v-calendar'
 import Toast from 'vue-toastification'
 
+Vue.use(VueBus)
 Vue.use(Api)
 
 Vue.use(Skelenton)
@@ -26,13 +28,15 @@ Vue.config.productionTip = false
 import '@/plugins/modal'
 
 (async () => {
-	await store.dispatch('app/prepare')
+
 
 	let app = new Vue({
 		router,
 		store,
 		render: h => h(App),
 	}).$mount('#app')
+
+	await store.dispatch('app/prepare')
 
 	global.vm = app
 	Vue.config.devtools = true

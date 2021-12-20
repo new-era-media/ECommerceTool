@@ -1,15 +1,20 @@
 <template lang="pug">
 	#app
+		ProgressBar
 		RouterView
 		ModalService
 </template>
 
 <script>
+import ProgressBar from '@/components/Elements/ProgressBar'
 import ModalService from '@/components/Layout/ModalService.vue'
 
 export default {
 	name: 'App',
-	components: { ModalService }
+	components: {
+		ProgressBar,
+		ModalService,
+	},
 }
 </script>
 
