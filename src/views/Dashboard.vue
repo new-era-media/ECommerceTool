@@ -2,58 +2,51 @@
 .dashboard
 	Menu(title="Дашборд")
 		nav.dashboard__nav.flex.items-center
-			.dashboard__nav-item Наши бренды
-			.dashboard__nav-item Близкие конкуренты
-			.dashboard__nav-item Другие бренды
-			.dashboard__nav-item Ритейлеры
+			.dashboard__nav-item(
+				v-for="item in settingTabs"
+				:key="item.id"
+				@click="changeSettingTabs(item)"
+			)
+				| {{ item.title }}
 			.dashboard__nav-item
 				Tooltip(trigger="clickToToggle")
 					template(slot="reference")
-						div 16 мар. 2021 – 23 мар. 2021
-					Period
+						div {{ getDateStr }}
+					Period(:date="date")
 
 	.dashboard__wrap.container
 		.dashboard__section.flex.justify-between.items-center
 			.flex.items-center
 				.dashboard__title Данные у ритейлеров
 				.dashboard__tabs.flex
-					.dashboard__tab-item.flex.items-center.--active
-						ComparisonIcon
-						.dashboard__tab-label Сравнение
-					.dashboard__tab-item.flex.items-center
-						MarkItem(color="blue")
-						.dashboard__tab-label Наши бренды
-					.dashboard__tab-item.flex.items-center
-						MarkItem(color="orange")
-						.dashboard__tab-label Близкие конкуренты
-					.dashboard__tab-item.flex.items-center
-						MarkItem(color="gray")
-						.dashboard__tab-label Другие бренды категории
-				//Tabs.dashboard__tabs
-					TabItem(title="Сравнение")
-						.dashboard__tab-header
-							| Сравнение 1
-					TabItem(title="Наши бренды")
-						.dashboard__tab-header
-							| Наши бренды 1
-					TabItem(title="Близкие конкуренты")
-						.dashboard__tab-header
-							| Близкие конкуренты 1
-					TabItem(title="Другие бренды категории")
-						.dashboard__tab-header
-							| Другие бренды категории 1
-
+					.dashboard__tab-item.flex.items-center(
+						v-for="item in tabs"
+						:key="item.id"
+						@click="changeTab(item)"
+						:class="{'--active': source === item.slug}"
+					)
+						ComparisonIcon(v-if="item.slug === 'all'")
+						MarkItem(v-else :color="item.color")
+						.dashboard__tab-label {{ item.title }}
 			Button.dashboard__settings(type="violet-outline" size="sm" @click="settings")
 				SettingsIcon(:size="18")
 		.dashboard__widgets.flex.flex-wrap
-			Widget.dashboard__widget(
-				v-for="widget of widgetList"
-				:widget="widget"
-				:loading="widget.loading"
-				:type="widget ? widget.type : 'count'"
+			template(v-if="source === 'all'")
+				Widget.dashboard__widget(
+					v-for="widget of widgetList"
+					:widget="widget"
+					:loading="widget.loading"
+					:type="widget ? widget.type : 'count'"
+					)
+				Widget.dashboard__widget(:widget="sku")
+				Widget.dashboard__widget(v-for="(item, index) of list" :key="index" :widget="item" type="percent")
+			template(v-else)
+				WidgetLight.dashboard__widget(
+					v-for="widget of widgetList"
+					:widget="widget"
+					:loading="widget.loading"
+					:source="source"
 				)
-			Widget.dashboard__widget(:widget="sku")
-			Widget.dashboard__widget(v-for="(item, index) of list" :key="index" :widget="item" type="percent")
 		.dashboard__section
 			.flex.justify-between.items-center
 				.dashboard__title Графики
@@ -92,13 +85,12 @@
 
 <script>
 import Menu from '@/components/Menu/Menu.vue'
-import Tabs from '@/components/Tabs/Tabs.vue'
-import TabItem from '@/components/Tabs/TabItem.vue'
 import Button from '@/components/Button/Button.vue'
 import SettingsIcon from 'vue-material-design-icons/Cog.vue'
 import PlusIcon from 'vue-material-design-icons/Plus.vue'
 import ComparisonIcon from '@/assets/svg/comparison.svg'
 import Widget from '@/components/Widget/Widget.vue'
+import WidgetLight from '@/components/Widget/WidgetLight.vue'
 import OnboardTooltip from '@/components/Onboard/Onboard.vue'
 import MarkItem from '@/components/Elements/MarkItem.vue'
 import ChartItem from '@/components/Chart/ChartItem'
@@ -107,16 +99,17 @@ import BarChart from '@/components/Chart/BarChart'
 import Tooltip from '@/components/Elements/Tooltip.vue'
 import Period from '@/components/Period/Period.vue'
 
+import dayjs from 'dayjs'
+
 export default {
 	components: {
 		Menu,
-		Tabs,
-		TabItem,
 		Button,
 		SettingsIcon,
 		PlusIcon,
 		ComparisonIcon,
 		Widget,
+		WidgetLight,
 		OnboardTooltip,
 		MarkItem,
 		ChartItem,
@@ -133,9 +126,58 @@ export default {
 	},
 	data() {
 		return {
-			tabs: [
-
+			settingTabs: [
+				{
+					id: 1,
+					title: 'Наши бренды',
+					slug: 'brands',
+				},
+				{
+					id: 2,
+					title: 'Близкие конкуренты',
+					slug: 'competitors',
+				},
+				{
+					id: 3,
+					title: 'Другие бренды категории',
+					slug: 'other',
+				},
+				{
+					id: 4,
+					title: 'Ритейлеры',
+					slug: 'other',
+				},
 			],
+			source: 'all',
+			tabs: [
+				{
+					id: 1,
+					title: 'Сравнение',
+					slug: 'all',
+				},
+				{
+					id: 2,
+					title: 'Наши бренды',
+					slug: 'brands',
+					color: 'blue',
+				},
+				{
+					id: 3,
+					title: 'Близкие конкуренты',
+					slug: 'competitors',
+					color: 'orange',
+				},
+				{
+					id: 4,
+					title: 'Другие бренды категории',
+					slug: 'other',
+					color: 'gray',
+				},
+			],
+			date: {
+				from: dayjs().subtract(30, 'days').toDate(),
+				to: dayjs().subtract(1, 'days').toDate(),
+			},
 			sku: {
 				title: 'Количество SKU',
 				counters: {
@@ -802,7 +844,16 @@ export default {
 					},
 				]
 			}
-		}
+		},
+		getDateStr() {
+			return `${dayjs(this.date.from).format('DD.MM.YYYY')} - ${dayjs(this.date.to).format('DD.MM.YYYY')}`
+		},
+		dateFrom() {
+			return dayjs(this.date.from).format('YYYY-MM-DD')
+		},
+		dateTo() {
+			return dayjs(this.date.to).format('YYYY-MM-DD')
+		},
 	},
 	mounted() {
 		this.fetch()
@@ -819,12 +870,54 @@ export default {
 					this.widgetList = resp.data.filter((item) => item.selected).map((item) => {
 						return { ...item, loading: true }
 					})
-					const widgetResp = await Promise.allSettled(this.widgetList.map((item) => {
-						return this.$api.common.getWidgetComparison(item.id, this.id)
-					}))
-					console.log(widgetResp)
-					this.setWidgetList(widgetResp)
+					// const widgetResp = await Promise.allSettled(this.widgetList.map((item) => {
+					// 	return this.$api.common.getWidgetComparison(item.id, this.id)
+					// }))
+					if (this.source === 'all') {
+						await this.fetchWidgetComparison()
+					} else {
+						await this.fetchWidgetSpecific()
+					}
+					// this.setWidgetList(widgetResp)
 				}
+			} catch (error) {
+				let err = error ? error.data?.message : 'Произошла ошибка, попробуйте позже'
+				this.$toast.error(err)
+			}
+		},
+		async fetchWidgetComparison() {
+			try {
+				let params = {
+					categoryId: this.id,
+					dateFrom: this.dateFrom,
+					dateTo: this.dateTo,
+					brands: [],
+					competitors: [],
+					others: [],
+					retailers: [],
+				}
+				const widgetResp = await Promise.allSettled(this.widgetList.map((item) => {
+					return this.$api.common.getWidgetComparison({ ...params, widgetId: item.id })
+				}))
+				this.setWidgetComparisonList(widgetResp)
+			} catch (error) {
+				let err = error ? error.data?.message : 'Произошла ошибка, попробуйте позже'
+				this.$toast.error(err)
+			}
+		},
+		async fetchWidgetSpecific() {
+			try {
+				let params = {
+					categoryId: this.id,
+					dateFrom: this.dateFrom,
+					dateTo: this.dateTo,
+					brands: [],
+					retailers: [],
+				}
+				const widgetResp = await Promise.allSettled(this.widgetList.map((item) => {
+					return this.$api.common.getWidgetSpecific({ ...params, widgetId: item.id })
+				}))
+				this.setWidgetSpecificList(widgetResp)
 			} catch (error) {
 				let err = error ? error.data?.message : 'Произошла ошибка, попробуйте позже'
 				this.$toast.error(err)
@@ -837,9 +930,15 @@ export default {
 					this.chartList = resp.data.filter((item) => item.selected).map((item) => {
 						return { ...item, loading: true }
 					})
-					const chartResp = await Promise.allSettled(this.chartList.map((item) => {
-						return this.$api.common.getChartComparison(item.id, this.id)
-					}))
+					// const chartResp = await Promise.allSettled(this.chartList.map((item) => {
+					// 	return this.$api.common.getChartComparison(item.id, this.id)
+					// }))
+					let chartResp
+					if (this.source === 'all') {
+						chartResp = await this.getChartsComparison()
+					} else {
+						chartResp = await this.getChartsSpecific()
+					}
 					console.log(chartResp)
 					this.setChartList(chartResp)
 				}
@@ -848,7 +947,33 @@ export default {
 				this.$toast.error(err)
 			}
 		},
-		setWidgetList(widgetResp) {
+		getChartsComparison() {
+			let params = {
+				categoryId: this.id,
+				dateFrom: this.dateFrom,
+				dateTo: this.dateTo,
+				brands: [],
+				competitors: [],
+				others: [],
+				retailers: [],
+			}
+			return Promise.allSettled(this.chartList.map((item) => {
+				return this.$api.common.getChartComparison({ ...params, chartId: item.id })
+			}))
+		},
+		getChartsSpecific() {
+			let params = {
+				categoryId: this.id,
+				dateFrom: this.dateFrom,
+				dateTo: this.dateTo,
+				brands: [],
+				retailers: [],
+			}
+			return Promise.allSettled(this.chartList.map((item) => {
+				return this.$api.common.getChartSpecific({ ...params, chartId: item.id })
+			}))
+		},
+		setWidgetComparisonList(widgetResp) {
 			this.widgetList = widgetResp.map((item) => {
 				let widg = item.value[0]
 				let data = null
@@ -877,8 +1002,32 @@ export default {
 				return data
 			})
 		},
+		setWidgetSpecificList(widgetResp) {
+			this.widgetList = widgetResp.map((item) => {
+				let widg = item.value[0]
+				let data = null
+				if (item.status === 'fulfilled') {
+					data = widg
+				} else {
+					data = {
+						error: true
+					}
+				}
+				return data
+			})
+		},
 		setChartList(chartResp) {
 			console.log(chartResp)
+		},
+		changeTab(item) {
+			this.widgetList = this.widgetList.map((item) => {
+				return { ...item, loading: true }
+			})
+			this.source = item.slug
+			this.fetch()
+		},
+		changeSettingTabs(item) {
+			console.log(item)
 		},
 		onboardClose() {
 			this.onboardShow = false
@@ -916,7 +1065,7 @@ export default {
 					}
 				},
 			})
-		}
+		},
 	}
 }
 </script>
@@ -950,7 +1099,9 @@ export default {
 	&__tab {
 		&-item {
 			margin-left: 28px;
+			cursor: pointer;
 
+			&:hover,
 			&.--active {
 				.dashboard__tab-label {
 					color: color(black);

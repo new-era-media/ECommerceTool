@@ -76,8 +76,9 @@ export default {
 			}
 		},
 		change(item) {
+			let modalName = item === 'name' ? 'ChangeName' : 'ChangePassword'
 			this.$modal({
-				component: 'Personal',
+				component: modalName,
 				props: {
 
 				},
