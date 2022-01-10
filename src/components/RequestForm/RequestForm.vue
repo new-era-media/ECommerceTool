@@ -74,8 +74,11 @@ export default {
 				return false
 			}
 			try {
-				const resp = await this.$api.common.request(this.form)
-				console.log(resp)
+				const { status } = await this.$api.common.request(this.form)
+				console.log(status)
+				if (status === 'success') {
+					this.$toast.success('Заявка отправлена успешно. Мы свяжемся с Вами по указанной почте в течении рабочего дня')
+				}
 			} catch (error) {
 				let err = error ? error.data.message : 'Произошла ошибка, попробуйте позже'
 				this.$toast.error(err)

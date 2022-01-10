@@ -73,7 +73,7 @@ export default {
 			try {
 				// let params = { ...this.form, recaptchaToken}
 				let params = this.form
-				let { success } = await this.login(params)
+				const { success } = await this.login(params)
 				if (success) {
 					location.href = '/welcome'
 				}
