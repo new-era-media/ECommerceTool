@@ -29,11 +29,12 @@ export default ({ get, post, put }) => ({
 	editSettingsWidgetList(categoryId, params) {
 		return put(`/settings/category/${categoryId}/widgets`, params)
 	},
-	getWidgetSpecific(widgetId, categoryId) {
-		return get(`/widget/${widgetId}/category/${categoryId}/brands/specific`)
+	getWidgetSpecific(params) {
+		console.log(params)
+		return get(`/widget/${params.widgetId}/category/${params.categoryId}/brands/specific`, params)
 	},
-	getWidgetComparison(widgetId, categoryId) {
-		return get(`/widget/${widgetId}/category/${categoryId}/brands/comparison`)
+	getWidgetComparison(params) {
+		return get(`/widget/${params.widgetId}/category/${params.categoryId}/brands/comparison`, params)
 	},
 	getSettingsChartList(categoryId) {
 		return get(`/settings/category/${categoryId}/charts`)
@@ -41,11 +42,11 @@ export default ({ get, post, put }) => ({
 	editSettingsChartList(categoryId, params) {
 		return put(`/settings/category/${categoryId}/charts`, params)
 	},
-	getChartSpecific(chartId, categoryId) {
-		return get(`/chart/${chartId}/category/${categoryId}/brands/specific`)
+	getChartSpecific(params) {
+		return get(`/chart/${params.chartId}/category/${params.categoryId}/brands/specific`, params)
 	},
-	getChartComparison(chartId, categoryId) {
-		return get(`/chart/${chartId}/category/${categoryId}/brands/comparison`)
+	getChartComparison(params) {
+		return get(`/chart/${params.chartId}/category/${params.categoryId}/brands/comparison`, params)
 	},
 	getBrandList(categoryId) {
 		return get(`/sku/brand/all/category/${categoryId}`)
