@@ -32,14 +32,24 @@
 				SettingsIcon(:size="18")
 		.dashboard__widgets.flex.flex-wrap
 			template(v-if="source === 'all'")
-				Widget.dashboard__widget(
-					v-for="widget of widgetList"
-					:widget="widget"
-					:loading="widget.loading"
-					:type="widget ? widget.type : 'count'"
+				.dashboard__widget-col(
+					v-for="(part, index) in widgetMatrix"
+					:key="index"
+				)
+					Draggable.dashboard__draggable(
+						:list="part.list"
+						:animation="200"
+						group="part"
+						:data-part="part.status"
+						@change="handleChange"
+						@end="handleEnd"
 					)
-				Widget.dashboard__widget(:widget="sku")
-				Widget.dashboard__widget(v-for="(item, index) of list" :key="index" :widget="item" type="percent")
+						Widget.dashboard__widget(
+							v-for="widget of part.list"
+							:widget="widget"
+							:loading="widget.loading"
+							:type="widget ? widget.type : 'count'"
+						)
 			template(v-else)
 				WidgetLight.dashboard__widget(
 					v-for="widget of widgetList"
@@ -98,6 +108,7 @@ import LineChart from '@/components/Chart/LineChart'
 import BarChart from '@/components/Chart/BarChart'
 import Tooltip from '@/components/Elements/Tooltip.vue'
 import Period from '@/components/Period/Period.vue'
+import Draggable from 'vuedraggable'
 
 import dayjs from 'dayjs'
 
@@ -117,6 +128,7 @@ export default {
 		BarChart,
 		Tooltip,
 		Period,
+		Draggable,
 	},
 	props: {
 		categories: {
@@ -180,6 +192,7 @@ export default {
 			},
 			sku: {
 				title: 'Количество SKU',
+				status: 0,
 				counters: {
 					brand: {
 						value: 122345124,
@@ -191,11 +204,12 @@ export default {
 					other: {
 						value: 122345124,
 					}
-				}
+				},
 			},
 			list: [
 				{
 					title: 'Доля полки',
+					status: 1,
 					counters: {
 						brand: {
 							value: 16.9,
@@ -211,6 +225,7 @@ export default {
 				},
 				{
 					title: 'Процент доступных SKU',
+					status: 1,
 					counters: {
 						brand: {
 							value: 15.3,
@@ -226,6 +241,7 @@ export default {
 				},
 				{
 					title: 'Доля в премиальной выдаче поиска',
+					status: 2,
 					counters: {
 						brand: {
 							value: 10,
@@ -241,6 +257,7 @@ export default {
 				},
 				{
 					title: 'Доля в премиальной категорийной выдаче',
+					status: 2,
 					counters: {
 						brand: {
 							value: 4,
@@ -256,6 +273,7 @@ export default {
 				},
 				{
 					title: 'Доля промо SKU',
+					status: 3,
 					counters: {
 						brand: {
 							value: 14,
@@ -271,6 +289,7 @@ export default {
 				},
 				{
 					title: 'Средняя скидка',
+					status: 3,
 					counters: {
 						brand: {
 							value: 14,
@@ -288,6 +307,7 @@ export default {
 			onboardShow: true,
 			widgetList: [],
 			chartList: [],
+			activeItem: null,
 		}
 	},
 	computed: {
@@ -854,6 +874,33 @@ export default {
 		dateTo() {
 			return dayjs(this.date.to).format('YYYY-MM-DD')
 		},
+		allWidgets() {
+			return this.widgetList.concat(this.sku).concat(this.list)
+		},
+		widgetMatrix() {
+			return [
+				{
+					title: 'Col 0',
+					status: 0,
+					list: this.allWidgets.filter((item) => item.status === 0),
+				},
+				{
+					title: 'Col 1',
+					status: 1,
+					list: this.allWidgets.filter((item) => item.status === 1),
+				},
+				{
+					title: 'Col 2',
+					status: 2,
+					list: this.allWidgets.filter((item) => item.status === 2),
+				},
+				{
+					title: 'Col 3',
+					status: 3,
+					list: this.allWidgets.filter((item) => item.status === 3),
+				},
+			]
+		},
 	},
 	mounted() {
 		this.fetch()
@@ -868,7 +915,7 @@ export default {
 				const resp = await this.$api.common.getSettingsWidgetList(this.id)
 				if (resp) {
 					this.widgetList = resp.data.filter((item) => item.selected).map((item) => {
-						return { ...item, loading: true }
+						return { ...item, status: 0, loading: true }
 					})
 					// const widgetResp = await Promise.allSettled(this.widgetList.map((item) => {
 					// 	return this.$api.common.getWidgetComparison(item.id, this.id)
@@ -981,6 +1028,7 @@ export default {
 					data = {
 						title: widg.nameRu,
 						type:  widg.brandValue.type,
+						status: 0, // to do for test only
 						counters: {
 							brand: {
 								value: widg.brandValue.value,
@@ -1066,6 +1114,20 @@ export default {
 				},
 			})
 		},
+		handleChange(e) {
+			if (e.added) {
+				this.activeItem = e.added.element
+			}
+		},
+		handleEnd(e) {
+			let from = e.from.dataset.part
+			let to = e.to.dataset.part
+			if (from !== to && this.activeItem) {
+				let index = this.list.findIndex((item) => item.title === this.activeItem.title)
+				this.$set(this.list, index, { ... this.activeItem, status: parseInt(to)})
+				this.activeItem = null
+			}
+		},
 	}
 }
 </script>
@@ -1128,14 +1190,19 @@ export default {
 	&__widgets {
 		margin-top: 30px;
 	}
-	&__widget {
+	&__widget-col {
 		width: 23.5%;
 		margin-right: 2%;
-		margin-bottom: 26px;
 
 		&:nth-of-type(4n) {
 			margin-right: 0;
 		}
+	}
+	&__widget {
+		margin-bottom: 26px;
+	}
+	&__draggable {
+		min-height: 160px;
 	}
 	&__section {
 		margin-top: 12px;
