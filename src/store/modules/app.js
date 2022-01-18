@@ -6,8 +6,12 @@ export default {
 	state: {
 		userToken: '',
 		user: null,
+		nestleConfig: null,
 	},
 	getters: {
+		getNestleConfig(state) {
+			return state.nestleConfig
+		},
 	},
 
 	mutations: {
@@ -16,7 +20,10 @@ export default {
 		},
 		setToken(state, userToken) {
 			state.userToken = userToken
-		}
+		},
+		setNestleConfig(state, flag) {
+			state.nestleConfig = flag
+		},
 	},
 	actions: {
 		async login({ commit }, params) {
@@ -48,6 +55,9 @@ export default {
 				this._vm.$progress.start()
 				const user = await api.common.getUserInfo()
 				commit('setUser', user)
+
+				commit('setNestleConfig', localStorage.getItem('nestleConfig'))
+
 				this._vm.$progress.stop()
 			} catch (error) {
 				if (error?.code === 401) {
@@ -55,6 +65,18 @@ export default {
 				}
 				this._vm.$progress.fail()
 			}
+		},
+
+		toggleNestleConfig({ state }) {
+			if (state.nestleConfig) {
+				localStorage.removeItem('nestleConfig')
+				location.href = '/'
+			} else {
+				localStorage.setItem('nestleConfig', '1')
+				location.href = '/nestle/'
+			}
+
+			// commit('setNestleConfig', !state.nestleConfig)
 		},
 	},
 }

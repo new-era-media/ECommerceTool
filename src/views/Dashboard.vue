@@ -74,6 +74,8 @@
 				ChartItem.dashboard__chart(title="Количество SKU, OZON")
 					LineChart(:chartData="chartData2" :options="chartOptions" style="height: 384px")
 				ChartItem.dashboard__chart(title="Минимальные и максимальные цены, OZON")
+					div(style="height: 384px")
+						CandlesChart(:chartData="candlesChartData" :options="chartOptions" style="height: 384px")
 				ChartItem.dashboard__chart(title="Доступность SKU сегодня, наши бренды")
 					BarChart(:chartData="stackedBarChartData" :options="stackedBarChartOptions" style="height: 384px")
 				ChartItem.dashboard__chart(title="Доступность SKU сегодня, OZON")
@@ -106,6 +108,7 @@ import MarkItem from '@/components/Elements/MarkItem.vue'
 import ChartItem from '@/components/Chart/ChartItem'
 import LineChart from '@/components/Chart/LineChart'
 import BarChart from '@/components/Chart/BarChart'
+import CandlesChart from '@/components/Chart/CandlesChart'
 import Tooltip from '@/components/Elements/Tooltip.vue'
 import Period from '@/components/Period/Period.vue'
 import Draggable from 'vuedraggable'
@@ -126,6 +129,7 @@ export default {
 		ChartItem,
 		LineChart,
 		BarChart,
+		CandlesChart,
 		Tooltip,
 		Period,
 		Draggable,
@@ -863,6 +867,52 @@ export default {
 						data: [40, 46, 48, 52, 56, 58, 60, 62, 65, 70, 75]
 					},
 				]
+			}
+		},
+		candlesChartData() {
+			return {
+				labels: [''],
+				datasets: [
+					{
+						label: 'Series 1',
+						backgroundColor: '#f87979',
+						data: [{
+							o: 350,
+							h: 360,
+							l: 345,
+							c: 350,
+							t: new Date('2019-01-10').getTime(),
+						},
+							{
+								o: 350,
+								h: 370,
+								l: 340,
+								c: 360,
+								t: new Date('2019-01-11').getTime(),
+							},
+							{
+								o: 360,
+								h: 370,
+								l: 355,
+								c: 355,
+								t: new Date('2019-01-12').getTime(),
+							},
+							{
+								o: 355,
+								h: 380,
+								l: 360,
+								c: 370,
+								t: new Date('2019-01-13').getTime(),
+							},
+							{
+								o: 370,
+								h: 365,
+								l: 340,
+								c: 350,
+								t: new Date('2019-01-14').getTime(),
+							}],
+					},
+				],
 			}
 		},
 		getDateStr() {

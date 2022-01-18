@@ -6,13 +6,19 @@
 			RouterView
 		.layout__footer
 			Footer
+		NestleToggle
 </template>
 <script>
 import Header from '@/components/Layout/Header.vue'
 import Footer from '@/components/Layout/Footer.vue'
+import NestleToggle from '@/components/Elements/NestleToggle.vue'
 
 export default {
-	components: { Header, Footer },
+	components: {
+		Header,
+		Footer,
+		NestleToggle,
+	},
 	computed: {
 		noUser() {
 			return this.$route.name === 'Entry'
