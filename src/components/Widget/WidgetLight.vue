@@ -83,6 +83,7 @@ export default {
 <style lang="scss" scoped>
 .widget {
 	position: relative;
+	min-width: 290px;
 	min-height: 112px;
 	padding: 16px 34px 20px 34px;
 	background-color: color(white);
