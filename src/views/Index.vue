@@ -8,8 +8,7 @@
 						br
 						| рынка электронной торговли
 					.index__system-request
-						a(href="#request")
-							Button(@click="request") Заявка на доступ
+						Button(@click="request") Заявка на доступ
 				.index__system-img
 					img(src="~@/assets/img/system.png")
 		.index__cards.container.flex.justify-between
@@ -53,8 +52,7 @@
 					.product-card__text Описание ждем от Саши/Наташи. Анализ цен конкурентов позволит выстроить ценообразование основываясь на текущей ситуации рынка и максимизировать доход.
 				.product-card__img.relative
 					img(src="~@/assets/img/products/product-card-3.png")
-		a(name="request")
-		.index__request.container.flex.items-center.justify-between
+		.index__request.container.flex.items-center.justify-between(ref="request")
 			.index__request-blur-bg.relative
 			.index__request-title.relative
 				h1 Оставьте заявку и получите доступ одними из первых
@@ -108,8 +106,10 @@ export default {
 	},
 	methods: {
 		request() {
-			console.log('request')
-		}
+			const element = this.$refs.request
+			element.scrollIntoView({ behavior: 'smooth' })
+			// window.scrollTo(0, element.offsetTop)
+		},
 	}
 }
 </script>
@@ -168,6 +168,8 @@ export default {
 	}
 	&__product {
 		margin-top: 16px;
+		position: relative;
+		z-index: 10;
 	}
 	&__request {
 		margin-top: 190px;
@@ -176,7 +178,7 @@ export default {
 			@include radialBg(#FBE6BE, 1500px);
 			&:before {
 				left: -400px;
-				bottom: -800px;
+				bottom: -330px;
 			}
 		}
 
