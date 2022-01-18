@@ -1,6 +1,7 @@
 import LayoutLanding from '../components/Layout/LayoutLanding.vue'
 import LayoutFullPage from '../components/Layout/LayoutFullPage.vue'
 import Layout from '../components/Layout/Layout.vue'
+import NestleLayout from '../components/Nestle/Layout/Layout.vue'
 const _import = name => () => import('@/views/' + name + '.vue')
 // eslint-disable-next-line no-unused-vars
 import store from '@/store'
@@ -106,6 +107,20 @@ export default [
 				component: _import('Profile'),
 			}
 		]
+	},
+	{
+		path: '/nestle',
+		name: 'NestleLayout',
+		component: NestleLayout,
+		redirect: { name: 'Nestle.Index' },
+		children: [
+			{
+				path: '/',
+				name: 'Nestle.Index',
+				component: _import('Nestle/Index'),
+			}
+		]
+
 	},
 	{ path: '*', redirect: { name: 'PageNotFound' } },
 ]

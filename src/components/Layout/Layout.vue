@@ -4,12 +4,17 @@
 			RouterView
 		.layout__footer
 			Footer
+		NestleToggle
 </template>
 <script>
 import Footer from '@/components/Layout/Footer.vue'
+import NestleToggle from '@/components/Elements/NestleToggle.vue'
 
 export default {
-	components: { Footer },
+	components: {
+		Footer,
+		NestleToggle,
+	},
 }
 </script>
 <style lang="scss" scoped>

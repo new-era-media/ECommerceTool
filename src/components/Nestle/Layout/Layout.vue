@@ -1,29 +1,22 @@
 <template lang="pug">
 	main.layout
-		.layout__header(v-if="!noHeader")
-			HeaderLanding
 		.layout__content
 			RouterView
 		NestleToggle
 </template>
+
 <script>
-import HeaderLanding from '@/components/Layout/HeaderLanding.vue'
 import NestleToggle from '@/components/Elements/NestleToggle.vue'
 
 export default {
 	components: {
-		HeaderLanding,
 		NestleToggle,
 	},
-	computed: {
-		noHeader() {
-			return this.$route.meta.noHeader
-		}
-	}
 }
 </script>
-<style lang="scss" scoped>
-.layout {
 
+<style lang="scss">
+.layout {
+	min-height: 100vh;
 }
 </style>

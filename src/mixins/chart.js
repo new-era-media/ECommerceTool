@@ -19,7 +19,7 @@ export default {
 					},
 				}
 			}, this.$options.overrides || {}, this.options),
-			plugins: this.plugins,
+			// plugins: this.plugins,
 		})
 	},
 	watch: {
