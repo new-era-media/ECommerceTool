@@ -1,107 +1,130 @@
 <template lang="pug">
 	.index
 		.container
-			.index__system.flex.justify-between.items-center
-				.index__system-content
-					h1
-						| Система мониторинга
-						br
-						| рынка электронной торговли
-					.index__system-request
-						Button(@click="request") Заявка на доступ
-				.index__system-img
-					img(src="~@/assets/img/system.png")
-		.index__cards.container.flex.justify-between
-			.index__card
-				LoupeIcon.index__card-icon
-				.index__card-title Мониторинг цен
-				.index__card-text
-					| Анализ цен конкурентов позволит выстроить ценообразование на основе текущей ситуации рынка и максимизировать доход
-			.index__card
-				PriceIcon.index__card-icon
-				.index__card-title Цены конкурентов
-				.index__card-text
-					| Отслеживайте цены на сайтах конкурентов и маркетплейсах, чтобы делать лучшее предложение для потребителя.
-			.index__card
-				ChartIcon.index__card-icon
-				.index__card-title Цены ритейлеров
-				.index__card-text
-					| Если Вы призводитель или оптовая компания, отслеживайте демпинг и выявляйте общие тенденции на рынке.
-		.index__product.container
-			.product-card.flex.relative
-				.product-card__bg
-					EllipseItem
-				.product-card__content.relative
-					.product-card__title Сравнение своего товара с товарами конкурентов
-					.product-card__text Описание ждем от Саши/Наташи. Анализ цен конкурентов позволит выстроить ценообразование основываясь на текущей ситуации рынка и максимизировать доход.
-				.product-card__img.relative
-					img(src="~@/assets/img/products/product-card-1.png")
-			.product-card.flex.relative
-				.product-card__bg
-					EllipseItem(type="left")
-				.product-card__content.relative
-					.product-card__title Популярность товара в своей категории
-					.product-card__text Описание ждем от Саши/Наташи. Анализ цен конкурентов позволит выстроить ценообразование основываясь на текущей ситуации рынка и максимизировать доход.
-				.product-card__img.relative
-					img(src="~@/assets/img/products/product-card-2.png")
-			.product-card.flex.relative
-				.product-card__bg
-					EllipseItem
-				.product-card__content.relative
-					.product-card__title Сравнение своего товара с товарами конкурентов
-					.product-card__text Описание ждем от Саши/Наташи. Анализ цен конкурентов позволит выстроить ценообразование основываясь на текущей ситуации рынка и максимизировать доход.
-				.product-card__img.relative
-					img(src="~@/assets/img/products/product-card-3.png")
-		.index__request.container.flex.items-center.justify-between(ref="request")
-			.index__request-blur-bg.relative
-			.index__request-title.relative
-				h1 Оставьте заявку и получите доступ одними из первых
-				.index__request-title-bg
-					EllipseItem(:opacity="true" type="left")
-			.index__request-form.relative
-				.index__request-bg
-					EllipseItem(size="sm" :opacity="true")
-				RequestForm
+			.index__cta
+				.index__title
+					| Система мониторинга
+					br
+					| и анализа рынка онлайн-торговли
+				.index__text
+					| Ежедневное обновление данных по 50+ сайтам, включая ритейлеров, маркетплейсы, онлайн-аптеки, сайты детских товаров, как в web-версии, так и в мобильных приложениях
+				LandingButton.index__request-btn(
+					label="Заявка на доступ"
+					@click="request"
+				)
+
+		.index__lines
+			img.index__lines-img(src="~@/assets/img/landing/lines.png")
+		.index__content
+			.container
+				.index__cards.flex.justify-between
+					.index__card
+						.index__card-icon
+							img(src="~@/assets/img/landing/card-1.png")
+						.index__card-title
+							| Мониторинг
+							br
+							| онлайн-полки
+						.index__card-text.index__text
+							| Анализ представленности, ассортимента, видимости бренда, категорийной и поисковой выдачи, цены и промоактивности всех брендов в категории
+					.index__card
+						.index__card-icon
+							img(src="~@/assets/img/landing/card-2.png")
+						.index__card-title
+							| Мониторинг
+							br
+							| стоков
+						.index__card-text.index__text
+							| Анализ доступности товаров на сайтах, динамика стоков по дням, оценка
+							| уходимости товаров. Настройка алертов
+							| на закончившиеся товары
+					.index__card
+						.index__card-icon
+							img(src="~@/assets/img/landing/card-3.png")
+						.index__card-title
+							| Оценка
+							br
+							| карточки
+						.index__card-text.index__text
+							| Оценка качества заполненности карточки: название, описание, изображения,
+							| отзывы и рейтинг. А также исследования
+							| по влиянию контента на выдачу.
+				.index__products
+					.index__product.flex.justify-between.items-center
+						.index__product-img
+							img(src="~@/assets/img/products/product-1.png")
+						.index__product-content
+							.index__product-title.index__subtitle
+								| Анализ всей категории
+								br
+								| и позиции бренда
+							.index__product-text.index__text
+								| Данные позволяют:
+								ul
+									li сравнить позицию бренда с конкурентами по основным метрикам;
+									li оценить видимость бренда в категории по доле полки, доле премиальных позиций в выдаче;
+									li сравнить свой ассортимент с конкурентами
+					.index__product.flex.justify-between.items-center
+						.index__product-content
+							.index__product-title.index__subtitle
+								| Сравнение цены, скидки, доли промо в категории
+								| и с основными конкурентами
+							.index__product-text.index__text
+								| Оценка регулярной цены, уровня скидок
+								| и продолжительности промо для эффективного управления промополитикой на каждом сайте
+						.index__product-img
+							img(src="~@/assets/img/products/product-2.png")
+					.index__product.flex.justify-between.items-center
+						.index__product-img
+							img(src="~@/assets/img/products/product-3.png")
+						.index__product-content
+							.index__product-title.index__subtitle
+								| Анализ продуктовых карточек бренда
+								| и их интегральная оценка
+							.index__product-text.index__text
+								| Оценка качества карточки наличию видимым элементам: названию, описанию, количеству отзывов, рейтингу, изображениям, видеоконтенту и rich-контенту. Доступна ML оценка карточки с эталоном, включая оценка соответствия изображения, описания и названия
+					.index__product.flex.justify-between.items-center
+						.index__product-content
+							.index__product-title.index__subtitle
+								| Анализ стоков
+								br
+								| и доступности товаров
+							.index__product-text.index__text
+								| Сбор динамики стоков для оценки уходимости
+								br
+								| на каждом сайте мониторинга
+						.index__product-img
+							img(src="~@/assets/img/products/product-4.png")
+
+
+		.index__bottom(ref="request")
+			img.index__bottom-bg(src="~@/assets/img/landing/footer-bg.png")
+			.container.index__bottom-content
+				.index__request
+					.index__request-title.index__subtitle
+						| Заявка на получение доступа к демо-версии
+					.index__text
+						| Используйте эту форму в случае появления любых вопросов о продукте
+					RequestFormLanding.index__request-form
+				CatFooter.index__footer
 
 
 </template>
 
 <script>
-import Button from '@/components/Button/Button.vue'
-import RequestForm from '@/components/RequestForm/RequestForm.vue'
-import EllipseItem from '@/components/Elements/EllipseItem.vue'
-import LoupeIcon from '@/assets/svg/loupe.svg'
-import PriceIcon from '@/assets/svg/price.svg'
-import ChartIcon from '@/assets/svg/chart.svg'
+import LandingButton from '@/components/LandingButton/LandingButton.vue'
+import CatFooter from '@/components/Layout/CatFooter.vue'
+import RequestFormLanding from '@/components/RequestForm/RequestFormLanding.vue'
 
 export default {
 	components: {
-		Button,
-		RequestForm,
-		EllipseItem,
-		LoupeIcon,
-		PriceIcon,
-		ChartIcon,
+		LandingButton,
+		CatFooter,
+		RequestFormLanding,
 	},
 	data() {
 		return {
-			products: [
-				{
-					title: 'Сравнение своего товара с товарами конкурентов',
-					text: 'Описание ждем от Саши/Наташи. Анализ цен конкурентов позволит выстроить ценообразование основываясь на текущей ситуации рынка и максимизировать доход.',
-					img: '~@/assets/img/products/product-card-1.png'
-				},
-				{
-					title: 'Популярность товара в своей категории',
-					text: 'Описание ждем от Саши/Наташи. Анализ цен конкурентов позволит выстроить ценообразование основываясь на текущей ситуации рынка и максимизировать доход.',
-					img: '~@/assets/img/products/product-card-1.png'
-				},
-				{
-					title: 'Сравнение своего товара с товарами конкурентов',
-					text: 'Описание ждем от Саши/Наташи. Анализ цен конкурентов позволит выстроить ценообразование основываясь на текущей ситуации рынка и максимизировать доход.',
-					img: '~@/assets/img/products/product-card-1.png'
-				},
-			]
+
 		}
 	},
 	methods: {
@@ -116,186 +139,271 @@ export default {
 
 <style lang="scss" scoped>
 .index {
-	padding-bottom: 40px;
-	overflow: hidden;
-	//background: radial-gradient(ellipse at top, #DFD3F2, transparent),
-	//	radial-gradient(ellipse at top, #D3E7F7, transparent),
-	//	radial-gradient(ellipse at top, #FAE9D4, transparent);
+	font-family: Montserrat, Helvetica, Arial, sans-serif;
 
-	&__system {
+	&__cta {
 		position: relative;
-		margin: 225px 0 295px 0;
+		max-width: 580px;
+		margin-top: 44px;
+		margin-left: 92px;
+		z-index: 10;
 
+		&:before {
+			content: '';
+			position: absolute;
+			width: 492px;
+			height: 451px;
+			top: -68px;
+			left: -410px;
+			background-image: url('~@/assets/img/landing/subtract-1.png');
+		}
+	}
 
-		&-content {
-			padding: 0 80px;
-			width: 680px;
-		}
-		&-request {
-			margin-top: 20px;
-		}
+	&__title {
+		margin-bottom: 22px;
+		font-size: 40px;
+		font-weight: 700;
+		line-height: 1.15;
+	}
+	&__text {
+		font-size: 15px;
+		line-height: 1.3;
+	}
+	&__request-btn {
+		position: relative;
+		margin-top: 28px;
+	}
+
+	&__subtitle {
+		font-size: 30px;
+		font-weight: 700;
+		line-height: 1.15;
+	}
+
+	&__lines {
+		position: relative;
+		width: 100%;
+		height: 475px;
+		margin-top: -200px;
 
 		&-img {
 			position: absolute;
-			width: 792px;
-			top: 50%;
+			min-width: 1920px;
+			width: 1920px;
+			height: 482px;
+			top: 0;
 			left: 50%;
-			transform: translate(-45px, -212px);
+			transform: translateX(-50%);
 		}
 	}
+
+	&__content {
+		position: relative;
+		background-color: color(white);
+
+		&:before {
+			content: '';
+			position: absolute;
+			min-width: 1920px;
+			height: 124px;
+			top: -118px;
+			left: 50%;
+			transform: translateX(-50%);
+			background-image: url('~@/assets/img/landing/back-top.png');
+		}
+	}
+
 	&__cards {
-		padding: 0 50px;
+		margin-top: 16px;
+		padding: 20px 45px 0 45px;
 	}
 	&__card {
-		width: 28%;
-		text-align: center;
+		width: 30%;
 
 		&-icon {
+			width: 120px;
+			height: 120px;
 			margin: 0 auto;
-			height: 67px;
 		}
 		&-title {
-			margin-top: 22px;
-			font-size: 20px;
-			line-height: 1.35;
-			font-weight: 600;
+			margin: 16px 0;
+			text-align: center;
+			font-size: 24px;
+			font-weight: 700;
+			line-height: 1.15;
 		}
 		&-text {
-			margin-top: 5px;
-			font-size: 16px;
-			line-height: 1.75;
+			text-align: center;
 		}
 	}
-	&__product {
-		margin-top: 16px;
-		position: relative;
-		z-index: 10;
-	}
-	&__request {
-		margin-top: 190px;
 
-		&-blur-bg {
-			@include radialBg(#FBE6BE, 1500px);
-			&:before {
-				left: -400px;
-				bottom: -330px;
+	&__products {
+		margin-top: 100px;
+	}
+	&__product {
+		position: relative;
+		padding: 0 45px;
+
+		&-img {
+			flex-shrink: 0;
+			width: 684px;
+		}
+		&-content {
+			width: 482px;
+		}
+		&-text {
+			margin-top: 36px;
+
+			ul {
+				margin-top: 22px;
+
+				li {
+					position: relative;
+					padding-left: 24px;
+					margin-top: 8px;
+
+					&:before {
+						content: '';
+						position: absolute;
+						width: 3px;
+						height: 3px;
+						top: 10px;
+						left: 10px;
+						background-color: color(primary);
+						border-radius: 50%;
+					}
+				}
 			}
 		}
 
-		&-title {
-			width: 36.5%;
-			margin-left: 190px;
-			text-align: right;
-		}
-		&-form {
-			width: 42%;
-			padding: 74px 130px 74px 90px;
-			border-top-left-radius: 100px;
-			border-bottom-left-radius: 100px;
-			background-color: color(white);
-			//overflow: hidden;
+		&:nth-of-type(1) {
 
 			&:before {
 				content: '';
 				position: absolute;
-				width: 100%;
-				height: 100%;
-				top: 0;
-				right: -100%;
-				background-color: color(white);
+				width: 970px;
+				height: 954px;
+				top: 80px;
+				left: 90px;
+				background-image: url('~@/assets/img/landing/subtract-2.png');
+			}
+			&:after {
+				content: '';
+				position: absolute;
+				width: 952px;
+				height: 936px;
+				top: -4px;
+				left: -320px;
+				background-image: url('~@/assets/img/landing/subtract-3.png');
+			}
+
+			& .index__product-img {
+				position: relative;
+				width: 674px;
+				z-index: 10;
+			}
+			& .index__product-content {
+				position: relative;
+				margin-top: -40px;
+				z-index: 10;
 			}
 		}
+		&:nth-of-type(2n) {
+			& .index__product-title,
+			& .index__product-text {
+				text-align: right;
+			}
+		}
+		&:nth-of-type(2) {
+			margin-top: 4px;
+
+			& .index__product-content {
+				margin-top: 36px;
+			}
+			& .index__product-text {
+				margin-top: 22px;
+			}
+		}
+		&:nth-of-type(3) {
+			margin-top: 50px;
+
+			&:before {
+				content: '';
+				position: absolute;
+				width: 1178px;
+				height: 810px;
+				top: 200px;
+				left: 230px;
+				background-image: url('~@/assets/img/landing/subtract-4.png');
+			}
+
+			&:after {
+				content: '';
+				position: absolute;
+				width: 1160px;
+				height: 792px;
+				top: -112px;
+				left: 440px;
+				background-image: url('~@/assets/img/landing/subtract-5.png');
+			}
+
+			& .index__product-img,
+			& .index__product-content {
+				position: relative;
+				z-index: 10;
+			}
+
+			& .index__product-content {
+				margin-top: 80px;
+			}
+			& .index__product-text {
+				margin-top: 24px;
+			}
+		}
+		&:nth-of-type(4) {
+			margin-top: 220px;
+
+			& .index__product-content {
+				margin-top: 38px;
+			}
+			& .index__product-text {
+				margin-top: 22px;
+			}
+		}
+	}
+
+	&__bottom {
+		position: relative;
+		padding-top: 216px;
+
 		&-bg {
 			position: absolute;
-			top: 63px;
-			right: -245px;
-		}
-		&-title-bg {
-			position: absolute;
-			top: 50%;
+			min-width: 1920px;
+			height: 955px;
+			top: 0;
 			left: 50%;
-			margin-top: -120px;
-			margin-left: -740px;
+			transform: translateX(-50%);
 		}
-	}
-}
-.product-card {
-	margin-top: 25px;
-	padding: 0 20px 0 140px;
-
-	&:first-of-type {
-		margin-top: 0;
-	}
-
-	&:nth-of-type(2n) {
-		margin-bottom: 60px;
-
-		.product-card__content {
-			order: 2;
-			margin-top: 120px;
-			margin-left: 35px;
-		}
-		.product-card__img {
-			order: 1;
-		}
-	}
-	&:nth-of-type(1) {
-		@include radialBg(#DFD3F2, 1500px);
-
-		&:before {
-			left: -400px;
-		}
-
-		.product-card__bg {
-			top: 50%;
-			left: 50%;
-			margin-left: -590px;
-			margin-top: -80px;
-		}
-	}
-	&:nth-of-type(2) {
-		@include radialBg(#D4E7F6, 1500px);
-
-		.product-card__bg {
-			top: 50%;
-			left: 50%;
-			margin-left: -242px;
-			margin-top: -112px;
-		}
-	}
-	&:nth-of-type(3) {
-		.product-card__content {
-			margin-top: 96px;
-			margin-left: 36px;
-		}
-		.product-card__bg {
-			top: 50%;
-			left: 50%;
-			margin-left: -502px;
-			margin-top: 18px;
+		&-content {
+			position: relative;
 		}
 	}
 
-	&__bg {
-		position: absolute;
-	}
+	&__request {
+		width: 1120px;
+		margin: 0 auto;
+		padding: 0 45px;
+		min-height: 500px;
 
-	&__content {
-		width: 420px;
-		margin-top: 230px;
+		&-title {
+			margin-bottom: 8px;
+		}
+		&-form {
+			margin-top: 26px;
+		}
 	}
-	&__title {
-		font-weight: 600;
-		font-size: 20px;
-		line-height: 1.35;
-	}
-	&__text {
-		margin-top: 10px;
-		font-size: 16px;
-		line-height: 1.75;
-	}
-	&__img {
-		flex-shrink: 0;
+	&__footer {
+		margin-top: 90px;
 	}
 }
 </style>
