@@ -15,8 +15,8 @@
 					CalendarBlank.icon-button
 					DatePicker(v-model="dateSelect")
 
-		.flex
-			select.mb-8(v-model="group")
+		.flex.mb-24
+			select(v-model="group")
 				option(v-for="item in groupOptions" :value="item") Group By: {{ item }}
 			.header-right
 				Tabs(:tabs="tabsData" v-model="tab")
@@ -50,18 +50,24 @@
 					LineChart(v-bind="chartPropsLine")
 
 		ContainerForData(width="100%")
-			//template(#header-left)
-			//	.flex.items-center
-			//		p Portfolio Availability Over Time
-			//		Tooltip(trigger="hover")
-			//			template(slot="reference")
-			//				HelpCircle.icon
-			//			span 'Tooltip'
+			template(#header-left)
+				.flex.items-center
+					select(v-model="status")
+						option(v-for="item in statusOptions" :value="item") {{ item }}
+					input.ml-8(type="checkbox" id="status")
+					label.ml-8(for="status") Only New Changes
 			template(#header-right)
-				Tooltip(trigger="clickToToggle")
-					template(slot="reference")
-						.data-range-picker {{ getDateStr }}
-					Period(:date="date")
+				.flex
+					.table-button
+						button &#x2039; Earler dates
+						button Later dates &#x203A;
+					.search.ml-8
+						.icon &#x1F50E;&#xFE0E;
+						input(type="text" placeholder="UPC, RPC, MPC or Product Description")
+					Tooltip.ml-8(trigger="clickToToggle")
+						template(slot="reference")
+							.data-range-picker {{ getDateStr }}
+						Period(:date="date")
 			template(#data)
 				Table.brands__table(v-bind="tableOptions")
 					template(#title="{item, index}") {{ item.title }}
@@ -91,7 +97,7 @@ import CalendarExport from 'vue-material-design-icons/CalendarExport.vue'
 import CalendarBlank from 'vue-material-design-icons/CalendarBlank.vue'
 import DatePicker from '@/components/Elements/DatePicker.vue'
 import Tabs from "@/components/Nestle/Tabs";
-import Table from "../../components/Table/Table";
+import Table from "@/components/Table/Table";
 
 export default {
 	components: {
@@ -111,6 +117,8 @@ export default {
 		return {
 			group: 'Online Store',
 			groupOptions: ['Online Store'],
+			status: 'Any Status',
+			statusOptions: ['Any Status'],
 			date: {
 				from: dayjs().subtract(30, 'days').toDate(),
 				to: dayjs().subtract(1, 'days').toDate(),
@@ -128,6 +136,7 @@ export default {
 				}
 			],
 			list: [],
+			tabTable: 1,
 		}
 	},
 	computed:{
@@ -399,11 +408,16 @@ h1{
 		border-top: 5px solid black;
 	}
 }
+.mb-24 {
+	margin-bottom: 24px;
+}
+.ml-8 {
+	margin-left: 8px;
+}
 select{
 	padding: 0 5px;
 	outline: 1px color(gray-400) solid;
 	border-radius: 3px;
-	margin-bottom: 24px;
 	color: color(gray-700);
 
 	&:focus{
@@ -420,6 +434,19 @@ select{
 	&:focus{
 		outline: none;
 	}
+}
+.search input{
+	position: relative;
+	padding-left: 30px;
+	width: 300px;
+	outline: 1px color(gray-400) solid;
+	border-radius: 3px;
+	z-index: 1;
+}
+.search .icon{
+	position: absolute;
+	z-index: 2;
+	top: 15px;
 }
 .charts{
 	margin-bottom: 38px;
@@ -439,5 +466,13 @@ select{
 	&-green{
 		background-color: color(green);
 	}
+}
+.table-button button{
+	font-size: 14px;
+	background-color: #fff;
+	outline: 1px color(gray-400) solid;
+	padding: 0 5px;
+	border-radius: 3px;
+	color: color(gray-600)
 }
 </style>
