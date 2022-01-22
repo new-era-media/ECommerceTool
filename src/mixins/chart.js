@@ -17,9 +17,13 @@ export default {
 							color: '#718096'
 						}
 					},
+				},
+				plugins: {
+					legend: {
+						display: false
+					}
 				}
 			}, this.$options.overrides || {}, this.options),
-			// plugins: this.plugins,
 		})
 	},
 	watch: {

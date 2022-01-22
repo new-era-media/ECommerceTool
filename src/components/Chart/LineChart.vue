@@ -5,6 +5,7 @@
 
 <script>
 import chart from '@/mixins/chart'
+
 export default {
 	name: 'LineChart',
 	type: 'line',

@@ -118,6 +118,11 @@ export default [
 				path: '/',
 				name: 'Nestle.Index',
 				component: _import('Nestle/Index'),
+			},
+			{
+				path: 'portfolio-availability',
+				name: 'Nestle.PortfolioAvailability',
+				component: _import('Nestle/PortfolioAvailability'),
 			}
 		]
 
