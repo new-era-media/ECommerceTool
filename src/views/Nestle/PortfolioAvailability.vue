@@ -21,7 +21,7 @@
 			.header-right
 				Tabs(:tabs="tabsData" v-model="tab")
 
-		.flex.justify-between
+		.flex.justify-between.charts
 			ContainerForData
 				template(#header-left)
 					.flex.items-center
@@ -48,6 +48,35 @@
 						Period(:date="date")
 				template(#data)
 					LineChart(v-bind="chartPropsLine")
+
+		ContainerForData(width="100%")
+			//template(#header-left)
+			//	.flex.items-center
+			//		p Portfolio Availability Over Time
+			//		Tooltip(trigger="hover")
+			//			template(slot="reference")
+			//				HelpCircle.icon
+			//			span 'Tooltip'
+			template(#header-right)
+				Tooltip(trigger="clickToToggle")
+					template(slot="reference")
+						.data-range-picker {{ getDateStr }}
+					Period(:date="date")
+			template(#data)
+				Table.brands__table(v-bind="tableOptions")
+					template(#title="{item, index}") {{ item.title }}
+					template(#image="{item}")
+						.table-image(:style="{backgroundImage: `url(${item.url})`}")
+					template(#description="{item}")
+						div {{ item.description.name }}
+						div
+							strong RPC
+							span {{ item.description.rpc }}
+						div
+							strong UPC
+							span {{ item.description.upc }}
+					template(#date="{item}") {{ item.date }}
+						.circle(:class="Math.floor(Math.random() * 2) ? 'circle-red' : 'circle-green'")
 </template>
 
 <script>
@@ -62,9 +91,11 @@ import CalendarExport from 'vue-material-design-icons/CalendarExport.vue'
 import CalendarBlank from 'vue-material-design-icons/CalendarBlank.vue'
 import DatePicker from '@/components/Elements/DatePicker.vue'
 import Tabs from "@/components/Nestle/Tabs";
+import Table from "../../components/Table/Table";
 
 export default {
 	components: {
+		Table,
 		Tabs,
 		Period,
 		LineChart,
@@ -96,6 +127,7 @@ export default {
 					title: '%'
 				}
 			],
+			list: [],
 		}
 	},
 	computed:{
@@ -195,6 +227,106 @@ export default {
 		getDateStr() {
 			return `${dayjs(this.date.from).format('DD.MM.YYYY')} - ${dayjs(this.date.to).format('DD.MM.YYYY')}`
 		},
+		tableDataDefault() {
+			return [
+				{
+					title: 'Ozon',
+					url: 'https://pechatvkaliningrade.ru/wp-content/uploads/2020/03/Шоколадка-Алёнка-с-твоим-фото-на-8-марта.jpg',
+					description: {
+						name: 'name',
+						rpc: '11111111',
+						upc: '22222'
+					}
+				},
+				{
+					title: 'Ozon',
+					url: 'https://pechatvkaliningrade.ru/wp-content/uploads/2020/03/Шоколадка-Алёнка-с-твоим-фото-на-8-марта.jpg',
+					description: {
+						name: 'name',
+						rpc: '11111111',
+						upc: '22222'
+					}
+				},
+				{
+					title: 'Ozon',
+					url: 'https://pechatvkaliningrade.ru/wp-content/uploads/2020/03/Шоколадка-Алёнка-с-твоим-фото-на-8-марта.jpg',
+					description: {
+						name: 'name',
+						rpc: '11111111',
+						upc: '22222'
+					}
+				}
+			]
+		},
+		tableColumns() {
+			return [
+				{
+					title: 'Online Store',
+					width: 80,
+					slot: 'title',
+				},
+				{
+					title: 'Image',
+					width: 80,
+					slot: 'image',
+				},
+				{
+					title: 'Description',
+					width: 240,
+					slot: 'description',
+				},
+				{
+					title: 'Dec 10',
+					width: 60,
+					slot: 'date',
+					value: () => {
+						return Math.floor(Math.random() * 2) === 1
+					}
+				},
+				{
+					title: 'Dec 11',
+					width: 60,
+					slot: 'date',
+					value: () => {
+						return Math.floor(Math.random() * 2) === 1
+					}
+				},
+				{
+					title: 'Dec 12',
+					width: 60,
+					slot: 'date',
+					value: () => {
+						return Math.floor(Math.random() * 2) === 1
+					}
+				},
+				{
+					title: 'Dec 13',
+					width: 60,
+					slot: 'date',
+					value: () => {
+						return Math.floor(Math.random() * 2) === 1
+					}
+				},
+				{
+					title: 'Dec 14',
+					width: 60,
+					slot: 'date',
+					value: () => {
+						return Math.floor(Math.random() * 2) === 1
+					}
+				},
+			]
+		},
+		tableOptions() {
+			return {
+				sort: {field: 'name', order: 'desc'},
+				columns: this.tableColumns,
+				data: this.tableData,
+			}
+		},
+		tableData() {
+			return this.list.concat(this.tableDataDefault)
+		},
 	}
 }
 </script>
@@ -287,6 +419,25 @@ select{
 	cursor: pointer;
 	&:focus{
 		outline: none;
+	}
+}
+.charts{
+	margin-bottom: 38px;
+}
+.table-image{
+	width: 40px;
+	height: 40px;
+	background-size: cover;
+}
+.circle{
+	width: 15px;
+	height: 15px;
+	border-radius: 50%;
+	&-red{
+		background-color: color(red);
+	}
+	&-green{
+		background-color: color(green);
 	}
 }
 </style>

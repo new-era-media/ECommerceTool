@@ -1,5 +1,5 @@
 <template lang="pug">
-	.element-container
+	.element-container(:style="style")
 		.element-container__title.flex.items-center
 			.element-container__title-left
 				slot(name="header-left")
@@ -11,14 +11,26 @@
 
 <script>
 export default {
-	name: "ContainerForData"
+	name: "ContainerForData",
+	props: {
+		width: {
+			type: String,
+			default: '600px'
+		}
+	},
+	computed: {
+		style(){
+			return {
+				width: this.width
+			}
+		}
+	}
 }
 </script>
 
 <style lang="scss" scoped>
 .element-container{
 	position: relative;
-	width: 600px;
 	border: 3px color(gray-400) solid;
 	background-color: white;
 	border-radius: 2px;

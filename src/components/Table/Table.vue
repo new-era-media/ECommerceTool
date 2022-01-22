@@ -225,7 +225,6 @@ export default {
 	&:first-child {
 		padding-left: 0;
 		padding-right: 0;
-
 	}
 
 	&.--fixed {
@@ -254,6 +253,10 @@ export default {
 }
 
 .tr {
+	&:first-child{
+		border-top: 1px color(gray-200) solid;
+	}
+
 	border-bottom: 1px solid color(gray-300);
 
 	&:hover {
