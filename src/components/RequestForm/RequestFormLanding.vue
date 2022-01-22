@@ -17,6 +17,7 @@
 			Checkbox.request__agreements(
 				:value="isAgree"
 				type="gray"
+				@change="change"
 			)
 				| Согласие на&nbsp;
 				Link(href="/" unstyled native)
@@ -42,6 +43,11 @@ export default {
 	data() {
 		return {
 			isAgree: true,
+		}
+	},
+	methods: {
+		change() {
+			this.isAgree = !this.isAgree
 		}
 	},
 }
