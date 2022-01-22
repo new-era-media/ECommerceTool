@@ -77,10 +77,10 @@
 						div {{ item.description.name }}
 						div
 							strong RPC
-							span {{ item.description.rpc }}
+							span.ml-8 {{ item.description.rpc }}
 						div
 							strong UPC
-							span {{ item.description.upc }}
+							span.ml-8 {{ item.description.upc }}
 					template(#date="{item}") {{ item.date }}
 						.circle(:class="Math.floor(Math.random() * 2) ? 'circle-red' : 'circle-green'")
 </template>
