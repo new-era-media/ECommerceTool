@@ -1,3 +1,4 @@
+import CatLayout from '../components/Layout/CatLayout.vue'
 import LayoutLanding from '../components/Layout/LayoutLanding.vue'
 import LayoutFullPage from '../components/Layout/LayoutFullPage.vue'
 import Layout from '../components/Layout/Layout.vue'
@@ -9,8 +10,8 @@ import store from '@/store'
 export default [
 	{
 		path: '',
-		name: 'LayoutLanding',
-		component: LayoutLanding,
+		name: 'CatLayout',
+		component: CatLayout,
 		redirect: { name: 'Index' },
 		children: [
 			{
@@ -18,6 +19,15 @@ export default [
 				name: 'Index',
 				component: _import('Index'),
 			},
+
+		]
+	},
+	{
+		path: '/',
+		name: 'LayoutLanding',
+		component: LayoutLanding,
+		redirect: { name: 'SignIn' },
+		children: [
 			{
 				path: '/signin',
 				name: 'SignIn',

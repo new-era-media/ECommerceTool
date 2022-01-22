@@ -1,7 +1,7 @@
 <template lang="pug">
 	.checkbox.flex.items-center(:class="classNames" @click="change")
 		.checkbox__icon.flex.justify-around.items-center
-			CheckIcon.checkbox__icon-check(:size="18" fillColor="#5744D6")
+			CheckIcon.checkbox__icon-check(:size="18" :fillColor="checkboxColor")
 		.checkbox__label
 			slot
 				| {{label}}
@@ -20,18 +20,27 @@ export default {
 		},
 		label: {
 			type: String,
-			required: true
 		},
 		value: [String, Boolean],
+		type: {
+			default: 'violet',
+			validator: value => ~[
+				'violet', 'gray',
+			].indexOf(value),
+		},
 	},
 	computed: {
 		classNames() {
 			let cn = [
 				this.value ? '--active' : '',
 				this.disabled ? '--disabled' : '',
+				`--type-${this.type}`,
 			]
 
 			return cn
+		},
+		checkboxColor() {
+			return this.type === 'violet' ? '#5744D6' : '#000000'
 		},
 	},
 	methods: {
@@ -52,8 +61,6 @@ export default {
 	&__icon {
 		width: 24px;
 		height: 24px;
-		border-radius: 4px;
-		border: 2px solid color(gray-500);
 
 		&-check {
 			display: none;
@@ -62,13 +69,34 @@ export default {
 	&__label {
 		margin-left: 8px;
 	}
+	&.--type {
+		&-violet {
+			.checkbox__icon {
+				border-radius: 4px;
+				border: 2px solid color(gray-500);
+			}
 
-	&.--active {
-		.checkbox__icon {
-			border-color: color(violet);
+			&.--active {
+				.checkbox__icon {
+					border-color: color(violet);
 
-			&-check {
-				display: block;
+					&-check {
+						display: block;
+					}
+				}
+			}
+		}
+		&-gray {
+			.checkbox__icon {
+				border-radius: 1px;
+				border: 1px solid color(gray-light);
+			}
+			&.--active {
+				.checkbox__icon {
+					&-check {
+						display: block;
+					}
+				}
 			}
 		}
 	}
