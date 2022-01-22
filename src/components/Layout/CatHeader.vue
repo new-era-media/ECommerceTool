@@ -6,7 +6,8 @@
 			nav.header__nav.flex.items-center
 				.header__nav-item(v-for="item in nav" :key="item.title")
 					| {{ item.title }}
-				LandingButton.header__signin(type="red-outline" label="Войти")
+				Link(:to="{name: 'SignIn'}" unstyled)
+					LandingButton.header__signin(type="red-outline" label="Войти")
 
 </template>
 
