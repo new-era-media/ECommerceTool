@@ -27,6 +27,12 @@
 							.ml-auto.mr-8 {{ item.titlePercent }}
 					template(#color="{item, index}")
 
+					template(#marketplace="{item, index, value}")
+						.color-container.flex.items-center.justify-center.flex-col(:class="getColor(value)")
+							| {{ value }}%
+							template(v-if="!value")
+								div No Results
+
 </template>
 
 <script>
@@ -93,27 +99,30 @@ export default {
 					title: `<div class="table-title">Ozon</div>
 									<div class="table-percent--green">39%<div>`,
 					width: 300,
+					slot: 'marketplace',
 					alignCenter: true,
-					value: (item)=>{
-						return `<div class="color-container ${this.getColor(item.ozon)} flex items-center justify-center flex-col">${item.ozon}% ${item.ozon ? '' : '<div>No Rezults</div>'}</div>`
+					value: (item) => {
+						return item.ozon
 					}
 				},
 				{
 					title: `<div class="table-title">Утканос</div>
 									<div class="table-percent--green">59%<div>`,
 					width: 300,
+					slot: 'marketplace',
 					alignCenter: true,
-					value: (item)=>{
-						return `<div class="color-container ${this.getColor(item.ytka)} flex items-center justify-center  flex-col">${item.ytka}% ${item.ytka ? '' : '<div>No Rezults</div>'}</div>`
+					value: (item) => {
+						return item.ytka
 					}
 				},
 				{
 					title: `<div class="table-title">Яндекс Маркет</div>
 									<div class="table-percent--red">0%<div>`,
 					width: 300,
+					slot: 'marketplace',
 					alignCenter: true,
-					value: (item)=>{
-						return `<div class="color-container ${this.getColor(item.yandex)} flex items-center justify-center flex-col">${item.yandex}%  ${item.yandex ? '' : '<div>No Rezults</div>'}</div>`
+					value: (item) => {
+						return item.yandex
 					}
 				}
 			]
