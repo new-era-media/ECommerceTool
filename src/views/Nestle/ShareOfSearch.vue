@@ -148,6 +148,14 @@ export default {
 			}
 
 			return '--green'
+		},
+		getTableTemplate(item){
+			return `<div class="color-container ${this.getColor(item)} flex items-center justify-center  flex-col">
+								${item}%
+								${item ? '' :
+								'<div>No Rezults' +
+								'</div>'}
+							</div>`
 		}
 	}
 }
