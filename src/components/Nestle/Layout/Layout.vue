@@ -1,5 +1,6 @@
 <template lang="pug">
 	main.layout
+		Header
 		.layout__content
 			RouterView
 		NestleToggle
@@ -7,9 +8,11 @@
 
 <script>
 import NestleToggle from '@/components/Elements/NestleToggle.vue'
+import Header from '@/components/Nestle/Layout/Header.vue'
 
 export default {
 	components: {
+		Header,
 		NestleToggle,
 	},
 }
