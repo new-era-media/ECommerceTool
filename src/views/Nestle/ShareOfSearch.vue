@@ -25,8 +25,6 @@
 							.table-name-item {{ item.title }}
 							FlagVariant.flag-icon.ml-8
 							.ml-auto.mr-8 {{ item.titlePercent }}
-					template(#color="{item, index}")
-
 					template(#marketplace="{item, index, value}")
 						.color-container.flex.items-center.justify-center.flex-col(:class="getColor(value)")
 							| {{ value }}%
