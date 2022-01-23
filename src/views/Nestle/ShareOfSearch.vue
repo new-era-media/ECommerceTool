@@ -95,7 +95,7 @@ export default {
 					width: 300,
 					alignCenter: true,
 					value: (item)=>{
-						return `<div class="color-container ${this.getColor(item.ozon)} flex items-center justify-center flex-col">${item.ozon}% ${item.ozon ? '' : '<div>No Rezults</div>'}</div>`
+						return this.getTableTemplate(item.ozon)
 					}
 				},
 				{
@@ -104,7 +104,7 @@ export default {
 					width: 300,
 					alignCenter: true,
 					value: (item)=>{
-						return `<div class="color-container ${this.getColor(item.ytka)} flex items-center justify-center  flex-col">${item.ytka}% ${item.ytka ? '' : '<div>No Rezults</div>'}</div>`
+						return this.getTableTemplate(item.ytka)
 					}
 				},
 				{
@@ -113,7 +113,7 @@ export default {
 					width: 300,
 					alignCenter: true,
 					value: (item)=>{
-						return `<div class="color-container ${this.getColor(item.yandex)} flex items-center justify-center flex-col">${item.yandex}%  ${item.yandex ? '' : '<div>No Rezults</div>'}</div>`
+						return this.getTableTemplate(item.yandex)
 					}
 				}
 			]
@@ -139,6 +139,14 @@ export default {
 			}
 
 			return '--green'
+		},
+		getTableTemplate(item){
+			return `<div class="color-container ${this.getColor(item)} flex items-center justify-center  flex-col">
+								${item}%
+								${item ? '' :
+								'<div>No Rezults' +
+								'</div>'}
+							</div>`
 		}
 	}
 }
