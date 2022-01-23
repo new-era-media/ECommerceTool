@@ -45,14 +45,16 @@
 						@end="handleEnd"
 					)
 						Widget.dashboard__widget(
-							v-for="widget of part.list"
+							v-for="(widget, index) of part.list"
+							:key="`widget-${index}`"
 							:widget="widget"
 							:loading="widget.loading"
 							:type="widget ? widget.type : 'count'"
 						)
 			template(v-else)
 				WidgetLight.dashboard__widget(
-					v-for="widget of widgetList"
+					v-for="(widget, index) of widgetList"
+					:key="`widget-light-${index}`"
 					:widget="widget"
 					:loading="widget.loading"
 					:source="source"
