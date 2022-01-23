@@ -18,5 +18,6 @@ export default {
 <style lang="scss">
 .layout {
 	min-height: 100vh;
+	background-color: color(gray-200);
 }
 </style>

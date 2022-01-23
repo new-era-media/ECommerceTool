@@ -19,25 +19,27 @@ import {
 	TimeScale,
 	//TimeSeriesScale,
 	//Decimation,
-	//Filler,
-	//Legend,
+	Filler,
+	Legend,
 	//Title,
 	Tooltip
 } from 'chart.js'
 
 Chart.register(
-		ArcElement,
-		LineElement,
-		BarElement,
-		PointElement,
-		BarController,
-		BubbleController,
-		DoughnutController,
-		LineController,
-		CategoryScale,
-		LinearScale,
-		TimeScale,
-		Tooltip
+	ArcElement,
+	LineElement,
+	BarElement,
+	PointElement,
+	BarController,
+	BubbleController,
+	DoughnutController,
+	LineController,
+	CategoryScale,
+	LinearScale,
+	TimeScale,
+	Tooltip,
+	Filler,
+	Legend
 )
 
 import Vue from 'vue'
@@ -84,7 +86,9 @@ e.line.backgroundColor = defaultColor
 e.line.borderColor = defaultColor
 e.bar.backgroundColor = defaultColor
 
-d.plugins.legend = false
+
+
+// d.plugins.legend = false
 /*let l = d.plugins.legend
 l.position = 'bottom'
 l.align = 'start'
