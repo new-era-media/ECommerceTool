@@ -1,5 +1,57 @@
 @import './fonts.scss';
 
+$spacing: (0, 1, 2, 4, 5, 6, 8, 10, 12, 16, 20, 24, 26, 28, 30, 32, 36, 40, 42, 46, 48, 56, 64, 80, 96, 120, 128, 160, 192, 224, 256);
+
+$sides: (
+	t: (top),
+	r: (right),
+	b: (bottom),
+	l: (left),
+	x: (left, right),
+	y: (top, bottom)
+);
+
+
+@each $space in $spacing {
+	@each $short, $rule in (p: 'padding', m: 'margin') {
+		.#{$short}-#{$space} {
+			#{$rule}: #{$space}px;
+		}
+
+		.#{$short}-#{$space}-important {
+			#{$rule}: #{$space}px;
+		}
+	}
+}
+
+@each $spell, $sideTypes in $sides {
+	@each $space in $spacing {
+		@each $short, $rule in (p: 'padding', m: 'margin') {
+			.#{$short}#{$spell}-#{$space} {
+				@each $s in $sideTypes {
+					#{$rule}-#{$s}: #{$space}px;
+				}
+			}
+
+			.#{$short}#{$spell}-#{$space}-important {
+				@each $s in $sideTypes {
+					#{$rule}-#{$s}: #{$space}px !important;
+				}
+			}
+		}
+	}
+}
+
+@each $spell, $sideTypes in $sides {
+	@each $short, $rule in (p: 'padding', m: 'margin') {
+		*.#{$short}#{$spell}-auto {
+			@each $s in $sideTypes {
+				#{$rule}-#{$s}: auto;
+			}
+		}
+	}
+}
+
 body {
 	&.--overlay {
 		overflow: hidden;

@@ -32,6 +32,7 @@
 							span 'Tooltip'
 				template(#data)
 					ShellDoughuntChart(v-bind="chartPropsDoughunt")
+					ShellDoughuntChart(v-bind="chartPropsDoughunt")
 
 			ContainerForData
 				template(#header-left)
@@ -414,6 +415,7 @@ h1{
 .ml-8 {
 	margin-left: 8px;
 }
+
 select{
 	padding: 0 5px;
 	outline: 1px color(gray-400) solid;
@@ -424,6 +426,7 @@ select{
 		outline: none;
 	}
 }
+
 /deep/.control__input{
 	padding: 10px 5px;
 	border: none;

@@ -18,9 +18,8 @@
 								WithAddon(v-else :right="col.alignRight")
 									.fa.far(slot="addon" v-if="sort && sort.field === col.sort") 
 
-									.th__cell-content(:class="{'--right': col.alignRight}")
-										.th__cell-title
-											| {{col.title}}
+									.th__cell-content(:class="{'--right': col.alignRight, '--center': col.alignCenter}")
+										.th__cell-title(v-html="col.title")
 
 										//Tooltip.th__cell-tooltip(v-if="col.tooltip" trigger="hover" placement="top" append-to-body)
 											FontAwesome.far(slot="reference") 
@@ -38,7 +37,7 @@
 										:index="index"
 										:col="col"
 									)
-									div(v-else) {{col.value(row, index)}}
+									div(v-else v-html="col.value(row, index)" )
 		slot
 </template>
 
@@ -186,6 +185,9 @@ export default {
 
 			&.--right {
 				justify-content: flex-end;
+			}
+			&.--center {
+				justify-content: center;
 			}
 		}
 
