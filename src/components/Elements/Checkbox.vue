@@ -1,7 +1,7 @@
 <template lang="pug">
 	.checkbox.flex.items-center(:class="classNames" @click="change")
 		.checkbox__icon.flex.justify-around.items-center
-			CheckIcon.checkbox__icon-check(:size="18" :fillColor="checkboxColor")
+			CheckIcon.checkbox__icon-check(:size="iconSize" :fillColor="checkboxColor")
 		.checkbox__label
 			slot
 				| {{label}}
@@ -28,12 +28,17 @@ export default {
 				'violet', 'gray',
 			].indexOf(value),
 		},
+		size: {
+			default: 'md',
+			validator: value => ~['sm', 'md'].indexOf(value),
+		},
 	},
 	computed: {
 		classNames() {
 			let cn = [
 				this.value ? '--active' : '',
 				this.disabled ? '--disabled' : '',
+				`--size-${this.size}`,
 				`--type-${this.type}`,
 			]
 
@@ -41,6 +46,9 @@ export default {
 		},
 		checkboxColor() {
 			return this.type === 'violet' ? '#5744D6' : '#000000'
+		},
+		iconSize() {
+			return this.size === 'md' ? 18 : 14
 		},
 	},
 	methods: {
@@ -98,6 +106,20 @@ export default {
 					}
 				}
 			}
+		}
+	}
+
+	&.--size {
+		&-sm {
+			.checkbox {
+				&__icon {
+					width: 18px;
+					height: 18px;
+				}
+			}
+		}
+		&-md {
+
 		}
 	}
 	&.--disabled {

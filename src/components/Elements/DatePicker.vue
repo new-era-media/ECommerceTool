@@ -23,7 +23,7 @@
 			RightIcon(:size="18" fillColor="#5744D6")
 
 		template(v-slot="{ inputValue, inputEvents }")
-			.control
+			.control(:class="classNames")
 				Input.control__input(
 					:value="inputValue"
 					v-on="inputEvents"
@@ -40,7 +40,7 @@ import LeftIcon from 'vue-material-design-icons/ChevronLeft.vue'
 import RightIcon from 'vue-material-design-icons/ChevronRight.vue'
 
 require('dayjs/locale/ru')
-import dayjs from 'dayjs';
+import dayjs from 'dayjs'
 
 export default {
 	components: {
@@ -50,7 +50,18 @@ export default {
 		RightIcon,
 	},
 	inheritAttrs: false,
-	props: ['value', 'placeholder', 'popover-visibility'],
+	props: {
+		value: [String, Date],
+		placeholder: String,
+		popoverVisibility: Boolean,
+		type: {
+			default: 'input',
+			validator: value => ~[
+				'input', 'string',
+			].indexOf(value),
+		}
+	},
+	// props: ['value', 'placeholder', 'popover-visibility'],
 	data() {
 		return {
 			masks: {
@@ -74,7 +85,14 @@ export default {
 		},
 		currentYear() {
 			return dayjs(this.value).locale('ru').format('YYYY')
-		}
+		},
+		classNames() {
+			const cn = [
+				`--type-${this.type}`,
+			]
+
+			return cn
+		},
 	},
 	methods: {
 		clear() {
@@ -95,6 +113,20 @@ export default {
 
 	&__input {
 
+	}
+	&.--type {
+		&-input {
+
+		}
+		&-string {
+			.control__input {
+				height: auto;
+				width: auto;
+				padding: 0;
+				background-color: transparent;
+				border: none;
+			}
+		}
 	}
 }
 .date {

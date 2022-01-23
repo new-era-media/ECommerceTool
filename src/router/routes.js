@@ -122,12 +122,12 @@ export default [
 		path: '/nestle',
 		name: 'NestleLayout',
 		component: NestleLayout,
-		redirect: { name: 'Nestle.Index' },
+		redirect: { name: 'Nestle.KPIDashboard' },
 		children: [
 			{
 				path: '/',
-				name: 'Nestle.Index',
-				component: _import('Nestle/Index'),
+				name: 'Nestle.KPIDashboard',
+				component: _import('Nestle/KPIDashboard'),
 			},
 			{
 				path: 'portfolio-availability',

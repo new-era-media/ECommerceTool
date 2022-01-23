@@ -1,91 +1,105 @@
 <template lang="pug">
-	.index
+	.portfolio
+		Menu(title="Portfolio Availability")
+			.portfolio__nav.flex.justify-between.items-center
+				Export.portfolio__export(
+					type='white'
+					@click="exportHandler"
+				)
+				.portfolio__date.flex.items-center
+					CalendarBlank.portfolio__date-icon(:size="18")
+					DatePicker(
+						v-model="dateSelect"
+						type="string"
+					)
 		.header.flex.items-center
-			h1 Portfolio Availability
-			Tooltip(trigger="hover")
-				template(slot="reference")
-					HelpCircle.icon
-				span 'Tooltip'
+		//	h1 Portfolio Availability
+		//	Tooltip(trigger="hover")
+		//		template(slot="reference")
+		//			HelpCircle.icon
+		//		span 'Tooltip'
+		//
+		//	.header-right.flex
+		//		button.header-button.flex.items-center
+		//			CalendarExport.icon-button
+		//			strong Export
+		//		button.header-button.flex.items-center
+		//			CalendarBlank.icon-button
+		//			DatePicker(v-model="dateSelect")
+		.container
+			.flex.mb-24
+				select(v-model="group")
+					option(v-for="item in groupOptions" :value="item") Group By: {{ item }}
+				.header-right
+					Tabs(:tabs="tabsData" v-model="tab")
 
-			.header-right.flex
-				button.header-button.flex.items-center
-					CalendarExport.icon-button
-					strong Export
-				button.header-button.flex.items-center
-					CalendarBlank.icon-button
-					DatePicker(v-model="dateSelect")
+			.flex.justify-between.charts
+				ContainerForData
+					template(#header-left)
+						.flex.items-center
+							p Summary
+							Tooltip(trigger="hover")
+								template(slot="reference")
+									HelpCircle.icon
+								span 'Tooltip'
+					template(#data)
+						ShellDoughuntChart(v-bind="chartPropsDoughunt")
 
-		.flex.mb-24
-			select(v-model="group")
-				option(v-for="item in groupOptions" :value="item") Group By: {{ item }}
-			.header-right
-				Tabs(:tabs="tabsData" v-model="tab")
+				ContainerForData
+					template(#header-left)
+						.flex.items-center
+							p Portfolio Availability Over Time
+							Tooltip(trigger="hover")
+								template(slot="reference")
+									HelpCircle.icon
+								span 'Tooltip'
+					template(#header-right)
+						Tooltip(trigger="clickToToggle")
+							template(slot="reference")
+								.data-range-picker {{ getDateStr }}
+							Period(:date="date")
+					template(#data)
+						LineChart(v-bind="chartPropsLine")
 
-		.flex.justify-between.charts
-			ContainerForData
+			ContainerForData(width="100%")
 				template(#header-left)
 					.flex.items-center
-						p Summary
-						Tooltip(trigger="hover")
-							template(slot="reference")
-								HelpCircle.icon
-							span 'Tooltip'
-				template(#data)
-					ShellDoughuntChart(v-bind="chartPropsDoughunt")
-
-			ContainerForData
-				template(#header-left)
-					.flex.items-center
-						p Portfolio Availability Over Time
-						Tooltip(trigger="hover")
-							template(slot="reference")
-								HelpCircle.icon
-							span 'Tooltip'
+						select(v-model="status")
+							option(v-for="item in statusOptions" :value="item") {{ item }}
+						input.ml-8(type="checkbox" id="status")
+						label.ml-8(for="status") Only New Changes
 				template(#header-right)
-					Tooltip(trigger="clickToToggle")
-						template(slot="reference")
-							.data-range-picker {{ getDateStr }}
-						Period(:date="date")
+					.flex
+						.table-button
+							button &#x2039; Earler dates
+							button Later dates &#x203A;
+						.search.ml-8
+							.icon &#x1F50E;&#xFE0E;
+							input(type="text" placeholder="UPC, RPC, MPC or Product Description")
+						Tooltip.ml-8(trigger="clickToToggle")
+							template(slot="reference")
+								.data-range-picker {{ getDateStr }}
+							Period(:date="date")
 				template(#data)
-					LineChart(v-bind="chartPropsLine")
-
-		ContainerForData(width="100%")
-			template(#header-left)
-				.flex.items-center
-					select(v-model="status")
-						option(v-for="item in statusOptions" :value="item") {{ item }}
-					input.ml-8(type="checkbox" id="status")
-					label.ml-8(for="status") Only New Changes
-			template(#header-right)
-				.flex
-					.table-button
-						button &#x2039; Earler dates
-						button Later dates &#x203A;
-					.search.ml-8
-						.icon &#x1F50E;&#xFE0E;
-						input(type="text" placeholder="UPC, RPC, MPC or Product Description")
-					Tooltip.ml-8(trigger="clickToToggle")
-						template(slot="reference")
-							.data-range-picker {{ getDateStr }}
-						Period(:date="date")
-			template(#data)
-				Table.brands__table(v-bind="tableOptions")
-					template(#title="{item, index}") {{ item.title }}
-					template(#image="{item}")
-						.table-image(:style="{backgroundImage: `url(${item.url})`}")
-					template(#description="{item}")
-						div {{ item.description.name }}
-						div
-							strong RPC
-							span.ml-8 {{ item.description.rpc }}
-						div
-							strong UPC
-							span.ml-8 {{ item.description.upc }}
-					template(#date="{item}") {{ item.date }}
-						.circle(:class="Math.floor(Math.random() * 2) ? 'circle-red' : 'circle-green'")
+					Table.brands__table(v-bind="tableOptions")
+						template(#title="{item, index}") {{ item.title }}
+						template(#image="{item}")
+							.table-image(:style="{backgroundImage: `url(${item.url})`}")
+						template(#description="{item}")
+							div {{ item.description.name }}
+							div
+								strong RPC
+								span.ml-8 {{ item.description.rpc }}
+							div
+								strong UPC
+								span.ml-8 {{ item.description.upc }}
+						template(#date="{item}") {{ item.date }}
+							.circle(:class="Math.floor(Math.random() * 2) ? 'circle-red' : 'circle-green'")
 </template>
 
 <script>
+import Menu from '@/components/Menu/Menu.vue'
+import Export from '@/components/Nestle/Export/Export.vue'
 import ShellDoughuntChart from "@/components/Nestle/ShellDoughuntChart";
 import ContainerForData from "@/components/Nestle/ContainerForData";
 import LineChart from "@/components/Chart/LineChart";
@@ -101,6 +115,8 @@ import Table from "@/components/Table/Table";
 
 export default {
 	components: {
+		Menu,
+		Export,
 		Table,
 		Tabs,
 		Period,
@@ -336,16 +352,36 @@ export default {
 		tableData() {
 			return this.list.concat(this.tableDataDefault)
 		},
-	}
+	},
+	methods: {
+		exportHandler() {
+			console.log('exportHandler')
+		},
+	},
 }
 </script>
 
 <style lang="scss" scoped>
-.index {
-	max-width: 1280px;
-	margin: 0 auto;
-	padding: 20px;
+.portfolio {
+	&__nav {
+		width: 190px;
+	}
+	&__date {
+		width: 100px;
+		color: color(white);
+		cursor: pointer;
+
+		&-icon {
+			margin-right: 4px;
+		}
+
+		/deep/.control__input{
+			color: color(white);
+			font-weight: 400;
+		}
+	}
 }
+
 h1{
 	color: color(gray-700);
 }
