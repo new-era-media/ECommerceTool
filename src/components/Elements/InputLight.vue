@@ -24,7 +24,6 @@ export default {
 	data() {
 		return {
 			isFocus: false,
-			isVisiblePlaceholder: true,
 		}
 	},
 	computed: {
@@ -40,6 +39,9 @@ export default {
 			return {
 				...omit(this.$listeners, ['input']),
 			}
+		},
+		isVisiblePlaceholder() {
+			return this.model.length
 		},
 	},
 	methods: {

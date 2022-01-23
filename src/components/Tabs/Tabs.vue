@@ -1,5 +1,5 @@
 <template lang="pug">
-.tabs
+.tabs(:class="classNames")
 	.tabs__header
 		.tabs__label(v-for="(tab, i) of tabs" :key="tab._uid" :class="labelClassNames(tab, i)" @click="openTab(i)") {{tab.title}}
 
@@ -12,6 +12,12 @@ export default {
 	props: {
 		defaultTabIndex: {
 			default: 0,
+		},
+		type: {
+			default: 'violet',
+			validator: value => ~[
+				'violet', 'gray',
+			].indexOf(value),
 		},
 	},
 	data() {
@@ -29,6 +35,13 @@ export default {
 			this.active
 
 			return this.$children
+		},
+		classNames() {
+			const cn = [
+				`--type-${this.type}`,
+			]
+
+			return cn
 		},
 	},
 	methods: {
@@ -86,6 +99,26 @@ export default {
 				transition: width 0.3s ease-in;
 			}
 
+		}
+	}
+	&.--type {
+		&-violet {
+			& .tabs__label {
+				&.--active {
+					&:after {
+						background: linear-gradient(67.64deg, color(blue) 28.69%, color(violet-bright) 82.18%);
+					}
+				}
+			}
+		}
+		&-gray {
+			& .tabs__label {
+				&.--active {
+					&:after {
+						background: color(gray-500);
+					}
+				}
+			}
 		}
 	}
 }
