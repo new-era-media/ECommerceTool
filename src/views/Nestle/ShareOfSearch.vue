@@ -1,19 +1,13 @@
 <template lang="pug">
-	.index
-		.header.flex.items-center
-			h1 Share of Search
-			Badge.ml-8(text="32%")
-			Tooltip(trigger="hover")
-				template(slot="reference")
-					HelpCircle.icon
-				span 'Tooltip'
+	.share
+		Menu(title="Portfolio Availability")
+			.share__nav.flex.justify-between.items-center
+				Export.share__export(
+					type='white'
+					@click="exportHandler"
+				)
 
-			.header-right.flex
-				button.header-button.flex.items-center
-					CalendarExport.icon-button
-					strong Export
-
-		ContainerForData(width="100%")
+		ContainerForData.mt-24(width="100%")
 			template(#header-left)
 				.flex.items-center
 					select(v-model="searchTerm")
@@ -33,6 +27,8 @@
 </template>
 
 <script>
+import Menu from '@/components/Menu/Menu.vue'
+import Export from '@/components/Nestle/Export/Export.vue'
 import Tooltip from '@/components/Elements/Tooltip.vue'
 import HelpCircle from 'vue-material-design-icons/HelpCircle.vue'
 import CalendarExport from 'vue-material-design-icons/CalendarExport.vue'
@@ -50,7 +46,9 @@ export default {
 		Tooltip,
 		CalendarExport,
 		HelpCircle,
-		FlagVariant
+		FlagVariant,
+		Menu,
+		Export
 	},
 	data: () => {
 		return {
@@ -136,6 +134,9 @@ export default {
 		},
 	},
 	methods: {
+		exportHandler() {
+			console.log('exportHandler')
+		},
 		getColor(number){
 			if(!number || number < 20){
 				return '--red'
@@ -162,10 +163,23 @@ export default {
 /deep/.c{
 	font-size: 30px;
 }
-.index {
+.share {
 	max-width: 1280px;
 	margin: 0 auto;
-	padding: 20px;
+	&__date {
+		width: 100px;
+		color: color(white);
+		cursor: pointer;
+
+		&-icon {
+			margin-right: 4px;
+		}
+
+		/deep/.control__input{
+			color: color(white);
+			font-weight: 400;
+		}
+	}
 }
 h1{
 	color: color(gray-700);
