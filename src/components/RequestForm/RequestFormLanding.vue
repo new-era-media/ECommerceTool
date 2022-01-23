@@ -2,18 +2,33 @@
 	.request
 		.request__section.flex.justify-between
 			.request__input
-				InputLight(placeholder="Имя и фамилия")
+				InputLight(
+					placeholder="Имя и фамилия"
+					v-model="form.name"
+				)
 			.request__input
-				InputLight(placeholder="Электронная почта")
+				InputLight(
+					placeholder="Электронная почта"
+					v-model="form.email"
+				)
 		.request__section.flex.justify-between
 			.request__input
-				InputLight(placeholder="Компания")
+				InputLight(
+					placeholder="Компания"
+					v-model="form.company"
+				)
 			.request__input
-				InputLight(placeholder="Должность")
+				InputLight(
+					placeholder="Должность"
+					v-model="form.position"
+				)
 		.request__section
-			TextareaLight.request__textarea(placeholder="Категория товаров, вопросы и пожелания")
+			TextareaLight.request__textarea(
+				placeholder="Категория товаров, вопросы и пожелания"
+				v-model="form.extra"
+			)
 		.request__section.flex
-			LandingButton.request__btn(label="Отправить")
+			LandingButton.request__btn(@click="request") Отправить
 			Checkbox.request__agreements(
 				:value="isAgree"
 				type="gray"
@@ -31,6 +46,7 @@ import TextareaLight from '@/components/Elements/TextareaLight.vue'
 import Checkbox from '@/components/Elements/Checkbox.vue'
 import LandingButton from '@/components/LandingButton/LandingButton.vue'
 import Link from '@/components/Link/Link.vue'
+import RequestForm from '@/components/RequestForm/RequestForm.vue'
 
 export default {
 	components: {
@@ -40,6 +56,7 @@ export default {
 		LandingButton,
 		Link,
 	},
+	mixins: [RequestForm],
 	data() {
 		return {
 			isAgree: true,
@@ -48,7 +65,7 @@ export default {
 	methods: {
 		change() {
 			this.isAgree = !this.isAgree
-		}
+		},
 	},
 }
 </script>
