@@ -133,6 +133,11 @@ export default [
 				path: 'portfolio-availability',
 				name: 'Nestle.PortfolioAvailability',
 				component: _import('Nestle/PortfolioAvailability'),
+			},
+			{
+				path: 'share-of-search',
+				name: 'Nestle.ShareOfSearch',
+				component: _import('Nestle/ShareOfSearch'),
 			}
 		]
 

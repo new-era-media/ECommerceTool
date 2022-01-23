@@ -12,22 +12,8 @@
 						v-model="dateSelect"
 						type="string"
 					)
-		.header.flex.items-center
-		//	h1 Portfolio Availability
-		//	Tooltip(trigger="hover")
-		//		template(slot="reference")
-		//			HelpCircle.icon
-		//		span 'Tooltip'
-		//
-		//	.header-right.flex
-		//		button.header-button.flex.items-center
-		//			CalendarExport.icon-button
-		//			strong Export
-		//		button.header-button.flex.items-center
-		//			CalendarBlank.icon-button
-		//			DatePicker(v-model="dateSelect")
 		.container
-			.flex.mb-24
+			.flex.mb-24.mt-24
 				select(v-model="group")
 					option(v-for="item in groupOptions" :value="item") Group By: {{ item }}
 				.header-right
@@ -198,16 +184,16 @@ export default {
 						above: 'rgba(93,95,236,0.4)',
 					}
 				},
-				{
-					label: 'Dataset 2',
-					data: [10, 20, 30, 80, 30],
-					borderColor: 'green',
-					backgroundColor: 'green',
-					fill: {
-						target: 'start',
-						above: 'rgba(76, 175, 80, 0.4)',
-					}
-				}]
+					{
+						label: 'Dataset 2',
+						data: [10, 20, 30, 80, 30],
+						borderColor: 'green',
+						backgroundColor: 'green',
+						fill: {
+							target: 'start',
+							above: 'rgba(76, 175, 80, 0.4)',
+						}
+					}]
 			}
 		},
 		optionsLine() {

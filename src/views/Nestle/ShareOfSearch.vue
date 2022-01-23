@@ -1,0 +1,285 @@
+<template lang="pug">
+	.share
+		Menu(title="Share of Search")
+			.share__nav.flex.justify-between.items-center
+				Export.share__export(
+					type='white'
+					@click="exportHandler"
+				)
+
+		ContainerForData.mt-24(width="100%")
+			template(#header-left)
+				.flex.items-center
+					select(v-model="searchTerm")
+						option(value="1") Search Term
+			template(#data)
+				Table(v-bind="tableOptions")
+					template(#name="{item, index}")
+						.flex.items-center
+							.table-name-item {{ item.title }}
+							FlagVariant.flag-icon.ml-8
+							.ml-auto.mr-8 {{ item.titlePercent }}
+					template(#marketplace="{item, index, value}")
+						.color-container.flex.items-center.justify-center.flex-col(:class="getColor(value)")
+							| {{ value }}%
+							template(v-if="!value")
+								div No Results
+</template>
+
+<script>
+import Menu from '@/components/Menu/Menu.vue'
+import Export from '@/components/Nestle/Export/Export.vue'
+import Tooltip from '@/components/Elements/Tooltip.vue'
+import HelpCircle from 'vue-material-design-icons/HelpCircle.vue'
+import CalendarExport from 'vue-material-design-icons/CalendarExport.vue'
+import FlagVariant from 'vue-material-design-icons/FlagVariant.vue'
+import Badge from "@/components/Chart/Badge";
+import ContainerForData from "@/components/Nestle/ContainerForData";
+import Table from "@/components/Table/Table";
+
+export default {
+	name: "ShareOfSearch",
+	components: {
+		Table,
+		ContainerForData,
+		Badge,
+		Tooltip,
+		CalendarExport,
+		HelpCircle,
+		FlagVariant,
+		Menu,
+		Export
+	},
+	data: () => {
+		return {
+			searchTerm: 1,
+			list: [],
+		}
+	},
+	computed:{
+		tableDataDefault() {
+			return [
+				{
+					title: 'After Eight',
+					titlePercent: '63%',
+					ozon: 94,
+					ytka: 94,
+					yandex: 0
+				},
+				{
+					title: 'After Eight Шоколад',
+					titlePercent: '65%',
+					ozon: 94,
+					ytka: 100,
+					yandex: 0
+				},
+				{
+					title: 'After Eight Шоколадны...',
+					titlePercent: '31%',
+					ozon: 94,
+					ytka: 0,
+					yandex: 0
+				},
+			]
+		},
+		tableColumns() {
+			return [
+				{
+					title: '<div class="table-title">Search Term</div>',
+					width: 300,
+					slot: 'name',
+					cellClass: 'justify-center',
+				},
+				{
+					title: `<div class="table-title">Ozon</div>
+									<div class="table-percent--green">39%<div>`,
+					width: 300,
+					slot: 'marketplace',
+					alignCenter: true,
+					value: (item) => {
+						return item.ozon
+					}
+				},
+				{
+					title: `<div class="table-title">Утканос</div>
+									<div class="table-percent--green">59%<div>`,
+					width: 300,
+					slot: 'marketplace',
+					alignCenter: true,
+					value: (item) => {
+						return item.ytka
+					}
+				},
+				{
+					title: `<div class="table-title">Яндекс Маркет</div>
+									<div class="table-percent--red">0%<div>`,
+					width: 300,
+					slot: 'marketplace',
+					alignCenter: true,
+					value: (item) => {
+						return item.yandex
+					}
+				}
+			]
+		},
+		tableOptions() {
+			return {
+				sort: {field: 'name', order: 'desc'},
+				columns: this.tableColumns,
+				data: this.tableData,
+			}
+		},
+		tableData() {
+			return this.list.concat(this.tableDataDefault)
+		},
+	},
+	methods: {
+		exportHandler() {
+			console.log('exportHandler')
+		},
+		getColor(number){
+			if(!number || number < 20){
+				return '--red'
+			}
+			if(number < 50){
+				return '--yellow'
+			}
+
+			return '--green'
+		},
+		getTableTemplate(item){
+			return `<div class="color-container ${this.getColor(item)} flex items-center justify-center flex-col">
+								${item}%
+								${item ? '' :
+								'<div>No Rezults' +
+								'</div>'}
+							</div>`
+		}
+	}
+}
+</script>
+
+<style scoped lang="scss">
+/deep/.c{
+	font-size: 30px;
+}
+.share {
+	max-width: 1280px;
+	margin: 0 auto;
+	&__date {
+		width: 100px;
+		color: color(white);
+		cursor: pointer;
+
+		&-icon {
+			margin-right: 4px;
+		}
+
+		/deep/.control__input{
+			color: color(white);
+			font-weight: 400;
+		}
+	}
+}
+h1{
+	color: color(gray-700);
+}
+.header{
+	margin-bottom: 32px;
+	&-right{
+		margin-left: auto;
+	}
+	&-button {
+		background-color: #fff;
+		padding: 10px 5px;
+		border-radius: 3px;
+		color: color(gray-700);
+		border: 1px color(gray-400) solid;
+		&:not(:last-child){
+			margin-right: 8px;
+		}
+		&:focus{
+			outline: none;
+		}
+	}
+}
+.icon{
+	color: color(gray-500);
+	position: absolute;
+	margin-left: 8px;
+	margin-top: -6px;
+	/deep/.material-design-icon__svg {
+		width: 15px;
+		height: 15px;
+	}
+}
+.icon-button{
+	color: color(gray-700);
+	/deep/.material-design-icon__svg {
+		width: 15px;
+		height: 15px;
+	}
+
+	margin-right: 8px;
+}
+/deep/.control__input{
+	padding: 10px 5px;
+	border: none;
+	width: 80px;
+	font-weight: 800;
+	color: color(gray-700);
+	cursor: pointer;
+
+	&:focus{
+		outline: none;
+	}
+}
+
+select{
+	padding: 0 5px;
+	outline: 1px color(gray-400) solid;
+	border-radius: 3px;
+	color: color(gray-700);
+
+	&:focus{
+		outline: none;
+	}
+}
+
+/deep/.table-name-item {
+	color: color(blue);
+}
+/deep/.table-title{
+	font-size: 24px;
+}
+/deep/.table-percent--green{
+	color: color(green);
+	text-align: center;
+}
+/deep/.table-percent--red{
+	color: color(red);
+	text-align: center;
+}
+.flag-icon{
+	color: yellow;
+}
+/deep/.color-container{
+	padding: 10px;
+	color: white;
+	border-radius: 3px;
+	height: 40px;
+	font-size: 12px;
+}
+/deep/.--red{
+	background-color: color(red);
+}
+/deep/.--yellow{
+	background-color: color(yellow);
+}
+/deep/.--green{
+	background-color: color(green);
+}
+/deep/.td {
+	padding: 2px;
+}
+</style>
