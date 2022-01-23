@@ -20,7 +20,7 @@
 						option(value="1") Search Term
 			template(#data)
 				Table(v-bind="tableOptions")
-					template(#first="{item, index}")
+					template(#name="{item, index}")
 						.flex.items-center
 							.table-name-item {{ item.title }}
 							FlagVariant.flag-icon.ml-8
@@ -30,7 +30,6 @@
 							| {{ value }}%
 							template(v-if="!value")
 								div No Results
-
 </template>
 
 <script>
@@ -90,7 +89,7 @@ export default {
 				{
 					title: '<div class="table-title">Search Term</div>',
 					width: 300,
-					slot: 'first',
+					slot: 'name',
 					cellClass: 'justify-center',
 				},
 				{
@@ -148,7 +147,7 @@ export default {
 			return '--green'
 		},
 		getTableTemplate(item){
-			return `<div class="color-container ${this.getColor(item)} flex items-center justify-center  flex-col">
+			return `<div class="color-container ${this.getColor(item)} flex items-center justify-center flex-col">
 								${item}%
 								${item ? '' :
 								'<div>No Rezults' +
