@@ -1,6 +1,6 @@
 <template lang="pug">
 	.share
-		Menu(title="Portfolio Availability")
+		Menu(title="Share of Search")
 			.share__nav.flex.justify-between.items-center
 				Export.share__export(
 					type='white'
