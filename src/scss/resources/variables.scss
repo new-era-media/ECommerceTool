@@ -29,6 +29,12 @@ $colors: (
 	red: #F44336,
 	red-light: #FB526B,
 	green: #4CAF50,
+	goal-above-high: #62B58E,
+	goal-above-medium: #BFE6B1,
+	goal-above-light: #E8F6E5,
+	goal-below-light: #FFCFC1,
+	goal-below-medium: #FF9EA2,
+	goal-below-high: #FC727F,
 );
 
 @function color($name) {
