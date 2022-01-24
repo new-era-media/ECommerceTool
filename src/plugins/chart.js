@@ -21,7 +21,7 @@ import {
 	//Decimation,
 	Filler,
 	Legend,
-	//Title,
+	Title,
 	Tooltip
 } from 'chart.js'
 
@@ -39,7 +39,8 @@ Chart.register(
 	TimeScale,
 	Tooltip,
 	Filler,
-	Legend
+	Legend,
+	Title
 )
 
 import Vue from 'vue'

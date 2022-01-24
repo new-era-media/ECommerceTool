@@ -28,7 +28,7 @@ export default {
 			return !Number.isInteger(this.rating);
 		},
 		emptyStars(){
-			return Math.ceil(this.rating) - this.fillStars;
+			return this.isHalfFull ? Math.ceil(this.rating) - this.fillStars - 1 : Math.ceil(this.rating) - this.fillStars
 		},
 	},
 }
