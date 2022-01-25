@@ -29,9 +29,11 @@
 			template(#header-right)
 				select(v-model="average")
 					option(v-for="item in averageRating" :value="item") {{ item }}
-			template(#data)
-				BarChart(:chartData="stackedBarChartData" :options="stackedBarChartOptions" :plugins="[erChartAvatarPlugin]" ref="bar")
-					span(style="position: absolute, top: 10px, left: 10px") 123131313
+			template.relative(#data)
+				.flex.ml-24(v-for="(item, index) in position")
+					.absolute(v-if="ratingList.length" :style="{top: `${item + 50}px`, left: '25px'}") {{ratingList[index]}}
+					Rating.absolute(v-if="position && ratingList.length" :style="{top: `${item + 48}px`, left: '50px'}" :rating="ratingList[index]")
+				BarChart(:chartData="stackedBarChartData" :options="stackedBarChartOptions" :plugins="[erChartRatingPlugin]" ref="bar")
 
 		ContainerForData.mt-24(width="100%")
 			template(#header-left)
@@ -58,7 +60,7 @@
 							span.mr-8 {{ value }}
 							Badge(text="pass")
 					template(#rating="{item, index, value}")
-						.flex.items-center.justify-center.mt-26
+						.flex.items-center.justify-center.mt-24
 							span.mr-8 {{ value }}
 							Badge(text="pass")
 						Rating(:rating="value")
@@ -77,8 +79,8 @@ import Search from "@/components/Nestle/Search";
 
 import dayjs from "dayjs";
 import Table from "@/components/Table/Table";
-import Badge from "../../components/Chart/Badge";
-import Rating from "../../components/Nestle/Layout/Rating";
+import Badge from "@/components/Chart/Badge";
+import Rating from "@/components/Nestle/Layout/Rating";
 
 export default {
 	name: "RatingsAndReviews",
@@ -104,7 +106,9 @@ export default {
 			averageRating: ['Avarage Rating'],
 			list: [],
 			dateSelect: dayjs().subtract(30, 'days').toDate(),
-			search: null
+			search: null,
+			position: [],
+			ratingList: [],
 		}
 	},
 	computed:{
@@ -141,6 +145,7 @@ export default {
 						}
 					},
 					title: {
+						position: 'bottom',
 						display: true,
 						text: 'Product count',
 						font: {
@@ -162,6 +167,7 @@ export default {
 		stackedBarChartData() {
 			return {
 				labels: ['Ozon', 'Utkonos', 'Yandex'],
+				percent: [4.1, 4.2, 4.5],
 				datasets: [
 					{
 						label: '1',
@@ -173,31 +179,31 @@ export default {
 						label: '2',
 						borderColor: '#C3C12A',
 						backgroundColor: '#C3C12A',
-						data: [5, 43, 0]
+						data: [5, 43, 0],
 					},
 					{
 						label: '3',
 						borderColor: '#FFC700',
 						backgroundColor: '#FFC700',
-						data: [0, 15, 0]
+						data: [0, 15, 0],
 					},
 					{
 						label: '4',
 						borderColor: '#FB8A02',
 						backgroundColor: '#FB8A02',
-						data: [0, 6, 0]
+						data: [0, 6, 0],
 					},
 					{
 						label: '5',
 						borderColor: '#E55627',
 						backgroundColor: '#E55627',
-						data: [0, 3, 0]
+						data: [0, 3, 0],
 					},
 					{
 						label: '6',
 						borderColor: '#ADACAD',
 						backgroundColor: '#ADACAD',
-						data: [0, 111, 19]
+						data: [0, 111, 19],
 					}
 				]
 			}
@@ -283,10 +289,10 @@ export default {
 		tableData() {
 			return this.list.concat(this.tableDataDefault)
 		},
-		erChartAvatarPlugin() {
+		erChartRatingPlugin() {
 			return {
-				id: 'chartAvatar',
-				afterDatasetUpdate: this.erChartAvatar
+				id: 'chartRating',
+				afterDatasetUpdate: this.erChartRating()
 			}
 		},
 	},
@@ -294,17 +300,14 @@ export default {
 		exportHandler() {
 			console.log('exportHandler')
 		},
-		async erChartAvatar(chart) {
-			console.log(1231331, chart)
-			// await this.$nextTick(()=>{
-			// 	const newChart = this.$refs.bar.chart
-			// 	newChart._metasets[0].data.forEach((bar) => {
-			// 		return {
-			// 			top: bar.y - bar.height / 2 - 6,
-			// 			left: bar.base - 30,
-			// 		}
-			// 	})
-			// })
+		async erChartRating() {
+			await this.$nextTick(()=>{
+				const newChart = this.$refs?.bar?.chart
+				newChart._metasets[0].data.forEach((bar) => {
+					this.ratingList = newChart?.config?._config?.data?.percent
+					this.position.push(bar.y)
+				})
+			})
 		}
 	}
 }
@@ -399,6 +402,14 @@ select{
 }
 
 /deep/.chart {
-	width: 100%;
+	width: 88%;
+	margin-left: auto;
+}
+
+.relative {
+	position: relative;
+}
+.absolute {
+	position: absolute;
 }
 </style>
