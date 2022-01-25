@@ -30,8 +30,8 @@
 				select(v-model="average")
 					option(v-for="item in averageRating" :value="item") {{ item }}
 			template(#data)
-				BarChart(:chartData="stackedBarChartData" :options="stackedBarChartOptions")
-					span 12313
+				BarChart(:chartData="stackedBarChartData" :options="stackedBarChartOptions" :plugins="[erChartAvatarPlugin]" ref="bar")
+					span(style="position: absolute, top: 10px, left: 10px") 123131313
 
 		ContainerForData.mt-24(width="100%")
 			template(#header-left)
@@ -112,7 +112,22 @@ export default {
 			return {
 				indexAxis: 'y',
 				plugins: {
+					datalabels: {
+						display: function (context){
+							return context.dataset.data[context.dataIndex] > 0
+						},
+						color: 'white',
+						backgroundColor: 'transparent',
+						borderColor: 'transparent',
+						font: {
+							weight: 'bold',
+							size: 14
+						}
+					},
 					responsive: true,
+					tooltip: {
+						enabled: false
+					},
 					interaction: {
 						intersect: false,
 					},
@@ -127,22 +142,19 @@ export default {
 					},
 					title: {
 						display: true,
-						text: 'Product count'
+						text: 'Product count',
+						font: {
+							size: 18
+						}
 					}
 				},
 				responsive: true,
 				scales: {
 					x: {
 						stacked: true,
-						grid: {
-							display: false,
-						}
 					},
 					y: {
 						stacked: true,
-						grid: {
-							display: false,
-						}
 					}
 				}
 			}
@@ -152,10 +164,10 @@ export default {
 				labels: ['Ozon', 'Utkonos', 'Yandex'],
 				datasets: [
 					{
-						label: 'ozo',
+						label: '1',
 						borderColor: '#49A22F',
 						backgroundColor: '#49A22F',
-						data: [244, 117, 105]
+						data: [244, 117, 105],
 					},
 					{
 						label: '2',
@@ -271,30 +283,29 @@ export default {
 		tableData() {
 			return this.list.concat(this.tableDataDefault)
 		},
-		// erChartAvatarPlugin() {
-		// 	return {
-		// 		id: 'chartAvatar',
-		// 		afterDatasetUpdate: this.erChartAvatar,
-		// 	}
-		// },
-		// erChartAvatar(chart) {
-		// 	console.log(chart)
-			// const dataset = this.stackedBarChartData.datasets[0].data
-			// chart._metasets[0].data.forEach((bar, index) => {
-			// 	console.log(bar)
-			// 	// if (dataset[index].min < value && dataset[index].max >= value) {
-			// 	// 	this.avaPosition = {
-			// 	// 		top: bar.y - bar.height / 2 - 6,
-			// 	// 		left: bar.base - 30,
-			// 	// 	}
-			// 	// }
-			// })
-		// },
+		erChartAvatarPlugin() {
+			return {
+				id: 'chartAvatar',
+				afterDatasetUpdate: this.erChartAvatar
+			}
+		},
 	},
 	methods: {
 		exportHandler() {
 			console.log('exportHandler')
 		},
+		async erChartAvatar(chart) {
+			console.log(1231331, chart)
+			// await this.$nextTick(()=>{
+			// 	const newChart = this.$refs.bar.chart
+			// 	newChart._metasets[0].data.forEach((bar) => {
+			// 		return {
+			// 			top: bar.y - bar.height / 2 - 6,
+			// 			left: bar.base - 30,
+			// 		}
+			// 	})
+			// })
+		}
 	}
 }
 </script>

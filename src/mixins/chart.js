@@ -21,6 +21,9 @@ export default {
 				plugins: {
 					legend: {
 						display: false
+					},
+					datalabels: {
+						display: false,
 					}
 				}
 			}, this.$options.overrides || {}, this.options),
