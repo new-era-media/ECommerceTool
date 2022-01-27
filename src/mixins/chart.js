@@ -11,11 +11,8 @@ export default {
 				scales: {
 					x: {
 						grid: {
-							display: false
+							display: false,
 						},
-						ticks: {
-							color: '#718096'
-						}
 					},
 				},
 				plugins: {

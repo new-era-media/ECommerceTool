@@ -157,6 +157,10 @@ export default {
 				scales: {
 					x: {
 						stacked: true,
+						beginAtZero: true,
+						ticks: {
+							maxTicksLimit: 50,
+						},
 					},
 					y: {
 						stacked: true,
