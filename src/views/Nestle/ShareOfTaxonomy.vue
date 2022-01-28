@@ -23,7 +23,7 @@ export default {
 				plugins: {
 					datalabels: {
 						display: function (context){
-							return context.dataset.data[context.dataIndex] > 10
+							return context.dataset.data[context.dataIndex] > 5
 						},
 						formatter: (item) => {
 							return `${item}%`
@@ -80,14 +80,14 @@ export default {
 							label: '1',
 							borderColor: '#93AF21',
 							backgroundColor: '#93AF21',
-							data: [25, 20, 11],
+							data: [5, 20, 11],
 						},
 						{
 							barPercentage: this.colSize,
 							label: '2',
 							borderColor: '#ADACAD',
 							backgroundColor: '#ADACAD',
-							data: [75, 80, 89],
+							data: [95, 80, 89],
 						},
 					]
 				},
