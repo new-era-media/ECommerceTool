@@ -143,14 +143,13 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .share {
 	max-width: 1280px;
 	margin: 0 auto;
-}
-
-.chart {
-	width: 300px;
-	height: 600px;
+	.chart {
+		width: 300px;
+		height: 600px;
+	}
 }
 </style>
