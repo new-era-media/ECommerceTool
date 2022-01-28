@@ -141,8 +141,13 @@ export default [
 			},
 			{
 				path: 'ratings-and-reviews',
-				name: 'Nestle.RatingsAndReviews ',
-				component: _import('Nestle/RatingsAndReviews '),
+				name: 'Nestle.RatingsAndReviews',
+				component: _import('Nestle/RatingsAndReviews'),
+			},
+			{
+				path: 'share-of-taxonomy',
+				name: 'Nestle.ShareOfTaxonomy',
+				component: _import('Nestle/ShareOfTaxonomy'),
 			}
 		]
 
