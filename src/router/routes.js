@@ -138,6 +138,11 @@ export default [
 				path: 'share-of-search',
 				name: 'Nestle.ShareOfSearch',
 				component: _import('Nestle/ShareOfSearch'),
+			},
+			{
+				path: 'ratings-and-reviews',
+				name: 'Nestle.RatingsAndReviews ',
+				component: _import('Nestle/RatingsAndReviews '),
 			}
 		]
 

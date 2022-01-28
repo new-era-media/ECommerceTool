@@ -21,9 +21,11 @@ import {
 	//Decimation,
 	Filler,
 	Legend,
-	//Title,
+	Title,
 	Tooltip
 } from 'chart.js'
+
+import ChartDataLabels from 'chartjs-plugin-datalabels'
 
 Chart.register(
 	ArcElement,
@@ -39,12 +41,13 @@ Chart.register(
 	TimeScale,
 	Tooltip,
 	Filler,
-	Legend
+	Legend,
+	Title,
+	ChartDataLabels
 )
 
 import Vue from 'vue'
 import 'chartjs-adapter-dayjs-3'
-import ChartDataLabels from 'chartjs-plugin-datalabels'
 
 
 const defaultColor = '#2196F3'

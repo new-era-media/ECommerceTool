@@ -59,9 +59,7 @@
 						.table-button
 							button &#x2039; Earler dates
 							button Later dates &#x203A;
-						.search.ml-8
-							.icon &#x1F50E;&#xFE0E;
-							input(type="text" placeholder="UPC, RPC, MPC or Product Description")
+						Search(v-model="search")
 						Tooltip.ml-8(trigger="clickToToggle")
 							template(slot="reference")
 								.data-range-picker {{ getDateStr }}
@@ -98,9 +96,11 @@ import CalendarBlank from 'vue-material-design-icons/CalendarBlank.vue'
 import DatePicker from '@/components/Elements/DatePicker.vue'
 import Tabs from "@/components/Nestle/Tabs";
 import Table from "@/components/Table/Table";
+import Search from "../../components/Nestle/Search";
 
 export default {
 	components: {
+		Search,
 		Menu,
 		Export,
 		Table,
@@ -139,6 +139,7 @@ export default {
 			],
 			list: [],
 			tabTable: 1,
+			search: null
 		}
 	},
 	computed:{
@@ -378,6 +379,7 @@ h1{
 	}
 	&-button {
 		background-color: #fff;
+		margin-top: 1px;
 		padding: 10px 5px;
 		border-radius: 3px;
 		color: color(gray-700);
@@ -495,6 +497,7 @@ select{
 	outline: 1px color(gray-400) solid;
 	padding: 0 5px;
 	border-radius: 3px;
-	color: color(gray-600)
+	color: color(gray-600);
+	margin-top: 1px;
 }
 </style>
