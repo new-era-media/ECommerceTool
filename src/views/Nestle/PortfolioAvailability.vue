@@ -17,7 +17,7 @@
 				select(v-model="group")
 					option(v-for="item in groupOptions" :value="item") Group By: {{ item }}
 				.header-right
-					Tabs(:tabs="tabsData" v-model="tab")
+					Tabs(:tabs="tabsData" type-tab="table-tabs" v-model="tab")
 
 			.flex.justify-between.charts
 				ContainerForData
@@ -219,15 +219,6 @@ export default {
 						}
 					},
 				},
-				scales: {
-					Y: {
-						title: {
-							display: true,
-							text: 'Product Count',
-							fontSize: 20
-						}
-					},
-				}
 			}
 		},
 		chartPropsLine() {

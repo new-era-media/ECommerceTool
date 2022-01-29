@@ -1,23 +1,20 @@
 <template lang="pug">
-	.page
-		Menu(title="Product details")
-		ContainerForData(width="100%")
-			template(#data)
-				Table.mt-30(v-bind="tableOptions")
-					template(#date="{...args}") {{ args.value }}
-					template(#ranking="{...args}")
-						.ranking.flex.items-center.justify-center(:class="args.value > 10 ? '--green' : '--light-green'") {{ args.value }}
-			template(#header-right)
-				.flex.items-center
-					Tooltip.mr-24(trigger="clickToToggle")
-						template(slot="reference")
-							DotsHorizontal
-						span 'Tooltip'
+	ContainerForData(width="100%")
+		template(#data)
+			Table.mt-30(v-bind="tableOptions")
+				template(#date="{...args}") {{ args.value }}
+				template(#ranking="{...args}")
+					.ranking.flex.items-center.justify-center(:class="args.value > 10 ? '--green' : '--light-green'") {{ args.value }}
+		template(#header-right)
+			.flex.items-center
+				Tooltip.mr-24(trigger="clickToToggle")
+					template(slot="reference")
+						DotsHorizontal
+					span 'Tooltip'
 
 </template>
 
 <script>
-import Menu from '@/components/Menu/Menu.vue'
 import Table from "@/components/Table/Table";
 import ContainerForData from "@/components/Nestle/ContainerForData";
 import Tooltip from '@/components/Elements/Tooltip.vue'
@@ -27,7 +24,6 @@ export default {
 	name: "RatingsAndReviews",
 	components: {
 		ContainerForData,
-		Menu,
 		Table,
 		DotsHorizontal,
 		Tooltip
