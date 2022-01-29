@@ -20,8 +20,8 @@
 import Menu from '@/components/Menu/Menu.vue'
 import Table from "@/components/Table/Table";
 import ContainerForData from "@/components/Nestle/ContainerForData";
-import DotsHorizontal from 'vue-material-design-icons/DotsHorizontal.vue'
 import Tooltip from '@/components/Elements/Tooltip.vue'
+import DotsHorizontal from 'vue-material-design-icons/DotsHorizontal.vue'
 
 export default {
 	name: "RatingsAndReviews",
