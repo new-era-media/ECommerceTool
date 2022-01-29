@@ -623,7 +623,7 @@ export default {
 }
 .ranking{
 	width: 130px;
-	height: 30px;
+	height: 20px;
 	font-weight: bold;
 	padding: 0 10px;
 }
