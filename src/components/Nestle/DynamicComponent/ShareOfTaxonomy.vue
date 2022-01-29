@@ -59,9 +59,7 @@ export default {
 							data: [18],
 						},
 						{
-							barPercentage: (context)=>{
-								return  context.dataset.data.length <= 1 ? 1.23 : 1.2
-							},
+							barPercentage: this.colSize,
 							label: '2',
 							borderColor: '#ADACAD',
 							backgroundColor: '#ADACAD',
