@@ -56,7 +56,7 @@ export default {
 					datasets: [
 						{
 							barPercentage: this.colSize,
-									label: '1',
+							label: '1',
 							borderColor: '#93AF21',
 							backgroundColor: '#93AF21',
 							data: [18],
