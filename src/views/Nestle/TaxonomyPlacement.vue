@@ -23,6 +23,7 @@ import Export from '@/components/Nestle/Export/Export.vue'
 import OverviewAndTrend from '@/components/Nestle/DynamicComponent/OverviewAndTrend'
 import ShareOfTaxonomy from '@/components/Nestle/DynamicComponent/ShareOfTaxonomy'
 import ProductDetails from '@/components/Nestle/DynamicComponent/ProductDetails'
+import ProductFalls from '@/components/Nestle/DynamicComponent/ProductFalls'
 import DatePicker from '@/components/Elements/DatePicker.vue'
 import CalendarBlank from 'vue-material-design-icons/CalendarBlank.vue'
 import dayjs from "dayjs";
@@ -42,6 +43,7 @@ export default {
 		OverviewAndTrend,
 		ShareOfTaxonomy,
 		ProductDetails,
+		ProductFalls,
 		NewTab
 	},
 	data: () => {
@@ -68,7 +70,7 @@ export default {
 				},
 				{
 					title: 'Product Fails',
-					value: 'ProductFails'
+					value: 'ProductFalls'
 				}
 			]
 		}
