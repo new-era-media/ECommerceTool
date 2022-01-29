@@ -148,6 +148,11 @@ export default [
 				path: 'share-of-taxonomy',
 				name: 'Nestle.ShareOfTaxonomy',
 				component: _import('Nestle/ShareOfTaxonomy'),
+			}			,
+			{
+				path: 'product-details',
+				name: 'Nestle.ProductDetails',
+				component: _import('Nestle/ProductDetails'),
 			}
 		]
 
