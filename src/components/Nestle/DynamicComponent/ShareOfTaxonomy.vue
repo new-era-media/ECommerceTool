@@ -1,9 +1,6 @@
 <template lang="pug">
-	.share
-		Menu(title="Share of Search")
-		.flex.justify-between
-			BarChart.chart(v-for="chart in stackedBarChartData" :chartData="chart" :options="stackedBarChartOptions")
-
+	.share.flex.justify-between
+		BarChart.chart(v-for="chart in stackedBarChartData" :chartData="chart" :options="stackedBarChartOptions")
 </template>
 
 <script>
@@ -148,8 +145,11 @@ export default {
 	max-width: 1280px;
 	margin: 0 auto;
 	.chart {
-		width: 300px;
+		width: 280px;
 		height: 600px;
+	}
+	/deep/.chart{
+		margin: 0;
 	}
 }
 </style>

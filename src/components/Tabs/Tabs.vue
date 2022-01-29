@@ -34,6 +34,8 @@ export default {
 		tabs() {
 			this.active
 
+			console.log(this.$children)
+
 			return this.$children
 		},
 		classNames() {

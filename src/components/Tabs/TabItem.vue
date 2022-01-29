@@ -23,6 +23,6 @@ export default {
 
 <style lang="scss" scoped>
 .tab {
-
+	cursor: pointer;
 }
 </style>
