@@ -1,5 +1,5 @@
 <template lang="pug">
-	button.flex.items-center(v-on="listeners" :class="classNames")
+	button.flex.items-center(v-on="listeners" :class="classNames" :disabled="disabled")
 		slot
 			span(v-if="label" v-text="label")
 
@@ -14,6 +14,10 @@ export default {
 			validator: value => ~[
 				'violet', 'violet-outline', 'empty', 'orange'
 			].indexOf(value),
+		},
+		disabled: {
+			type: Boolean,
+			default: false
 		},
 		size: {
 			default: 'md',

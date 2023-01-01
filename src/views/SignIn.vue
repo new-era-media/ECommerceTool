@@ -1,13 +1,17 @@
 <template lang="pug">
 	.page.flex.items-center.justify-center
 		.page__info.px-24.flex.flex-col.justify-center.items-center
-			span
-				.page__info-logo.flex.items-center
-					.page__info-logo-img.mr-4
+			.d-flex.flex-column.align-start
+				.page__info-logo.d-flex.align-center
+					.page__info-logo-img.mr-1
 					.page__info-logo-title E-Commerce Tool
-				.page__info-title.mt-8 Система управления продажами селлерских кабинетов
-		.page__form.flex.items-center.justify-center
-			component(:is="form")
+				.page__info-title.mt-2 Система управления продажами селлерских кабинетов
+				.back.d-flex.justify-center.align-center.mt-5(v-if="form === 'SignInApprove'")
+					v-icon mdi-arrow-left
+					.back-text(@click="back") Назад
+
+		.page__form.d-flex.align-center.justify-center
+			component(:is="form" @use="enterPhone" @enter="goTo")
 </template>
 
 <script>
@@ -18,9 +22,20 @@ export default {
 	components: {SignInApprove, SignInForm},
 	data() {
 		return {
-			form: 'SignInApprove',
+			form: 'SignInForm',
 		}
 	},
+	methods: {
+		enterPhone() {
+			this.form = 'SignInApprove'
+		},
+		goTo() {
+			this.$router.push({name: 'EnterName'})
+		},
+		back() {
+			this.form = 'SignInForm'
+		}
+	}
 }
 </script>
 
@@ -51,6 +66,7 @@ export default {
 				}
 			}
 			&-title {
+				max-width: 425px;
 				font-weight: 400;
 				font-size: 24px;
 				line-height: 29px;
@@ -64,6 +80,18 @@ export default {
 			width: 600px;
 			min-height: 100vh;
 			height: 100vh;
+		}
+	}
+	.back {
+		font-style: normal;
+		font-weight: 400;
+		font-size: 14px;
+		line-height: 20px;
+		letter-spacing: 0.25px;
+		color: #212121;
+		cursor: pointer;
+		&-text {
+			text-decoration-line: underline;
 		}
 	}
 </style>

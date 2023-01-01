@@ -1,22 +1,21 @@
+import AuthLayout from '../components/Layout/AuthLayout.vue'
 const _import = name => () => import('@/views/' + name + '.vue')
-// eslint-disable-next-line no-unused-vars
-import store from '@/store'
 
 export default [
-	// {
-	// 	path: '',
-	// 	name: 'CatLayout',
-	// 	component: CatLayout,
-	// 	redirect: { name: 'Index' },
-	// 	children: [
-	// 		{
-	// 			path: '/',
-	// 			name: 'Index',
-	// 			component: _import('Index'),
-	// 		},
-	//
-	// 	]
-	// },
+	{
+		path: '',
+		name: 'AuthLayout',
+		component: AuthLayout,
+		redirect: { name: 'EnterName' },
+		children: [
+			{
+				path: '/enter-name',
+				name: 'EnterName',
+				component: _import('EnterName'),
+			},
+
+		]
+	},
 	{
 		path: '/signin',
 		name: 'SignIn',
