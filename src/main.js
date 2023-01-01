@@ -26,15 +26,17 @@ Vue.use(Toast, {
 Vue.config.productionTip = false
 
 import '@/plugins/modal'
+import vuetify from './plugins/vuetify'
 
 (async () => {
 
 
 	let app = new Vue({
-		router,
-		store,
-		render: h => h(App),
-	}).$mount('#app')
+        router,
+        store,
+        vuetify,
+        render: h => h(App)
+    }).$mount('#app')
 
 	await store.dispatch('app/prepare')
 

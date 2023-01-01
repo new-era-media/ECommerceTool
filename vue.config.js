@@ -1,6 +1,6 @@
 
 module.exports = {
-	chainWebpack: (config) => {
+    chainWebpack: (config) => {
 		// import svg as component
 		const svgRule = config.module.rule('svg');
 
@@ -28,7 +28,12 @@ module.exports = {
 				.end()
 		});
 	},
-	devServer: {
+
+    devServer: {
 		proxy: 'https://stag.rest-api.cluster.emonit.ru/'
-	}
+	},
+
+    transpileDependencies: [
+      'vuetify'
+    ]
 };

@@ -10,9 +10,9 @@ export default {
 	props: {
 		label: String,
 		type: {
-			default: 'violet',
+			default: 'orange',
 			validator: value => ~[
-				'violet', 'violet-outline', 'empty',
+				'violet', 'violet-outline', 'empty', 'orange'
 			].indexOf(value),
 		},
 		size: {
@@ -43,7 +43,7 @@ export default {
 .button {
 	font-weight: 600;
 	line-height: 1.72;
-	border-radius: 20px;
+	border-radius: 4px;
 
 	&:active,
 	&:focus {
@@ -69,12 +69,12 @@ export default {
 	}
 
 	&.--type {
-		&-violet {
+		&-orange {
 			color: color(white);
-			background: linear-gradient(67.64deg, #2954DF 28.69%, #733BD1 82.18%);
+			background: #FA4860;
 
 			&:hover {
-				background: linear-gradient(67.64deg, color(blue) 28.69%, color(violet-bright) 82.18%);
+				background: #FA4860;
 				box-shadow: 0 0 2px rgba(0, 0, 0, 0.14), 0 2px 2px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.2);
 			}
 			&:disabled {
@@ -83,19 +83,33 @@ export default {
 				cursor: default;
 			}
 		}
-		&-violet-outline {
-			color: color(violet);
-			border: 2px solid color(violet);
-
-			&:hover {
-				background-color: color(gray-300);
-			}
-			&:disabled {
-				color: color(gray-600);
-				border-color: color(gray-400);
-				cursor: default;
-			}
-		}
+		//&-violet {
+		//	color: color(white);
+		//	background: linear-gradient(67.64deg, #2954DF 28.69%, #733BD1 82.18%);
+		//
+		//	&:hover {
+		//		background: linear-gradient(67.64deg, color(blue) 28.69%, color(violet-bright) 82.18%);
+		//		box-shadow: 0 0 2px rgba(0, 0, 0, 0.14), 0 2px 2px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.2);
+		//	}
+		//	&:disabled {
+		//		color: color(gray-600);
+		//		background: color(gray-300);
+		//		cursor: default;
+		//	}
+		//}
+		//&-violet-outline {
+		//	color: color(violet);
+		//	border: 2px solid color(violet);
+		//
+		//	&:hover {
+		//		background-color: color(gray-300);
+		//	}
+		//	&:disabled {
+		//		color: color(gray-600);
+		//		border-color: color(gray-400);
+		//		cursor: default;
+		//	}
+		//}
 		&-empty {
 			color: color(violet);
 		}
