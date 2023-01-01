@@ -1,10 +1,9 @@
 <template lang="pug">
-	div
-		slot
-		//Header
-		//.content
-		//	slot
-		//Footer
+	.layout.d-flex.flex-column
+		Header
+		.content
+			slot
+		Footer
 </template>
 
 <script>
@@ -13,9 +12,6 @@ import Footer from "@/components/Footer";
 export default {
 	name: "AuthLayout",
 	components: {Footer, Header},
-	mounted() {
-		console.log(this.$slots)
-	}
 }
 </script>
 
@@ -23,8 +19,11 @@ export default {
 .layout {
 	background-image: url(../../../src/assets/img/footer-bg.png);
 	background-position: 0 100%;
+	height: 100%;
+	min-height: 100vh;
 }
 .content {
+	width: 100%;
 	height: 100%;
 }
 </style>

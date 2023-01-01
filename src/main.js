@@ -38,7 +38,7 @@ import vuetify from './plugins/vuetify'
         render: h => h(App)
     }).$mount('#app')
 
-	await store.dispatch('app/prepare')
+	// await store.dispatch('app/prepare')
 
 	global.vm = app
 	Vue.config.devtools = true

@@ -1,30 +1,48 @@
 <template lang="pug">
 	AuthLayout
-		p 1231313
-
-	//.form.d-flex.align-center.justify-center
-	//	.form__label Добро пожаловать
-	//	.form__input
-	//		v-text-field(
-	//			outlined
-	//			hide-details
-	//			label="Фамилия и имя")
-	//	.form__button
-	//		Button(@click="use") Сохранить
+		.slot.d-flex.justify-center
+			.form.d-flex.flex-column.align-center.justify-center
+				.form__label Добро пожаловать
+				.form__input.mt-8
+					v-text-field(
+						outlined
+						hide-details
+						label="Фамилия и имя")
+				.form__button.mt-6
+					Button(@click="use" disabled) Сохранить
 </template>
 
 <script>
 import AuthLayout from "@/components/Layout/AuthLayout";
 import Button from "@/components/Button/Button";
+import TestComp from "@/components/TestComp";
+
 export default {
 	name: "EnterName",
-	components: {Button, AuthLayout},
+	components: {AuthLayout, TestComp, Button},
 	methods: {
 		use() {}
 	}
 }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+.slot {
+	height: 100%;
+}
+.form {
+	max-width: 320px;
+	width: 100%;
+	height: 100%;
+	&__label {
+		font-style: normal;
+		font-weight: 400;
+		font-size: 24px;
+		line-height: 29px;
+		letter-spacing: 0.15px;
+	}
+	&__input {
+		width: 100%;
+	}
+}
 </style>

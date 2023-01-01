@@ -1,20 +1,11 @@
-import AuthLayout from '../components/Layout/AuthLayout.vue'
+
 const _import = name => () => import('@/views/' + name + '.vue')
 
 export default [
 	{
-		path: '',
-		name: 'AuthLayout',
-		component: AuthLayout,
-		redirect: { name: 'EnterName' },
-		children: [
-			{
-				path: '/enter-name',
-				name: 'EnterName',
-				component: _import('EnterName'),
-			},
-
-		]
+		path: '/enter-name',
+		name: 'EnterName',
+		component: _import('EnterName'),
 	},
 	{
 		path: '/signin',

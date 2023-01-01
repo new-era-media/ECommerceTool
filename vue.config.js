@@ -29,9 +29,9 @@ module.exports = {
 		});
 	},
 
-    devServer: {
-		proxy: 'https://stag.rest-api.cluster.emonit.ru/'
-	},
+    // devServer: {
+	// 	proxy: 'https://stag.rest-api.cluster.emonit.ru/'
+	// },
 
     transpileDependencies: [
       'vuetify'
