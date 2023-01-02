@@ -1,5 +1,5 @@
 <template lang="pug">
-	.conponent
+	footer
 		.footer.d-flex.align-end
 			.footer__menu
 				router-link.footer__menu-element(v-for="list in lists" :key="list.id" :to="list.link") {{ list.label }}

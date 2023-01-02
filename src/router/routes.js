@@ -3,11 +3,6 @@ const _import = name => () => import('@/views/' + name + '.vue')
 
 export default [
 	{
-		path: '/enter-name',
-		name: 'EnterName',
-		component: _import('EnterName'),
-	},
-	{
 		path: '/signin',
 		name: 'SignIn',
 		component: _import('SignIn'),
@@ -15,6 +10,20 @@ export default [
 			noHeader: true,
 		},
 	},
+	{
+		path: '/enter-name',
+		name: 'EnterName',
+		component: _import('EnterName'),
+		meta: {
+			microHeader: true,
+		},
+	},
+	{
+		path: '/connecting',
+		name: 'Connecting',
+		component: _import('СonnectingMarketplace'),
+	},
+	// { path: '*', redirect: { name: 'PageNotFound' } },
 	// {
 	// 	path: '/',
 	// 	name: 'LayoutFullPage',
@@ -126,5 +135,4 @@ export default [
 	// 	]
 	//
 	// },
-	{ path: '*', redirect: { name: 'PageNotFound' } },
 ]

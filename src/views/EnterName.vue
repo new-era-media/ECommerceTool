@@ -22,7 +22,7 @@ export default {
 	components: {AuthLayout, TestComp, Button},
 	methods: {
 		use() {}
-	}
+	},
 }
 </script>
 
