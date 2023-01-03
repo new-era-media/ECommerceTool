@@ -7,8 +7,9 @@
 			.header__menu.d-flex.align-center.justify-center(v-if="microHeader")
 				.header__menu-el.logout Выйти
 			.header__menu.d-flex.align-center.justify-center(v-else)
-				.header__menu-el.disabled Аналитика
-				.header__menu-el.ml-4 Маркетплейсы
+				//.header__menu-el.disabled Аналитика
+				//.header__menu-el.ml-4 Маркетплейсы
+				router-link.header__menu-el.ml-4(v-for="list in lists" :key="list.name" :to="list.link" exact) {{ list.name }}
 				.header__menu-divider.ml-4 •
 				.header__menu-avatar.ml-4
 					v-icon mdi-account-outline
@@ -19,13 +20,27 @@
 <script>
 export default {
 	name: "Header",
+	data() {
+		return {
+			lists: [
+				{
+					name: 'Аналитика',
+					link: '/signin'
+				},
+				{
+					name: 'Маркетплейсы',
+					link: '/connecting'
+				},
+			]
+		}
+	},
 	computed: {
 		meta() {
 			return this.$route.meta
 		},
 		microHeader() {
 			return this.meta?.microHeader
-		}
+		},
 	}
 }
 </script>
@@ -72,12 +87,13 @@ export default {
 				border: 2px #9E9E9E solid;
 				cursor: pointer;
 			}
-			&-el {
+			&-el, a {
 				font-weight: 400;
 				font-size: 14px;
 				line-height: 16px;
 				letter-spacing: 0.15px;
 				cursor: pointer;
+				color: #676767;
 			}
 			&-divider {
 				color: #9E9E9E;
@@ -87,5 +103,19 @@ export default {
 	}
 	.disabled {
 		color: #9C9C9C;
+	}
+	.router-link-exact-active {
+		position: relative;
+		color: #212121;
+		&:after {
+			content: '';
+			position: absolute;
+			width: 100%;
+			left: 0;
+			bottom: -5px;
+			height: 3px;
+			border-radius: 4px;
+			background-color: #FA4860;
+		}
 	}
 </style>

@@ -1,6 +1,5 @@
 <template lang="pug">
 	.card(:class="{lightred: false}")
-		pre {{ src }}
 		.card__logo
 			slot(name="img")
 		template
@@ -28,10 +27,6 @@ export default {
 			type: String,
 			required: true,
 		},
-		src: {
-			type: String,
-			required: true,
-		}
 	},
 	methods: {
 		setting() {

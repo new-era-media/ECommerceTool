@@ -1,8 +1,12 @@
 <template lang="pug">
 	footer
 		.footer.d-flex.align-end
-			.footer__menu
-				router-link.footer__menu-element(v-for="list in lists" :key="list.id" :to="list.link") {{ list.label }}
+			.footer__menu.d-flex.justify-space-between.align-center
+				.footer__menu-update
+					span.text Загружены данные на 01.01.2023 12:01
+					span.link.ml-1 Получить данные
+				.footer__menu-list
+					router-link.footer__menu-element.ml-auto(v-for="list in lists" :key="list.id" :to="list.link") {{ list.label }}
 </template>
 
 <script>
@@ -32,6 +36,7 @@ export default {
 	&__menu {
 		padding: 16px 24px;
 		margin-left: auto;
+		width: 100%;
 		&-element {
 			color: #676767;
 			margin-left: auto;
@@ -43,6 +48,23 @@ export default {
 				margin-right: 0;
 			}
 			&:hover {
+				color: #FA4860;
+			}
+		}
+		&-update {
+			.text {
+				font-weight: 400;
+				font-size: 14px;
+				line-height: 16px;
+				letter-spacing: 0.15px;
+				color: #9C9C9C;
+			}
+			.link {
+				cursor:  pointer;
+				font-weight: 400;
+				font-size: 14px;
+				line-height: 16px;
+				letter-spacing: 0.15px;
 				color: #FA4860;
 			}
 		}
