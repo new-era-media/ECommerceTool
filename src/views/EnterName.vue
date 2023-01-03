@@ -3,7 +3,7 @@
 		.slot.d-flex.justify-center
 			.form.d-flex.flex-column.align-center.justify-center
 				.form__label Добро пожаловать
-				.form__input.mt-8
+				.form__input.mt-8.px-2
 					v-text-field(
 						outlined
 						hide-details
@@ -36,6 +36,7 @@ export default {
 	height: 100%;
 	&__label {
 		font-style: normal;
+		text-align: center;
 		font-weight: 400;
 		font-size: 24px;
 		line-height: 29px;

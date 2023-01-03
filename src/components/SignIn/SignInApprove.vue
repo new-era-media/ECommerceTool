@@ -7,8 +7,9 @@
 				outlined
 				hide-details
 				label="Код")
-		.form__btn.mt-4
-			Button(@click="use") Отправить код для входа
+		.form__btn.d-flex.align-center.justify-space-between.mt-4
+			Button(@click="use") Вход
+			span.ml-12 Изменить номер телефона
 
 </template>
 
@@ -41,6 +42,17 @@ export default {
 			line-height: 16px;
 			letter-spacing: 0.15px;
 			color: #757575;
+		}
+		&__btn {
+			span {
+				cursor: pointer;
+				font-style: normal;
+				font-weight: 400;
+				font-size: 14px;
+				line-height: 24px;
+				text-decoration-line: underline;
+				color: #424242;
+			}
 		}
 	}
 	::deep.v-text-field {
