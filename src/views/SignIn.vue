@@ -10,7 +10,7 @@
 					v-icon mdi-arrow-left
 					.back-text(@click="back") Назад
 
-		.page__form.d-flex.align-center.justify-center
+		.page__form
 			component(:is="form" @use="enterPhone" @enter="goTo")
 </template>
 
@@ -45,11 +45,21 @@ export default {
 		width: 100%;
 		min-height: 100vh;
 		height: 100%;
+		@media screen and(max-width: 1060px) {
+			flex-direction: column;
+			align-items: start !important;
+			justify-content: start;
+		}
 		&__info {
 			background-color: #FAFAFA;
 			width: 100%;
 			min-height: 100vh;
 			height: 100vh;
+			@media screen and(max-width: 1060px) {
+				min-height: auto;
+				height: auto;
+				padding: 24px 24px;
+			}
 			&-logo {
 				&-img {
 					width: 59px;
@@ -72,14 +82,29 @@ export default {
 				line-height: 29px;
 				letter-spacing: 0.15px;
 				color: #424242;
+				@media screen and(max-width: 1060px) {
+					max-width: 320px;
+					font-size: 16px;
+					line-height: 24px;
+				}
 			}
 		}
 		&__form {
+			display: flex;
+			align-items: center;
+			justify-content: center;
 			background-color: #fff;
 			box-shadow: 0 0 37px rgba(190, 190, 190, 0.15);
 			width: 600px;
 			min-height: 100vh;
 			height: 100vh;
+			@media screen and(max-width: 1060px) {
+				width: 100%;
+				align-items: start;
+				padding: 24px 14px;
+				min-height: auto;
+				height: 100%;
+			}
 		}
 	}
 	.back {
