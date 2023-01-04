@@ -158,13 +158,13 @@ export default {
 		color: color(violet);
 	}
 }
-/deep/ .vc-highlight {
+::deep .vc-highlight {
 	background-color: color(violet)!important;
 }
-/deep/ .vc-popover-caret {
+::deep .vc-popover-caret {
 	display: none;
 }
-/deep/ .vc-arrow {
+::deep .vc-arrow {
 	margin-top: 95px;
 }
 </style>

@@ -12,7 +12,7 @@ export default {
 		type: {
 			default: 'orange',
 			validator: value => ~[
-				'violet', 'violet-outline', 'empty', 'orange'
+				'violet', 'violet-outline', 'empty', 'orange', 'orange-outline'
 			].indexOf(value),
 		},
 		disabled: {
@@ -79,6 +79,21 @@ export default {
 
 			&:hover {
 				background: #FA4860;
+				box-shadow: 0 0 2px rgba(0, 0, 0, 0.14), 0 2px 2px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.2);
+			}
+			&:disabled {
+				color: color(gray-600);
+				background: color(gray-300);
+				cursor: default;
+			}
+		}
+		&-orange-outline {
+			color: #FA4860;
+			border: 2px #FA4860 solid;
+
+			&:hover {
+				background: #FA4860;
+				color: white;
 				box-shadow: 0 0 2px rgba(0, 0, 0, 0.14), 0 2px 2px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.2);
 			}
 			&:disabled {

@@ -94,7 +94,7 @@ export default {
 .popper {
 	box-shadow: 0 20px 45px rgba(24, 26, 28, 0.16), 0px -1px 6px rgba(29, 33, 38, 0.05);
 	border-radius: 4px;
-	padding: 15px 20px;
+	//padding: 15px 20px;
 	line-height: 19px;
 	min-width: 240px;
 	text-align: left;

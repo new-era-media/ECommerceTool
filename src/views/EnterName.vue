@@ -15,11 +15,10 @@
 <script>
 import AuthLayout from "@/components/Layout/AuthLayout";
 import Button from "@/components/Button/Button";
-import TestComp from "@/components/TestComp";
 
 export default {
 	name: "EnterName",
-	components: {AuthLayout, TestComp, Button},
+	components: {AuthLayout, Button},
 	methods: {
 		use() {}
 	},

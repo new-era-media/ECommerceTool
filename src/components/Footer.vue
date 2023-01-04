@@ -1,12 +1,12 @@
 <template lang="pug">
 	footer
 		.footer.d-flex.align-end
-			.footer__menu.d-flex.justify-space-between.align-center
-				.footer__menu-update
+			.footer__menu.d-flex.align-center
+				.footer__menu-update(v-if="!microHeader")
 					span.text Загружены данные на 01.01.2023 12:01
 					span.link.ml-1 Получить данные
-				.footer__menu-list
-					router-link.footer__menu-element.ml-auto(v-for="list in lists" :key="list.id" :to="list.link") {{ list.label }}
+				.footer__menu-list.ml-auto
+					router-link.footer__menu-element(v-for="list in lists" :key="list.id" :to="list.link") {{ list.label }}
 </template>
 
 <script>
@@ -28,6 +28,14 @@ export default {
 			]
 		}
 	},
+	computed: {
+		meta() {
+			return this.$route.meta
+		},
+		microHeader() {
+			return this.meta?.microHeader
+		},
+	}
 }
 </script>
 

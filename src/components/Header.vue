@@ -9,7 +9,7 @@
 			.header__menu.d-flex.align-center.justify-center(v-else)
 				//.header__menu-el.disabled Аналитика
 				//.header__menu-el.ml-4 Маркетплейсы
-				router-link.header__menu-el.ml-4(v-for="list in lists" :key="list.name" :to="list.link" exact) {{ list.name }}
+				router-link.header__menu-el.ml-4(v-for="list in lists" :key="list.name" :to="list.link" :class="{disabled: list.disabled}" exact) {{ list.name }}
 				.header__menu-divider.ml-4 •
 				.header__menu-avatar.ml-4
 					v-icon mdi-account-outline
@@ -25,11 +25,13 @@ export default {
 			lists: [
 				{
 					name: 'Аналитика',
-					link: '/signin'
+					link: '/analytics',
+					disabled: false,
 				},
 				{
 					name: 'Маркетплейсы',
-					link: '/connecting'
+					link: '/connecting',
+					disabled: false,
 				},
 			]
 		}
@@ -48,6 +50,7 @@ export default {
 <style lang="scss" scoped>
 	header{
 		width: 100%;
+		font-family: 'Montserrat';
 	}
 	.header {
 		padding: 16px 24px;

@@ -2,7 +2,7 @@
 	.layout.d-flex.flex-column
 		Header
 		.content
-			slot
+			router-view
 		Footer
 </template>
 

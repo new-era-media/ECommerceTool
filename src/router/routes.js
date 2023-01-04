@@ -1,7 +1,26 @@
 
+import AuthLayout from '@/components/Layout/AuthLayout'
 const _import = name => () => import('@/views/' + name + '.vue')
 
 export default [
+	{
+		path: '/',
+		name: 'AuthLayout',
+		component: AuthLayout,
+		redirect: { name: 'Analytics' },
+		children: [
+			{
+				path: '/analytics',
+				name: 'Analytics',
+				component: _import('Analytics'),
+			},
+			{
+				path: '/connecting',
+				name: 'Connecting',
+				component: _import('СonnectingMarketplace'),
+			},
+		]
+	},
 	{
 		path: '/signin',
 		name: 'SignIn',
@@ -18,11 +37,16 @@ export default [
 			microHeader: true,
 		},
 	},
-	{
-		path: '/connecting',
-		name: 'Connecting',
-		component: _import('СonnectingMarketplace'),
-	},
+	// {
+	// 	path: '/analytics',
+	// 	name: 'Analytics',
+	// 	component: _import('Analytics'),
+	// },
+	// {
+	// 	path: '/connecting',
+	// 	name: 'Connecting',
+	// 	component: _import('СonnectingMarketplace'),
+	// },
 	// { path: '*', redirect: { name: 'PageNotFound' } },
 	// {
 	// 	path: '/',
