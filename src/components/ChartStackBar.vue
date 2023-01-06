@@ -100,10 +100,4 @@ export default {
 		}
 	}
 }
-.select {
-	::deep.title {
-		color: red !important;
-		font-weight: 400 !important;
-	}
-}
 </style>
