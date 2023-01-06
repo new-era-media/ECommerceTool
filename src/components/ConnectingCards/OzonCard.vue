@@ -7,15 +7,15 @@
 				v-text-field(
 					outlined
 					hide-details
-					label="Название магазина")
+					label="Название магазина" dense)
 				v-text-field.mt-4(
 					outlined
 					hide-details
-					label="Client ID")
+					label="Client ID" dense)
 				v-text-field.mt-4(
 					outlined
 					hide-details
-					label="Ключ API")
+					label="Ключ API" dense)
 				.ttp.mt-2(@click="setting")
 						v-icon(color="#FA4860" size="14") mdi-help-circle-outline
 						span.ml-1 Как настроить?

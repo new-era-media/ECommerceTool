@@ -10,6 +10,9 @@
 				DateSelector
 				Select.ml-5(:lists="selectWallet" v-model="select")
 				MultiSelect.ml-5(:lists="selectWallet" v-model="select2" placeholder="Все магазины")
+		.charts
+			ChartStackBar(:colors="['red', 'blue', 'green', 'yellow', 'brown']" :lists="['Заказ', 'Продажи', 'Возвраты', 'Отмененные', 'Остатки']")
+			ChartStackBar(:colors="['red', 'blue', 'green', 'yellow', 'brown']" :lists="['Заказ', 'Продажи', 'Возвраты', 'Отмененные', 'Остатки']")
 
 		.analytics__body
 		.analytics__table
@@ -24,27 +27,6 @@
 					.analytics__table-body-name.mr-4
 						strong Название магазина
 						div OZON
-
-			//Table(
-			//	:columns="tableColumns"
-			//	:data="tableSource"
-			//	fixed-header
-			//)
-			//	template(#name)
-			//		strong Название магазина
-			//		div OZON
-
-			//.analytics__table-body.mt-6
-			//	.analytics__table-body-head.d-flex
-			//		.analytics__table-body-name.mr-4
-			//		.analytics__table-body-cell.mr-4(v-for="name in cellNamesFirst") {{ name }}
-			//	.analytics__table-body-content.d-flex
-			//		.analytics__table-body-name.mr-4
-			//			strong Название магазина
-			//			div OZON
-			//		.analytics__table-body-cell.mr-4.mt-1(v-for="value in cellDataFirst") {{ value }}
-
-
 			.analytics__table-title.mt-8 Расходы
 
 			v-data-table.mt-6(
@@ -57,16 +39,6 @@
 						strong Название магазина
 						div OZON
 
-			//.analytics__table-body.mt-6
-			//	.analytics__table-body-head.d-flex
-			//		.analytics__table-body-name.mr-4
-			//		.analytics__table-body-cell.mr-8(v-for="name in cellNamesSecond") {{ name }}
-			//	.analytics__table-body-content.d-flex
-			//		.analytics__table-body-name.mr-4
-			//			strong Название магазина
-			//			div OZON
-			//		.analytics__table-body-cell.mr-8.mt-1(v-for="value in cellDataSecond") {{ value }}
-
 
 </template>
 
@@ -76,11 +48,26 @@ import Table from "@/components/Table/Table";
 import Select from "@/components/Select";
 import MultiSelect from "@/components/MultiSelect";
 import DateSelector from "@/components/DateSelector";
+import ChartStackBar from "@/components/ChartStackBar";
 export default {
 	name: "Analytics",
-	components: {DateSelector, MultiSelect, Select, Table},
+	components: {ChartStackBar, DateSelector, MultiSelect, Select, Table},
 	data() {
 		return {
+			options: {
+				responsive: true,
+				interaction: {
+					intersect: false,
+				},
+				scales: {
+					x: {
+						stacked: true,
+					},
+					y: {
+						stacked: true
+					}
+				}
+			},
 			selectWallet: [{title: 'Единицы товара', value: 'Единицы товара'}, {title: 'Рубли', value: 'Рубли'}],
 			select: 'Единицы товара',
 			select2: [],
@@ -174,8 +161,6 @@ export default {
 			]
 		},
 	},
-	methods: {
-	},
 }
 </script>
 
@@ -237,5 +222,10 @@ export default {
 		border-radius: 4px;
 		background-color: #FA4860;
 	}
+}
+.charts {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	grid-gap: 24px;
 }
 </style>

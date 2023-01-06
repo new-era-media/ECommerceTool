@@ -7,7 +7,7 @@
 					v-text-field(
 						outlined
 						hide-details
-						label="Фамилия и имя")
+						label="Фамилия и имя" dense)
 				.form__button.mt-6
 					Button(@click="use" disabled) Сохранить
 </template>

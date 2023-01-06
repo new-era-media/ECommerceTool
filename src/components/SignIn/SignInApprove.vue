@@ -6,7 +6,7 @@
 			v-text-field(
 				outlined
 				hide-details
-				label="Код")
+				label="Код" dense)
 		.form__btn.d-flex.align-center.justify-space-between.mt-4
 			Button(@click="use") Вход
 			span.ml-12 Изменить номер телефона

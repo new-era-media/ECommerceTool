@@ -5,7 +5,7 @@
 			v-text-field(
 				outlined
 				hide-details
-				label="Номер телефона")
+				label="Номер телефона" dense)
 		.form__btn.mt-4
 			Button(@click="use") Отправить код для входа
 

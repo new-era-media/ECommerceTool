@@ -7,11 +7,11 @@
 				v-text-field(
 					outlined
 					hide-details
-					label="Название магазина")
+					label="Название магазина" dense)
 				v-text-field.mt-4(
 					outlined
 					hide-details
-					label="Как найти ключ API x64?")
+					label="Как найти ключ API x64?" dense)
 				.ttp.mt-2(@click="howUseKey64")
 					v-icon(color="#FA4860" size="14") mdi-help-circle-outline
 					span.ml-1 Как найти ключ API x64?
@@ -19,7 +19,7 @@
 				v-text-field.mt-4(
 					outlined
 					hide-details
-					label="Ключ к новому API")
+					label="Ключ к новому API" dense)
 				.ttp.mt-2(@click="howUseKey")
 					v-icon(color="#FA4860" size="14") mdi-help-circle-outline
 					span.ml-1 Как найти ключ к новому API??
