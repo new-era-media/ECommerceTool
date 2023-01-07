@@ -3,18 +3,20 @@
 		.analytics__header.d-flex
 			.analytics__header__menu
 				.analytics__menu
-					span Аналитика
+					span.analytics__menu-title Аналитика
 					span.analytics__menu-el.active.ml-4 сводная
 					span.analytics__menu-el.ml-4 по товарам
-			.analytics__header__menu.ml-auto.d-flex.items-center.justify-center
-				DateSelector
-				Select.ml-5(:lists="selectWallet" v-model="select")
+			.analytics__header__menu.ml-auto.d-flex.items-center.justify-center.flex-wrap
+				Select(:lists="selectWallet" v-model="select")
 				MultiSelect.ml-5(:lists="selectWallet" v-model="select2" placeholder="Все магазины")
+				DateSelector.ml-5
 		.charts
 			ChartStackBar(:colors="['red', 'blue', 'green', 'yellow', 'brown']" :lists="['Заказ', 'Продажи', 'Возвраты', 'Отмененные', 'Остатки']")
 			ChartStackBar(:colors="['red', 'blue', 'green', 'yellow', 'brown']" :lists="['Заказ', 'Продажи', 'Возвраты', 'Отмененные', 'Остатки']")
 
-		.analytics__body
+			ChartStackLine(title="Заказы")
+
+		// Темплейт для собственной даты
 		.analytics__table
 			.analytics__table-title.mt-8 Итого за 4 ноября – 3 декабря 2022
 
@@ -40,6 +42,39 @@
 						div OZON
 
 
+		// Темплейт для сравнения
+		.analytics__table
+			.analytics__table-title.mt-8 Сравнение 01.12.2022 – 03.03.2023 и 08.03 2021 – 18.04.2021
+
+			v-data-table.mt-6(
+				:headers="headers"
+				:items="data"
+				hide-default-footer
+			)
+				template(#item.name="{ item }")
+					.analytics__table-body-name.mr-4
+						strong Название магазина
+						div OZON
+				template(#item.order="{ item }")
+					.analytics__table-body-name.mr-4
+						div(:class="{'green-cell': item.return > item.order}") {{ item.return }}
+						div(:class="{'green-cell': item.order > item.return}") {{ item.order }}
+			.analytics__table-title.mt-8 Расходы
+
+			v-data-table.mt-6(
+				:headers="headers"
+				:items="data"
+				hide-default-footer
+			)
+				template(#item.name="{ item }")
+					.analytics__table-body-name.mr-4
+						strong Название магазина
+						div OZON
+				template(#item.order="{ item }")
+					.analytics__table-body-name.mr-4
+						div(:class="{'green-cell': item.order > item.return}") {{ item.order }}
+						div(:class="{'green-cell': item.return > item.order}") {{ item.return }}
+
 </template>
 
 <script>
@@ -49,9 +84,10 @@ import Select from "@/components/Select";
 import MultiSelect from "@/components/MultiSelect";
 import DateSelector from "@/components/DateSelector";
 import ChartStackBar from "@/components/ChartStackBar";
+import ChartStackLine from "@/components/ChartStackLine";
 export default {
 	name: "Analytics",
-	components: {ChartStackBar, DateSelector, MultiSelect, Select, Table},
+	components: {ChartStackLine, ChartStackBar, DateSelector, MultiSelect, Select, Table},
 	data() {
 		return {
 			options: {
@@ -82,84 +118,26 @@ export default {
 					sortable: false,
 					value: 'name',
 				},
-				{ text: 'Заказы', value: 'calories', sortable: false },
-				{ text: 'Продажи', value: 'fat', sortable: false },
-				{ text: 'Возвраты', value: 'carbs', sortable: false },
-				{ text: 'Отмененные заказы', value: 'protein', sortable: false },
-				{ text: 'Остатки', value: 'iron', sortable: false },
-				{ text: 'Расходы', value: 'iron', sortable: false },
-				{ text: 'Прибыль', value: 'iron', sortable: false },
-				{ text: 'Упущенная прибыль', value: 'iron', sortable: false },
+				{ text: 'Заказы', value: 'order', sortable: false },
+				{ text: 'Продажи', value: 'sales', sortable: false },
+				{ text: 'Возвраты', value: 'return', sortable: false },
+				{ text: 'Отмененные заказы', value: 'cancel', sortable: false },
+				{ text: 'Остатки', value: 'remains', sortable: false },
+				{ text: 'Расходы', value: 'expenses', sortable: false },
+				{ text: 'Прибыль', value: 'profit', sortable: false },
+				{ text: 'Упущенная прибыль', value: 'missed', sortable: false },
 			],
 			data: [
 				{
 					name: 'Frozen Yogurt',
-					calories: 159,
-					fat: 6.0,
-					carbs: 24,
-					protein: 4.0,
-					iron: '1%',
+					order: 159,
+					sales: 6.0,
+					return: 24,
+					cancel: 4.0,
+					expenses: '1%',
 				},
 			],
 		}
-	},
-	computed: {
-		tableColumns() {
-			return [
-				{
-					title: '',
-					slot: 'name',
-					width: 60,
-				},
-				{
-					title: 'Заказы',
-					value: (item) => item.value,
-					width: 10,
-				},
-				{
-					title: 'Продажи',
-					value: () => '123',
-					width: 10,
-				},
-				{
-					title: 'Возвраты',
-					value: () => '123',
-					width: 10,
-				},
-				{
-					title: 'Отмененные заказы',
-					value: () => '123',
-					width: 10,
-				},
-				{
-					title: 'Остатки',
-					value: () => '123',
-					width: 10,
-				},
-				{
-					title: 'Расходы',
-					value: () => '123',
-					width: 10,
-				},
-				{
-					title: 'Прибыль',
-					value: () => '123',
-					width: 10,
-				},
-				{
-					title: 'Упущенная прибыль',
-					value: () => '123',
-					width: 50,
-				},
-			]
-		},
-		tableSource() {
-			return [
-				{
-					value: 123,
-				}
-			]
-		},
 	},
 }
 </script>
@@ -167,17 +145,28 @@ export default {
 <style lang="scss" scoped>
 .analytics {
 	padding: 12px 24px;
-	&__header {
-		&__menu {
-			font-family: 'Montserrat';
-			font-weight: 400;
-			font-size: 24px;
-			line-height: 29px;
-			letter-spacing: 0.15px;
+	&__menu {
+		font-family: 'Montserrat';
+		font-weight: 400;
+		font-size: 24px;
+		line-height: 29px;
+		letter-spacing: 0.15px;
+		color: #676767;
+		&-title {
 			color: #212121;
-			&-el {
-				cursor: pointer;
-				color: #676767;
+		}
+		&-el {
+			cursor: pointer;
+			color: #676767;
+		}
+	}
+	&__header {
+		@media screen and (max-width: 1060px) {
+			flex-direction: column;
+			&__menu {
+				margin-left: 0 !important;
+				justify-content: flex-start !important;
+				margin-top: 12px;
 			}
 		}
 	}
@@ -227,5 +216,13 @@ export default {
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
 	grid-gap: 24px;
+	@media screen and (max-width: 1060px) {
+		grid-template-columns: repeat(1, 1fr);
+		grid-gap: 0;
+	}
+}
+
+.green-cell {
+	color: #8DC63F;
 }
 </style>

@@ -2,11 +2,11 @@
 	.chart.mt-6
 		.chart__header.d-flex.justify-space-between
 			.chart__header-list.d-flex.items-center.flex-wrap
-				.chart__header-el.mr-2(v-for="(list, i) in lists" :style="{color: colors[i]}") {{ list }}
+				.chart__header-el.mr-2 {{title}}
 			.chart__header-filters.d-flex.items-center
 				Select.select.ml-5(:lists="selectChart" v-model="selectChartValue")
 				MultiSelect.ml-5(:lists="selectTypes" v-model="selectType" icon="mdi-filter-outline")
-		BarChart.min(
+		LineChart(
 			:chartData="chartData"
 			:options="options"
 		)
@@ -18,17 +18,14 @@ import DateSelector from "@/components/DateSelector";
 import MultiSelect from "@/components/MultiSelect";
 import Select from "@/components/Select";
 import Table from "@/components/Table/Table";
+import LineChart from "@/components/Chart/LineChart";
 
 export default {
-	name: "ChartStackBar",
-	components: {BarChart, DateSelector, MultiSelect, Select, Table},
+	name: "ChartStackLine",
+	components: {LineChart, BarChart, DateSelector, MultiSelect, Select, Table},
 	props: {
-		colors: {
-			type: Array,
-			required: true,
-		},
-		lists: {
-			type: Array,
+		title: {
+			type: String,
 			required: true,
 		}
 	},
@@ -36,9 +33,6 @@ export default {
 		return {
 			options: {
 				responsive: true,
-				legend: {
-					display: false
-				},
 				plugins: {
 					tooltip: {
 						mode: 'index',
@@ -51,14 +45,11 @@ export default {
 				scales: {
 					x: {
 						stacked: true,
-						grid: {
-							color: 'transparent',
-							borderColor: 'transparent',
-							tickColor: 'transparent'
-						}
+						ticks: 1,
 					},
 					y: {
-						stacked: true
+						stacked: true,
+						// ticks: 1,
 					}
 				}
 			},
@@ -71,25 +62,19 @@ export default {
 	computed: {
 		chartData() {
 			return {
-				labels: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],
+				labels: [1,19,7,23,5,7,12,74],
 				datasets: [
 					{
 						label: 'Employee',
 						backgroundColor: "#caf270",
-						data: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],
+						data: [1,19,7,23,5,7,12,74],
+						tension: .3,
 					}, {
 						label: 'Engineer',
 						backgroundColor: "#45c490",
-						data: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],
-					}, {
-						label: 'Government',
-						backgroundColor: "#008d93",
-						data: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],
-					}, {
-						label: 'Political parties',
-						backgroundColor: "#2e5468",
-						data: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],
-					},
+						data: [10, 25, 74,21,5,71],
+						tension: .3,
+					}
 				],
 			}
 		},
