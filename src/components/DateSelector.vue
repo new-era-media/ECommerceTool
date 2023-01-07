@@ -1,7 +1,7 @@
 <template lang="pug">
 	v-menu(ref='menu2' v-model='menu2' :close-on-content-click="false" offset-y :nudge-width="480")
 		template(v-slot:activator='{ on, attrs }')
-			.d-flex.items-center.justify-center(v-bind="attrs" v-on="on")
+			.period.d-flex.items-center.justify-center(v-bind="attrs" v-on="on")
 				v-icon(color="#212121" size="24") mdi-calendar-week
 				.text.ml-3 {{ dateNow }}
 				.text.ml-3 -
@@ -20,14 +20,14 @@
 						.mt-3
 							v-menu(ref='selfPeriodFrom' v-model='selfPeriodFrom' :close-on-content-click='false' transition='scale-transition' max-width='290px' min-width='auto')
 								template(v-slot:activator='{ on, attrs }')
-									v-text-field.input(v-model='selfPeriod.from' label='Дата' solo v-bind='attrs' v-on='on' hide-details dense)
+									v-text-field.input(v-model='selfPeriod.from' label='Дата' outlined v-bind='attrs' v-on='on' hide-details dense)
 								v-date-picker(v-model='selfPeriod.from' no-title @input='selfPeriodFrom = false')
 						.mt-3
 							.divider.mx-2
 						.mt-3
 							v-menu(ref='selfPeriodTo' v-model='selfPeriodTo' :close-on-content-click='false' transition='scale-transition' max-width='290px' min-width='auto')
 								template(v-slot:activator='{ on, attrs }')
-									v-text-field.input(v-model='selfPeriod.to' label='Дата' solo v-bind='attrs' v-on='on' hide-details dense)
+									v-text-field.input(v-model='selfPeriod.to' label='Дата' outlined v-bind='attrs' v-on='on' hide-details dense)
 								v-date-picker(v-model='selfPeriod.to' no-title @input='selfPeriodTo = false')
 						.mt-3
 							Button.ml-4 Применить
@@ -37,34 +37,31 @@
 						.mt-3
 							v-menu(ref='selfPeriodFrom' v-model='selfPeriodFrom' :close-on-content-click='false' transition='scale-transition' max-width='290px' min-width='auto')
 								template(v-slot:activator='{ on, attrs }')
-									v-text-field.input(v-model='selfPeriod.from' label='Дата' solo v-bind='attrs' v-on='on' hide-details)
+									v-text-field.input(v-model='selfPeriod.from' label='Дата' outlined v-bind='attrs' v-on='on' hide-details)
 								v-date-picker(v-model='selfPeriod.from' no-title @input='selfPeriodFrom = false')
 						.mt-3
 							.divider.mx-2
 						.mt-3
 							v-menu(ref='selfPeriodTo' v-model='selfPeriodTo' :close-on-content-click='false' transition='scale-transition' max-width='290px' min-width='auto')
 								template(v-slot:activator='{ on, attrs }')
-									v-text-field.input(v-model='selfPeriod.to' label='Дата' solo v-bind='attrs' v-on='on' hide-details dense)
+									v-text-field.input(v-model='selfPeriod.to' label='Дата' outlined v-bind='attrs' v-on='on' hide-details dense)
 								v-date-picker(v-model='selfPeriod.to' no-title @input='selfPeriodTo = false')
 
 					.period-with-period.d-flex.align-center
 						.mt-3
 							v-menu(ref='selfPeriodFrom' v-model='selfPeriodFrom' :close-on-content-click='false' transition='scale-transition' max-width='290px' min-width='auto')
 								template(v-slot:activator='{ on, attrs }')
-									v-text-field.input(v-model='selfPeriod.from' label='Дата' solo v-bind='attrs' v-on='on' hide-details)
+									v-text-field.input(v-model='selfPeriod.from' label='Дата' outlined v-bind='attrs' v-on='on' hide-details)
 								v-date-picker(v-model='selfPeriod.from' no-title @input='selfPeriodFrom = false')
 						.mt-3
 							.divider.mx-2
 						.mt-3
 							v-menu(ref='selfPeriodTo' v-model='selfPeriodTo' :close-on-content-click='false' transition='scale-transition' max-width='290px' min-width='auto')
 								template(v-slot:activator='{ on, attrs }')
-									v-text-field.input(v-model='selfPeriod.to' label='Дата' solo v-bind='attrs' v-on='on' hide-details dense)
+									v-text-field.input(v-model='selfPeriod.to' label='Дата' outlined v-bind='attrs' v-on='on' hide-details dense)
 								v-date-picker(v-model='selfPeriod.to' no-title @input='selfPeriodTo = false')
 						.mt-3
 							Button.ml-4 Применить
-
-
-
 
 				.mt-3
 					strong Графики сравнения периодов

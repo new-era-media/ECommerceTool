@@ -2,7 +2,7 @@
 	Tooltip(trigger="click" append-to-body)
 		template(slot="reference")
 			.d-flex.items-center.justify-center
-				span.title {{ value || placeholder }}
+				span.text {{ value || placeholder }}
 				v-icon mdi-chevron-down
 		.lists
 			.list(v-for="list in lists" @click="check(list.value)") {{ list.title }}
@@ -37,8 +37,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.title {
-	font-family: 'Open Sans';
+.text {
+	font-family: 'Montserrat';
 	font-style: normal;
 	font-weight: 400;
 	font-size: 14px;

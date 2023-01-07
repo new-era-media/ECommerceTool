@@ -8,7 +8,7 @@
 					span.analytics__menu-el.ml-4(@click="setComponent('Product')" :class="{active: component === 'Product'}") по товарам
 			.analytics__header__menu.ml-auto.d-flex.items-center.justify-center.flex-wrap
 				Select(:lists="selectWallet" v-model="select")
-				MultiSelect.ml-5(:lists="selectWallet" v-model="select2" placeholder="Все магазины")
+				MultiSelect.mx-5(:lists="selectWallet" v-model="select2" placeholder="Все магазины")
 				DateSelector.ml-5
 
 		component(:is="component")
@@ -27,7 +27,7 @@ export default {
 	components: {Product, Summary, DateSelector, MultiSelect, Select},
 	data() {
 		return {
-			component: Summary,
+			component: 'Summary',
 			options: {
 				responsive: true,
 				interaction: {
