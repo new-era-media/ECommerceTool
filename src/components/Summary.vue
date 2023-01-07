@@ -1,33 +1,85 @@
 <template lang="pug">
-	.analytics
-		.analytics__header.d-flex
-			.analytics__header__menu
-				.analytics__menu
-					span.analytics__menu-title Аналитика
-					span.analytics__menu-el.ml-4(@click="setComponent('Summary')" :class="{active: component === 'Summary'}") сводная
-					span.analytics__menu-el.ml-4(@click="setComponent('Product')" :class="{active: component === 'Product'}") по товарам
-			.analytics__header__menu.ml-auto.d-flex.items-center.justify-center.flex-wrap
-				Select(:lists="selectWallet" v-model="select")
-				MultiSelect.ml-5(:lists="selectWallet" v-model="select2" placeholder="Все магазины")
-				DateSelector.ml-5
+	.page
+		.charts
+			ChartStackBar(:colors="['red', 'blue', 'green', 'yellow', 'brown']" :lists="['Заказ', 'Продажи', 'Возвраты', 'Отмененные', 'Остатки']")
+			ChartStackBar(:colors="['red', 'blue', 'green', 'yellow', 'brown']" :lists="['Заказ', 'Продажи', 'Возвраты', 'Отмененные', 'Остатки']")
 
-		component(:is="component")
+			ChartStackLine(title="Заказы")
+
+		// Темплейт для собственной даты
+		.page__table
+			.page__table-title.mt-8 Итого за 4 ноября – 3 декабря 2022
+
+			v-data-table.mt-6(
+				:headers="headers"
+				:items="data"
+				hide-default-footer
+			)
+				template(#item.name="{ item }")
+					.page__table-body-name.mr-4
+						strong Название магазина
+						div OZON
+			.page__table-title.mt-8 Расходы
+
+			v-data-table.mt-6(
+				:headers="headers"
+				:items="data"
+				hide-default-footer
+			)
+				template(#item.name="{ item }")
+					.page__table-body-name.mr-4
+						strong Название магазина
+						div OZON
+
+
+		// Темплейт для сравнения
+		.page__table
+			.page__table-title.mt-8 Сравнение 01.12.2022 – 03.03.2023 и 08.03 2021 – 18.04.2021
+
+			v-data-table.mt-6(
+				:headers="headers"
+				:items="data"
+				hide-default-footer
+			)
+				template(#item.name="{ item }")
+					.page__table-body-name.mr-4
+						strong Название магазина
+						div OZON
+				template(#item.order="{ item }")
+					.page__table-body-name.mr-4
+						div(:class="{'green-cell': item.return > item.order}") {{ item.return }}
+						div(:class="{'green-cell': item.order > item.return}") {{ item.order }}
+			.page__table-title.mt-8 Расходы
+
+			v-data-table.mt-6(
+				:headers="headers"
+				:items="data"
+				hide-default-footer
+			)
+				template(#item.name="{ item }")
+					.page__table-body-name.mr-4
+						strong Название магазина
+						div OZON
+				template(#item.order="{ item }")
+					.page__table-body-name.mr-4
+						div(:class="{'green-cell': item.order > item.return}") {{ item.order }}
+						div(:class="{'green-cell': item.return > item.order}") {{ item.return }}
 
 </template>
 
 <script>
 
+import Table from "@/components/Table/Table";
 import Select from "@/components/Select";
 import MultiSelect from "@/components/MultiSelect";
 import DateSelector from "@/components/DateSelector";
-import Summary from "@/components/Summary";
-import Product from "@/components/Product";
+import ChartStackBar from "@/components/ChartStackBar";
+import ChartStackLine from "@/components/ChartStackLine";
 export default {
-	name: "Analytics",
-	components: {Product, Summary, DateSelector, MultiSelect, Select},
+	name: "Summary",
+	components: {ChartStackLine, ChartStackBar, DateSelector, MultiSelect, Select, Table},
 	data() {
 		return {
-			component: Summary,
 			options: {
 				responsive: true,
 				interaction: {
@@ -77,43 +129,11 @@ export default {
 			],
 		}
 	},
-	methods: {
-		setComponent(component) {
-			this.component = component
-		}
-	}
 }
 </script>
 
 <style lang="scss" scoped>
-.analytics {
-	padding: 12px 24px;
-	&__menu {
-		font-family: 'Montserrat';
-		font-weight: 400;
-		font-size: 24px;
-		line-height: 29px;
-		letter-spacing: 0.15px;
-		color: #676767;
-		&-title {
-			color: #212121;
-		}
-		&-el {
-			cursor: pointer;
-			color: #676767;
-		}
-	}
-	&__header {
-		@media screen and (max-width: 1060px) {
-			flex-direction: column;
-			&__menu {
-				margin-left: 0 !important;
-				justify-content: flex-start !important;
-				margin-top: 12px;
-			}
-		}
-	}
-	&__body {}
+.page {
 	&__table {
 		&-title {
 			font-weight: 600;
