@@ -1,19 +1,27 @@
 <template lang="pug">
-	v-menu(ref='menu2' v-model='menu2' :close-on-content-click="false" offset-y :nudge-width="480")
+	v-menu(ref='menu2' v-model='menu2' :close-on-content-click="false" offset-y :nudge-width="240")
 		template(v-slot:activator='{ on, attrs }')
-			.period.d-flex.items-center.justify-center(v-bind="attrs" v-on="on")
-				v-icon(color="#212121" size="24") mdi-calendar-week
-				.text.ml-3 {{ dateNow }}
-				.text.ml-3 -
-				.text.ml-3 {{ dateNow }}
+			.period.d-flex.items-center.justify-center.flex-wrap(v-bind="attrs" v-on="on")
+				template(v-if="typeDate === 1")
+					v-icon.mr-3(color="#212121" size="24") mdi-calendar-week
+					.text {{ titlePeriod.from }}
+					.text.mx-3 -
+					.text {{ titlePeriod.to }}
+				template(v-if="typeDate === 2")
+					v-icon.mr-3(color="#212121" size="24") mdi-calendar-week
+					.text {{ titlePeriod.first.from }}
+					.text.mx-3 -
+					.text {{ titlePeriod.first.to }}
+					.text.mx-3 /
+					.text {{ titlePeriod.second.from }}
+					.text.mx-3 -
+					.text {{ titlePeriod.second.to }}
 		.content(@input='menu2 = false' )
 			.left-bar
 				.title Готовые периоды
-				Button.mt-3(type="orange-outline" @click="lastYear") Последний год
-				Button.mt-2(type="orange-outline" @click="halfYear") Полгода
-				Button.mt-2(type="orange-outline" @click="quarterfYear") Квартал
-				Button.mt-2(type="orange-outline" @click="month") Месяц
-				Button.mt-2(type="orange-outline" @click="week") Неделя
+				.bns
+					Button.mt-3(v-for="button in buttons" type="orange-outline" @click="button.fn") {{ button.title }}
+
 			.right-bar
 				.title Свой период
 					.self-period.d-flex.align-center
@@ -21,47 +29,47 @@
 							v-menu(ref='selfPeriodFrom' v-model='selfPeriodFrom' :close-on-content-click='false' transition='scale-transition' max-width='290px' min-width='auto')
 								template(v-slot:activator='{ on, attrs }')
 									v-text-field.input(v-model='selfPeriod.from' label='Дата' outlined v-bind='attrs' v-on='on' hide-details dense)
-								v-date-picker(v-model='selfPeriod.from' no-title @input='selfPeriodFrom = false')
+								v-date-picker(v-model='selfPeriod.from' no-title @input='selfPeriodFrom = false' :max="date")
 						.mt-3
 							.divider.mx-2
 						.mt-3
 							v-menu(ref='selfPeriodTo' v-model='selfPeriodTo' :close-on-content-click='false' transition='scale-transition' max-width='290px' min-width='auto')
 								template(v-slot:activator='{ on, attrs }')
 									v-text-field.input(v-model='selfPeriod.to' label='Дата' outlined v-bind='attrs' v-on='on' hide-details dense)
-								v-date-picker(v-model='selfPeriod.to' no-title @input='selfPeriodTo = false')
+								v-date-picker(v-model='selfPeriod.to' no-title @input='selfPeriodTo = false' :max="date")
 						.mt-3
-							Button.ml-4 Применить
+							Button.ml-4(@click="useDates(selfPeriod, 1)") Применить
 
 				.title.mt-4 Период к периоду
 					.period-with-period.d-flex.align-center
 						.mt-3
-							v-menu(ref='selfPeriodFrom' v-model='selfPeriodFrom' :close-on-content-click='false' transition='scale-transition' max-width='290px' min-width='auto')
+							v-menu(ref='selfPeriodFrom' v-model='periodToPeriodFirstFrom' :close-on-content-click='false' transition='scale-transition' max-width='290px' min-width='auto')
 								template(v-slot:activator='{ on, attrs }')
-									v-text-field.input(v-model='selfPeriod.from' label='Дата' outlined v-bind='attrs' v-on='on' hide-details)
-								v-date-picker(v-model='selfPeriod.from' no-title @input='selfPeriodFrom = false')
+									v-text-field.input(v-model='periodToPeriod.first.from' label='Дата' outlined v-bind='attrs' v-on='on' hide-details dense)
+								v-date-picker(v-model='periodToPeriod.first.from' no-title @input='periodToPeriodFirstFrom = false' :max="date")
 						.mt-3
 							.divider.mx-2
 						.mt-3
-							v-menu(ref='selfPeriodTo' v-model='selfPeriodTo' :close-on-content-click='false' transition='scale-transition' max-width='290px' min-width='auto')
+							v-menu(ref='selfPeriodTo' v-model='periodToPeriodFirstTo' :close-on-content-click='false' transition='scale-transition' max-width='290px' min-width='auto')
 								template(v-slot:activator='{ on, attrs }')
-									v-text-field.input(v-model='selfPeriod.to' label='Дата' outlined v-bind='attrs' v-on='on' hide-details dense)
-								v-date-picker(v-model='selfPeriod.to' no-title @input='selfPeriodTo = false')
+									v-text-field.input(v-model='periodToPeriod.first.to' label='Дата' outlined v-bind='attrs' v-on='on' hide-details dense)
+								v-date-picker(v-model='periodToPeriod.first.to' no-title @input='periodToPeriodFirstTo = false' :max="date")
 
 					.period-with-period.d-flex.align-center
 						.mt-3
-							v-menu(ref='selfPeriodFrom' v-model='selfPeriodFrom' :close-on-content-click='false' transition='scale-transition' max-width='290px' min-width='auto')
+							v-menu(ref='selfPeriodFrom' v-model='periodToPeriodSecondFrom' :close-on-content-click='false' transition='scale-transition' max-width='290px' min-width='auto')
 								template(v-slot:activator='{ on, attrs }')
-									v-text-field.input(v-model='selfPeriod.from' label='Дата' outlined v-bind='attrs' v-on='on' hide-details)
-								v-date-picker(v-model='selfPeriod.from' no-title @input='selfPeriodFrom = false')
+									v-text-field.input(v-model='periodToPeriod.second.from' label='Дата' outlined v-bind='attrs' v-on='on' hide-details dense)
+								v-date-picker(v-model='periodToPeriod.second.from' no-title @input='periodToPeriodSecondFrom = false' :max="date")
 						.mt-3
 							.divider.mx-2
 						.mt-3
-							v-menu(ref='selfPeriodTo' v-model='selfPeriodTo' :close-on-content-click='false' transition='scale-transition' max-width='290px' min-width='auto')
+							v-menu(ref='selfPeriodTo' v-model='periodToPeriodSecondTo' :close-on-content-click='false' transition='scale-transition' max-width='290px' min-width='auto')
 								template(v-slot:activator='{ on, attrs }')
-									v-text-field.input(v-model='selfPeriod.to' label='Дата' outlined v-bind='attrs' v-on='on' hide-details dense)
-								v-date-picker(v-model='selfPeriod.to' no-title @input='selfPeriodTo = false')
+									v-text-field.input(v-model='periodToPeriod.second.to' label='Дата' outlined v-bind='attrs' v-on='on' hide-details dense)
+								v-date-picker(v-model='periodToPeriod.second.to' no-title @input='periodToPeriodSecondTo = false' :max="date")
 						.mt-3
-							Button.ml-4 Применить
+							Button.ml-4(@click="useDates(periodToPeriod, 2)") Применить
 
 				.mt-3
 					strong Графики сравнения периодов
@@ -84,6 +92,7 @@ export default {
 	data() {
 		return {
 			date: dayjs().format('YYYY-MM-DD'),
+			typeDate: 1,
 			selfPeriodFrom: false,
 			selfPeriodTo: false,
 			menu2: false,
@@ -121,10 +130,50 @@ export default {
 					value: 'Упущенная прибыль',
 				},
 			],
+			titlePeriod: {
+				from: dayjs().format('YYYY-MM-DD'),
+				to: dayjs().format('YYYY-MM-DD'),
+			},
 			selfPeriod: {
 				from: dayjs().format('YYYY-MM-DD'),
 				to: dayjs().format('YYYY-MM-DD'),
-			}
+			},
+			periodToPeriod: {
+				first: {
+					from: dayjs().format('YYYY-MM-DD'),
+					to: dayjs().format('YYYY-MM-DD'),
+				},
+				second: {
+					from: dayjs().format('YYYY-MM-DD'),
+					to: dayjs().format('YYYY-MM-DD'),
+				},
+			},
+			periodToPeriodFirstTo: false,
+			periodToPeriodFirstFrom: false,
+			periodToPeriodSecondTo: false,
+			periodToPeriodSecondFrom: false,
+			buttons: [
+				{
+					title: 'Последний год',
+					fn: this.lastYear,
+				},
+				{
+					title: 'Полгода',
+					fn: this.halfYear,
+				},
+				{
+					title: 'Квартал',
+					fn: this.quarterfYear,
+				},
+				{
+					title: 'Месяц',
+					fn: this.month,
+				},
+				{
+					title: 'Неделя',
+					fn: this.week,
+				},
+			]
 		}
 	},
 	methods: {
@@ -154,6 +203,10 @@ export default {
 		change(value) {
 			this.menu2 = true
 			console.log(value)
+		},
+		useDates(period, type) {
+			this.typeDate = type
+			this.titlePeriod = period
 		}
 	},
 	computed: {
@@ -181,7 +234,6 @@ export default {
 	padding: 16px 24px;
 	display: flex;
 	background-color: #fff;
-	//max-width: 430px;
 }
 .title {
 	font-family: 'Montserrat';
@@ -205,6 +257,9 @@ export default {
 
 }
 .checkbox {
+	&:nth-child(even) {
+		width: auto !important;
+	}
 	width: 150px;
 }
 .divider {
@@ -218,10 +273,6 @@ export default {
 		height: 2px;
 		background-color: #212121;
 	}
-}
-::deep.container {
-	min-width: 600px !important;
-	max-width: 600px !important;
 }
 .self-period {
 	border-bottom: 1px #9C9C9C solid;

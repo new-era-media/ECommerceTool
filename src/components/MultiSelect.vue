@@ -1,11 +1,11 @@
 <template lang="pug">
-	Tooltip(trigger="click" append-to-body)
-		template(slot="reference")
-			.d-flex.items-center.justify-center
+	v-menu(ref='menu' v-model='menu' :close-on-content-click="false" offset-y)
+		template(v-slot:activator='{ on, attrs }')
+			.d-flex.items-center.justify-center(v-bind="attrs" v-on="on")
 				v-icon(size="16") {{ icon }}
 				span.text {{ placeholder }}
 				v-icon mdi-chevron-down
-		.lists
+		.lists(@input='menu = false')
 			.list(v-for="list in lists")
 				Checkbox(:value="list.value" :id="list.value" :checked="!!list.checked" :title="list.title" @change="change(list.value)")
 
@@ -13,11 +13,10 @@
 </template>
 
 <script>
-import Tooltip from "@/components/Elements/Tooltip";
 import Checkbox from "@/components/Checkbox";
 export default {
 	name: "MultiSelect",
-	components: {Checkbox, Tooltip},
+	components: {Checkbox},
 	props: {
 		value: {
 			type: Array,
@@ -36,6 +35,11 @@ export default {
 			required: true,
 		}
 	},
+	data() {
+		return {
+			menu: false
+		}
+	},
 	methods: {
 		check(item) {
 			return this.value.includes(item)
@@ -50,6 +54,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.lists {
+	background-color: #fff;
+}
 .text {
 	font-family: 'Montserrat';
 	font-style: normal;

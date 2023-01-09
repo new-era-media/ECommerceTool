@@ -7,12 +7,20 @@
 			.header__menu.d-flex.align-center.justify-center(v-if="microHeader")
 				.header__menu-el.logout Выйти
 			.header__menu.d-flex.align-center.justify-center(v-else)
-				//.header__menu-el.disabled Аналитика
-				//.header__menu-el.ml-4 Маркетплейсы
-				router-link.header__menu-el.ml-4(v-for="list in lists" :key="list.name" :to="list.link" :class="{disabled: list.disabled}" exact) {{ list.name }}
-				.header__menu-divider.ml-4 •
-				.header__menu-avatar.ml-4
-					v-icon mdi-account-outline
+				template(v-if="width>720")
+					router-link.header__menu-el.ml-4(v-for="list in lists" :key="list.name" :to="list.link" :class="{disabled: list.disabled}" exact) {{ list.name }}
+					.header__menu-divider.ml-4 •
+					.header__menu-avatar.ml-4
+						v-icon mdi-account-outline
+				template(v-else)
+					v-menu(ref='menu' v-model='menu' offset-y)
+						template(v-slot:activator='{ on, attrs }')
+							.mini-menu(v-bind="attrs" v-on="on")
+								.header__menu-avatar.ml-4
+									v-icon mdi-account-outline
+						.menu-list.d-flex.flex-column
+							router-link.header__menu-el.my-2.mx-2(v-for="list in listsMiniMenu" :key="list.name" :to="list.link" :class="{disabled: list.disabled}" exact) {{ list.name }}
+
 
 
 </template>
@@ -22,6 +30,7 @@ export default {
 	name: "Header",
 	data() {
 		return {
+			menu: false,
 			lists: [
 				{
 					name: 'Аналитика',
@@ -33,7 +42,20 @@ export default {
 					link: '/connecting',
 					disabled: false,
 				},
-			]
+			],
+			width: 0,
+		}
+	},
+	created() {
+		window.addEventListener('resize', this.handleResize);
+		this.handleResize();
+	},
+	destroyed() {
+		window.removeEventListener('resize', this.handleResize);
+	},
+	methods: {
+		handleResize() {
+			this.width = window.innerWidth;
 		}
 	},
 	computed: {
@@ -43,6 +65,13 @@ export default {
 		microHeader() {
 			return this.meta?.microHeader
 		},
+		listsMiniMenu() {
+			return [...this.lists, {
+				name: 'Профиль',
+				link: '/#',
+				disabled: false,
+			}]
+		}
 	}
 }
 </script>

@@ -26,6 +26,7 @@ import {
 } from 'chart.js'
 
 import ChartDataLabels from 'chartjs-plugin-datalabels'
+import ChartZoomPlugin from 'chartjs-plugin-zoom'
 
 Chart.register(
 	ArcElement,
@@ -43,7 +44,8 @@ Chart.register(
 	Filler,
 	Legend,
 	Title,
-	ChartDataLabels
+	ChartDataLabels,
+	ChartZoomPlugin,
 )
 
 import Vue from 'vue'
@@ -163,4 +165,4 @@ d.set('plugins.datalabels', {
 	align: 'center',
 })
 
-export { Chart, ChartDataLabels }
+export { Chart, ChartDataLabels, ChartZoomPlugin }

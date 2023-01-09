@@ -2,14 +2,17 @@
 	.analytics
 		.analytics__header.d-flex
 			.analytics__header__menu
-				.analytics__menu
-					span.analytics__menu-title Аналитика
-					span.analytics__menu-el.ml-4(@click="setComponent('Summary')" :class="{active: component === 'Summary'}") сводная
-					span.analytics__menu-el.ml-4(@click="setComponent('Product')" :class="{active: component === 'Product'}") по товарам
+				.analytics__menu.d-flex.flex-wrap
+					.analytics__menu-title.mr-4 Аналитика
+					.d-flex.flex-wrap
+						.analytics__menu-el.mr-4(@click="setComponent('Summary')" :class="{active: component === 'Summary'}") сводная
+						.analytics__menu-el(@click="setComponent('Product')" :class="{active: component === 'Product'}") по товарам
 			.analytics__header__menu.ml-auto.d-flex.items-center.justify-center.flex-wrap
-				Select(:lists="selectWallet" v-model="select")
-				MultiSelect.mx-5(:lists="selectWallet" v-model="select2" placeholder="Все магазины")
-				DateSelector.ml-5
+				.mr-2
+					Select(:lists="selectWallet" v-model="select")
+				.mr-2
+					MultiSelect(:lists="selectWallet" v-model="select2" placeholder="Все магазины")
+				DateSelector
 
 		component(:is="component")
 

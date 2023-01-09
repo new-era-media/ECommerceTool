@@ -4,12 +4,19 @@
 			.chart__header-list.d-flex.items-center.flex-wrap
 				.chart__header-el.mr-2 {{title}}
 			.chart__header-filters.d-flex.items-center
-				Select.select.ml-5(:lists="selectChart" v-model="selectChartValue")
-				MultiSelect.ml-5(:lists="selectTypes" v-model="selectType" icon="mdi-filter-outline")
+				.ml-2
+					Select.select(:lists="selectChart" v-model="selectChartValue")
+				MultiSelect(:lists="selectTypes" v-model="selectType" icon="mdi-filter-outline")
 		LineChart(
 			:chartData="chartData"
 			:options="options"
+			:plugins="plugins"
 		)
+		Button(
+			v-if="zoom"
+			type="orange-outline"
+			@click="resetZoom"
+		) Отменить приближение
 </template>
 
 <script>
@@ -19,10 +26,12 @@ import MultiSelect from "@/components/MultiSelect";
 import Select from "@/components/Select";
 import Table from "@/components/Table/Table";
 import LineChart from "@/components/Chart/LineChart";
+import Button from "@/components/Button/Button";
+import { ChartZoomPlugin } from '@/plugins/chart'
 
 export default {
 	name: "ChartStackLine",
-	components: {LineChart, BarChart, DateSelector, MultiSelect, Select, Table},
+	components: {LineChart, BarChart, DateSelector, MultiSelect, Select, Table, Button},
 	props: {
 		title: {
 			type: String,
@@ -31,6 +40,7 @@ export default {
 	},
 	data() {
 		return {
+			zoom: false,
 			options: {
 				responsive: true,
 				plugins: {
@@ -38,9 +48,23 @@ export default {
 						mode: 'index',
 						intersect: false,
 					},
-				},
-				interaction: {
-					intersect: false,
+					zoom: {
+						zoom: {
+							drag: {
+								enabled: true,
+							},
+							wheel: {
+								enabled: false,
+							},
+							pinch: {
+								enabled: false,
+							},
+							mode: 'x',
+							onZoom: ({ chart }) => {
+								this.zoom = chart.resetZoom
+							},
+						},
+					},
 				},
 				scales: {
 					x: {
@@ -55,11 +79,14 @@ export default {
 			},
 			selectChart: [{title: 'По дням', value: 'По дням'}, {title: 'По неделям', value: 'По неделям'}, {title: 'По месяцам', value: 'По месяцам'}],
 			selectTypes: [{title: 'Заказы', value: 'Заказы'}, {title: 'Продажи', value: 'Продажи'}, {title: 'Возвраты', value: 'Возвраты'}, {title: 'Остатки', value: 'Остатки'}],
-			selectType: 'Заказы',
+			selectType: [],
 			selectChartValue: 'По дням',
 		}
 	},
 	computed: {
+		plugins() {
+			return [ChartZoomPlugin]
+		},
 		chartData() {
 			return {
 				labels: [1,19,7,23,5,7,12,74],
@@ -77,6 +104,12 @@ export default {
 					}
 				],
 			}
+		},
+	},
+	methods: {
+		resetZoom() {
+			this.zoom()
+			this.zoom = false
 		},
 	}
 }
@@ -111,4 +144,9 @@ export default {
 		}
 	}
 }
+//@media screen and (max-width: 720px) {
+//	::v-deep canvas {
+//		min-width: 720px !important;
+//	}
+//}
 </style>

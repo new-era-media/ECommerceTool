@@ -1,19 +1,17 @@
 <template lang="pug">
-	Tooltip(trigger="click" append-to-body)
-		template(slot="reference")
-			.d-flex.items-center.justify-center
+	v-menu(ref='menu' v-model='menu' :close-on-content-click="false" offset-y)
+		template(v-slot:activator='{ on, attrs }')
+			.d-flex.items-center.justify-center(v-bind="attrs" v-on="on")
 				span.text {{ value || placeholder }}
 				v-icon mdi-chevron-down
-		.lists
+		.lists(@input='menu = false')
 			.list(v-for="list in lists" @click="check(list.value)") {{ list.title }}
 
 </template>
 
 <script>
-import Tooltip from "@/components/Elements/Tooltip";
 export default {
 	name: "Select",
-	components: {Tooltip},
 	props: {
 		value: {
 			type: String,
@@ -28,6 +26,11 @@ export default {
 			required: true,
 		}
 	},
+	data() {
+		return {
+			menu: false
+		}
+	},
 	methods: {
 		check(value) {
 			this.$emit('input', value)
@@ -37,6 +40,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.lists {
+	background-color: #fff;
+}
 .text {
 	font-family: 'Montserrat';
 	font-style: normal;
