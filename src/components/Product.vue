@@ -1,7 +1,8 @@
 <template lang="pug">
 	.products.mt-4
+		pre {{ this.data3.length }}
 		.products__search
-			v-text-field.input(label='Поиск по бренду, названию, артикулу, цене' append-icon="mdi-magnify" outlined v-bind='attrs' v-on='on' hide-details dense)
+			v-text-field.input(label='Поиск по бренду, названию, артикулу, цене' append-icon="mdi-magnify" outlined hide-details dense)
 		.products__info.mt-5
 			.products__info__title Итого по 346 товарам с 01.12.2022 по 01.01.2023
 			// темплейт для одной даты
@@ -20,18 +21,36 @@
 				)
 					template(#item.period="{ item }")
 						.page__table-body-name.mr-4
-							div 01.12.2022 – 03.03.2023
-							div 08.03 2021 – 18.04.2021
+							.table-date 01.12.2022 – 03.03.2023
+							.table-date 08.03 2021 – 18.04.2021
 					template(#item.average-price="{ item }")
 						.page__table-body-name.mr-4
 							div(:class="{'green-cell': item['average-price'] > item['average-discount']}") {{ item['average-price'] }}
 							div(:class="{'green-cell': item['average-discount'] > item['average-price']}") {{ item['average-discount'] }}
 
+				v-data-table.virtual-scroll.mt-6(
+					:headers="info"
+					:items="data3"
+					disable-pagination
+					hide-default-footer
+					:loading="false"
+					@click:row="handleClick"
+				)
+					v-progress-linear(v-slot:progress color="blue" indeterminate)
+					template(v-slot:item="{item, index}")
+						template
+							tr.lazy(:class="index === data3.length - 1 ? 'footer' : ''")
+								td(v-for="el in item") {{ el }}
 </template>
 
 <script>
+import Observer from 'vue-intersection-observer'
+
 export default {
 	name: "Product",
+	components: {
+		Observer
+	},
 	data() {
 		return {
 			info: [
@@ -180,8 +199,190 @@ export default {
 					"count": 14,
 				},
 			],
+			data3: [
+					{
+						"average-price": 1,
+						"average-discount": 2,
+						"average-price-after-discount": 3,
+						"orders": 4,
+						"sales": 5,
+						"return": 6,
+						"expenses": 7,
+						"profit": 8,
+						"missed-profit": 10,
+						"remains": 11,
+						"basket": 12,
+						"position": 13,
+						"count": 14,
+					},
+					{
+						"average-price": 1,
+						"average-discount": 2,
+						"average-price-after-discount": 3,
+						"orders": 4,
+						"sales": 5,
+						"return": 6,
+						"expenses": 7,
+						"profit": 8,
+						"missed-profit": 10,
+						"remains": 11,
+						"basket": 12,
+						"position": 13,
+						"count": 14,
+				},
+				{
+					"average-price": 1,
+					"average-discount": 2,
+					"average-price-after-discount": 3,
+					"orders": 4,
+					"sales": 5,
+					"return": 6,
+					"expenses": 7,
+					"profit": 8,
+					"missed-profit": 10,
+					"remains": 11,
+					"basket": 12,
+					"position": 13,
+					"count": 14,
+				},
+				{
+					"average-price": 1,
+					"average-discount": 2,
+					"average-price-after-discount": 3,
+					"orders": 4,
+					"sales": 5,
+					"return": 6,
+					"expenses": 7,
+					"profit": 8,
+					"missed-profit": 10,
+					"remains": 11,
+					"basket": 12,
+					"position": 13,
+					"count": 14,
+				},
+				{
+					"average-price": 1,
+					"average-discount": 2,
+					"average-price-after-discount": 3,
+					"orders": 4,
+					"sales": 5,
+					"return": 6,
+					"expenses": 7,
+					"profit": 8,
+					"missed-profit": 10,
+					"remains": 11,
+					"basket": 12,
+					"position": 13,
+					"count": 14,
+				},
+				{
+					"average-price": 1,
+					"average-discount": 2,
+					"average-price-after-discount": 3,
+					"orders": 4,
+					"sales": 5,
+					"return": 6,
+					"expenses": 7,
+					"profit": 8,
+					"missed-profit": 10,
+					"remains": 11,
+					"basket": 12,
+					"position": 13,
+					"count": 14,
+				}
+			],
+			observer: null
 		}
 	},
+	mounted() {
+		this.useObs()
+	},
+	destroyed() {
+		this.observer.disconnect();
+	},
+	methods: {
+		useObs() {
+			const options = {
+				root: document.querySelector(".virtual-scroll"),
+				rootMargin: "0px",
+				threshold: 0.5
+			}
+
+			this.observer = new IntersectionObserver(entries => {
+				entries.forEach(({ target, isIntersecting}) => {
+					if (!isIntersecting) {
+						return;
+					}
+
+					if (isIntersecting && target) {
+						this.observer.unobserve(target);
+						this.addNewFields()
+					}
+				})
+			}, options);
+
+			const node = document.querySelector('.footer')
+			this.observer.observe(node);
+		},
+		addNewFields() {
+			this.data3 = [
+				...this.data3,
+				{
+				"average-price": 1,
+				"average-discount": 2,
+				"average-price-after-discount": 3,
+				"orders": 4,
+				"sales": 5,
+				"return": 6,
+				"expenses": 7,
+				"profit": 8,
+				"missed-profit": 10,
+				"remains": 11,
+				"basket": 12,
+				"position": 13,
+				"count": 14,
+			},
+				{
+					"average-price": 1,
+					"average-discount": 2,
+					"average-price-after-discount": 3,
+					"orders": 4,
+					"sales": 5,
+					"return": 6,
+					"expenses": 7,
+					"profit": 8,
+					"missed-profit": 10,
+					"remains": 11,
+					"basket": 12,
+					"position": 13,
+					"count": 14,
+				},
+				{
+					"average-price": 1,
+					"average-discount": 2,
+					"average-price-after-discount": 3,
+					"orders": 4,
+					"sales": 5,
+					"return": 6,
+					"expenses": 7,
+					"profit": 8,
+					"missed-profit": 10,
+					"remains": 11,
+					"basket": 12,
+					"position": 13,
+					"count": 14,
+				}
+			]
+
+			this.$nextTick(()=> {
+				const node = document.querySelector('.footer')
+				this.observer.observe(node);
+			})
+		},
+		handleClick(value) {
+			console.log(value)
+		},
+	}
 }
 </script>
 
@@ -234,5 +435,15 @@ export default {
 }
 .green-cell {
 	color: #8DC63F;
+}
+.table-date {
+	width: 160px;
+}
+.virtual-scroll {
+	max-height: 300px;
+	overflow: auto;
+}
+td {
+	text-align: center;
 }
 </style>

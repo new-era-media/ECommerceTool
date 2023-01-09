@@ -104,11 +104,11 @@ l.labels.padding = 30*/
 
 const t = d.plugins.tooltip
 t.intersect = false
-t.backgroundColor = '#FFFFFF'
-t.borderColor = '#E0E0E0'
+t.backgroundColor = 'rgba(0, 0, 0, 0.8)'
+t.borderColor = 'rgba(0, 0, 0, 0.8)'
 t.borderWidth = 1
-t.titleColor = '#212121'
-t.bodyColor = '#212121'
+t.titleColor = '#fff'
+t.bodyColor = '#fff'
 t.padding = {
 	x: 20,
 	y: 15
