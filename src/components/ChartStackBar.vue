@@ -10,14 +10,13 @@
 		BarChart.min(
 			:chartData="chartData"
 			:options="options"
-			:plugins="plugins"
 		)
-
-		Button(
-			v-if="zoom"
-			type="orange-outline"
-			@click="resetZoom"
-		) Отменить приближение
+		//
+		//Button(
+		//	v-if="zoom"
+		//	type="orange-outline"
+		//	@click="resetZoom"
+		//) Отменить приближение
 </template>
 
 <script>
@@ -27,7 +26,7 @@ import MultiSelect from "@/components/MultiSelect";
 import Select from "@/components/Select";
 import Table from "@/components/Table/Table";
 import Button from "@/components/Button/Button";
-import { ChartZoomPlugin } from '@/plugins/chart'
+// import { ChartZoomPlugin } from '@/plugins/chart'
 
 export default {
 	name: "ChartStackBar",
@@ -94,9 +93,9 @@ export default {
 		}
 	},
 	computed: {
-		plugins() {
-			return [ChartZoomPlugin]
-		},
+		// plugins() {
+		// 	return [ChartZoomPlugin]
+		// },
 		chartData() {
 			return {
 				labels: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],
@@ -122,12 +121,12 @@ export default {
 			}
 		},
 	},
-	methods: {
-		resetZoom() {
-			this.zoom()
-			this.zoom = false
-		},
-	}
+	// methods: {
+	// 	resetZoom() {
+	// 		this.zoom()
+	// 		this.zoom = false
+	// 	},
+	// }
 }
 </script>
 
@@ -160,9 +159,9 @@ export default {
 		}
 	}
 }
-@media screen and (max-width: 1060px) {
-	::v-deep canvas {
-		min-width: 1000px !important;
-	}
-}
+//@media screen and (max-width: 1060px) {
+//	::v-deep canvas {
+//		min-width: 1000px !important;
+//	}
+//}
 </style>

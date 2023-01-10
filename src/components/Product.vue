@@ -1,6 +1,5 @@
 <template lang="pug">
 	.products.mt-4
-		pre {{ this.data3.length }}
 		.products__search
 			v-text-field.input(label='Поиск по бренду, названию, артикулу, цене' append-icon="mdi-magnify" outlined hide-details dense)
 		.products__info.mt-5
@@ -28,19 +27,25 @@
 							div(:class="{'green-cell': item['average-price'] > item['average-discount']}") {{ item['average-price'] }}
 							div(:class="{'green-cell': item['average-discount'] > item['average-price']}") {{ item['average-discount'] }}
 
-				v-data-table.virtual-scroll.mt-6(
-					:headers="info"
-					:items="data3"
-					disable-pagination
-					hide-default-footer
-					:loading="false"
-					@click:row="handleClick"
-				)
-					v-progress-linear(v-slot:progress color="blue" indeterminate)
-					template(v-slot:item="{item, index}")
-						template
-							tr.lazy(:class="index === data3.length - 1 ? 'footer' : ''")
-								td(v-for="el in item") {{ el }}
+				.table-container
+					v-data-table.virtual-scroll.mt-6(
+						:headers="info"
+						:items="data3"
+						disable-pagination
+						fixed-header
+						:loading="false"
+						hide-default-footer
+						mobile-breakpoint="0"
+						mobile="false"
+						height="400px"
+						width="100%"
+						@click:row="handleClick"
+					)
+						v-progress-linear(v-slot:progress color="blue" indeterminate)
+						template(v-slot:item="{item, index}")
+							template
+								tr.lazy(:class="index === data3.length - 1 ? 'footer' : ''")
+									td(v-for="el in item") {{ el }}
 </template>
 
 <script>
@@ -305,11 +310,12 @@ export default {
 			const options = {
 				root: document.querySelector(".virtual-scroll"),
 				rootMargin: "0px",
-				threshold: 0.5
+				threshold: .1,
 			}
 
 			this.observer = new IntersectionObserver(entries => {
-				entries.forEach(({ target, isIntersecting}) => {
+				entries.forEach(({ target, isIntersecting, intersectionRatio}) => {
+					console.log(target, isIntersecting, intersectionRatio)
 					if (!isIntersecting) {
 						return;
 					}
@@ -373,6 +379,8 @@ export default {
 					"count": 14,
 				}
 			]
+
+			console.log(123131313131)
 
 			this.$nextTick(()=> {
 				const node = document.querySelector('.footer')
@@ -440,7 +448,9 @@ export default {
 	width: 160px;
 }
 .virtual-scroll {
-	max-height: 300px;
+	overflow: auto;
+}
+.table-container {
 	overflow: auto;
 }
 td {
