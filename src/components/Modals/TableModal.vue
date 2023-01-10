@@ -1,38 +1,33 @@
 <template lang="pug">
-	.products.mt-4
-		.icon(v-if="checkedElements.length" @click="openModal")
-			v-icon(size="28" color="#8DC63F") mdi-scale-unbalanced
-		.products__search
-			v-text-field.input(label='Поиск по бренду, названию, артикулу, цене' append-icon="mdi-magnify" outlined hide-details dense)
-		.products__info.mt-5
-			.products__info__title Итого по 346 товарам с 01.12.2022 по 01.01.2023
-			// темплейт для одной даты
-			.products__info__cards
-				v-data-table.mt-6(
-					:headers="info"
-					:items="data"
-					hide-default-footer
-				)
-			// темплейт для одной сравнения
-			//.products__info__cards
-			//	v-data-table.mt-6(
-			//		:headers="info2"
-			//		:items="data2"
-			//		hide-default-footer
-			//	)
-			//		template(#item.period="{ item }")
-			//			.page__table-body-name.mr-4
-			//				.table-date 01.12.2022 – 03.03.2023
-			//				.table-date 08.03 2021 – 18.04.2021
-			//		template(#item.average-price="{ item }")
-			//			.page__table-body-name.mr-4
-			//				div(:class="{'green-cell': item['average-price'] > item['average-discount']}") {{ item['average-price'] }}
-			//				div(:class="{'green-cell': item['average-discount'] > item['average-price']}") {{ item['average-discount'] }}
-
-		.products.mt-5
+	.modal
+		.modal__title Сравнение товаров
+		.products.mt-6
 			.products__info
-				.products__info__title.mt-5 Категория 1 — Бренд 1
-				LazyTable(:table-data="data3" :headers="headers" :loading="loading" @update="addNewFields" :lazy-load="true" height="700px" @handle-click="handleClick")
+				.products__info__title Итого по 3 товарам с 01.12.022 по 01.01.2023
+				// темплейт для одной даты
+				.products__info__cards
+					v-data-table.mt-6(
+						:headers="info"
+						:items="data"
+						hide-default-footer
+					)
+				// темплейт для одной сравнения
+				.products__info__cards
+					v-data-table.mt-6(
+						:headers="info2"
+						:items="data2"
+						hide-default-footer
+					)
+						template(#item.period="{ item }")
+							.page__table-body-name.mr-4
+								.table-date 01.12.2022 – 03.03.2023
+								.table-date 08.03 2021 – 18.04.2021
+						template(#item.average-price="{ item }")
+							.page__table-body-name.mr-4
+								div(:class="{'green-cell': item['average-price'] > item['average-discount']}") {{ item['average-price'] }}
+								div(:class="{'green-cell': item['average-discount'] > item['average-price']}") {{ item['average-discount'] }}
+				.products__info__title.mt-10 Категория 1 — Бренд 1
+				LazyTable(:table-data="data3" :headers="headers" @update="addNewFields" :lazy-load="false")
 					template(#row="{item}")
 						td(v-for="(el, key) in getKeys(item)")
 							img(v-if="key === 'img'" width="60px" height="40px" :src="el")
@@ -40,32 +35,15 @@
 								span {{el}}
 								v-icon.ml-1(v-if="item.highlighting" size="15" color="#FA4860") mdi-scale-unbalanced
 							.table-col(v-else ) {{ el }}
-
-				//LazyTable(:table-data="data4" :headers="headers" :loading="loading" @update="addNewFields" :lazy-load="false")
-				//	template(#row="{item}")
-				//		td(v-for="(el, key) in item")
-				//			img(v-if="key === 'img'" width="60px" height="40px" :src="el")
-				//			.table-col(v-else )
-				//				div(v-if="typeof el === 'object'")
-				//					// Пока цвета не работают, потому что приходит строка
-				//					v-tooltip(bottom)
-				//						template(v-slot:activator='{ on, attrs }')
-				//							div(v-bind='attrs' v-on='on')
-				//								div(:class="{'green-cell': el.first > el.second }") {{ el.first }}
-				//								div(:class="{'green-cell': el.second > el.first }") {{ el.second }}
-				//						span Tooltip
-				//				div(v-else) {{ el }}
 </template>
 
 <script>
-
 import LazyTable from "@/components/LazyTable";
 export default {
-	name: "Product",
+	name: "TableModal",
 	components: {LazyTable},
 	data() {
 		return {
-			loading: false,
 			info: [
 				{
 					text: 'Ср. цена',
@@ -120,104 +98,6 @@ export default {
 				{
 					text: 'Ср. кол-во дней не в сток',
 					value: "count", sortable: false
-				},
-			],
-			headers: [
-				{
-					text: 'Фото',
-					value: "img",
-					sortable: false,
-					width: '60px',
-				},
-				{
-					text: 'Название',
-					value: "name",
-					sortable: false,
-					width: '120px',
-				},
-				{
-					text: 'Код клиента',
-					value: "code",
-					sortable: false,
-					width: '90px',
-				},
-				{
-					text: 'Цена',
-					value: "price",
-					sortable: false,
-					width: '80px',
-				},
-				{
-					text: 'Скидка',
-					value: "discount",
-					sortable: false,
-					width: '90px',
-				},
-				{
-					text: 'Цена после скидки',
-					value: "price-after-discount",
-					sortable: false,
-					width: '90px',
-				},
-				{
-					text: 'Заказы',
-					value: "orders",
-					sortable: false,
-					width: '90px',
-				},
-				{
-					text: 'Продажи',
-					value: "sales",
-					sortable: false,
-					width: '90px',
-				},
-				{
-					text: 'Возвраты',
-					value: "returns",
-					sortable: false,
-					width: '90px',
-				},
-				{
-					text: 'Расходы',
-					value: "expenses",
-					sortable: false,
-					width: '90px',
-				},
-				{
-					text: 'Прибыль',
-					value: "profit",
-					sortable: false,
-					width: '90px',
-				},
-				{
-					text: 'Упущенная-прибыль',
-					value: "lose-profit",
-					sortable: false,
-					width: '90px',
-				},
-				{
-					text: 'Остатки',
-					value: "remains",
-					sortable: false,
-					width: '90px',
-				},
-				{
-					text: 'Конверсии в корзину',
-					value: "basket",
-					sortable: false,
-					width: '90px',
-				},
-				{
-					text: 'Позиция в поиск.выдаче',
-					value: "position",
-					sortable: false,
-					width: '90px',
-				},
-				{
-					text: 'Кол-во дней не в сток',
-					value: "days-count",
-					sortable: false,
-					width: '100px',
 				},
 			],
 			data: [
@@ -373,130 +253,107 @@ export default {
 					id: 3,
 				},
 			],
-			data4: [
+			headers: [
 				{
-					"img": 'https://png.pngtree.com/png-vector/20191103/ourlarge/pngtree-handsome-young-guy-avatar-cartoon-style-png-image_1947775.jpg',
-					"name": 'Название длинное в несколько строк',
-					"code": '123412356783',
-					"price": {
-						first: '133 ₽',
-						second: '133 ₽',
-					},
-					"discount": {
-						first: '10%',
-						second: '10%',
-					},
-					"price-after-discount": {
-						first: '133₽',
-						second: '133₽',
-					},
-					"orders": {
-						first: '10',
-						second: '10',
-					},
-					"sales": {
-						first: '10',
-						second: '10',
-					},
-					"returns": {
-						first: '-10',
-						second: '-10',
-					},
-					"expenses": {
-						first: '133 ₽',
-						second: '133 ₽',
-					},
-					"profit": {
-						first: '133 ₽',
-						second: '133 ₽',
-					},
-					"lose-profit": {
-						first: '133 ₽',
-						second: '133 ₽',
-					},
-					"remains": {
-						first: '133',
-						second: '133',
-					},
-					"basket": {
-						first: '10%',
-						second: '10%',
-					},
-					"position": {
-						first: '10',
-						second: '10',
-					},
-					"days-count": {
-						first: '7 дн.',
-						second: '7 дн.',
-					},
+					text: 'Фото',
+					value: "img",
+					sortable: false,
+					width: '60px',
 				},
 				{
-					"img": 'https://png.pngtree.com/png-vector/20191103/ourlarge/pngtree-handsome-young-guy-avatar-cartoon-style-png-image_1947775.jpg',
-					"name": 'Название длинное в несколько строк',
-					"code": '123412356783',
-					"price": '133 ₽',
-					"discount": '10%',
-					"price-after-discount": '112 ₽',
-					"orders": '12',
-					"sales": '34',
-					"returns": '– 13',
-					"expenses": '112 ₽',
-					"profit": '112 ₽',
-					"lose-profit": '112 ₽',
-					"remains": '100',
-					"basket": '12%',
-					"position": '12',
-					"days-count": '7 дн.',
+					text: 'Название',
+					value: "name",
+					sortable: false,
+					width: '120px',
 				},
 				{
-					"img": 'https://png.pngtree.com/png-vector/20191103/ourlarge/pngtree-handsome-young-guy-avatar-cartoon-style-png-image_1947775.jpg',
-					"name": 'Название длинное в несколько строк',
-					"code": '123412356783',
-					"price": '133 ₽',
-					"discount": '10%',
-					"price-after-discount": '112 ₽',
-					"orders": '12',
-					"sales": '34',
-					"returns": '– 13',
-					"expenses": '112 ₽',
-					"profit": '112 ₽',
-					"lose-profit": '112 ₽',
-					"remains": '100',
-					"basket": '12%',
-					"position": '12',
-					"days-count": '7 дн.',
+					text: 'Код клиента',
+					value: "code",
+					sortable: false,
+					width: '90px',
+				},
+				{
+					text: 'Цена',
+					value: "price",
+					sortable: false,
+					width: '80px',
+				},
+				{
+					text: 'Скидка',
+					value: "discount",
+					sortable: false,
+					width: '90px',
+				},
+				{
+					text: 'Цена после скидки',
+					value: "price-after-discount",
+					sortable: false,
+					width: '90px',
+				},
+				{
+					text: 'Заказы',
+					value: "orders",
+					sortable: false,
+					width: '90px',
+				},
+				{
+					text: 'Продажи',
+					value: "sales",
+					sortable: false,
+					width: '90px',
+				},
+				{
+					text: 'Возвраты',
+					value: "returns",
+					sortable: false,
+					width: '90px',
+				},
+				{
+					text: 'Расходы',
+					value: "expenses",
+					sortable: false,
+					width: '90px',
+				},
+				{
+					text: 'Прибыль',
+					value: "profit",
+					sortable: false,
+					width: '90px',
+				},
+				{
+					text: 'Упущенная-прибыль',
+					value: "lose-profit",
+					sortable: false,
+					width: '90px',
+				},
+				{
+					text: 'Остатки',
+					value: "remains",
+					sortable: false,
+					width: '90px',
+				},
+				{
+					text: 'Конверсии в корзину',
+					value: "basket",
+					sortable: false,
+					width: '90px',
+				},
+				{
+					text: 'Позиция в поиск.выдаче',
+					value: "position",
+					sortable: false,
+					width: '90px',
+				},
+				{
+					text: 'Кол-во дней не в сток',
+					value: "days-count",
+					sortable: false,
+					width: '100px',
 				},
 			],
 		}
 	},
-	computed: {
-		checkedElements() {
-			return this.data3.map(el => {
-				if(el.highlighting) {
-					return el
-				}
-			}).filter(Boolean)
-		},
-	},
 	methods: {
-		openModal() {
-			// this.sheet = true
-			this.$modal({
-				component: 'TableModal',
-				isRightSidebar: true,
-				props: {
-					title: 'Настройка OZON',
-					lists: [
-						'Зайдите в личный кабинет «Ozon Seller».',
-						'Отройте «Настройки».',
-						'В разделе «Seller API» выберите «API и ключи».',
-						'Установите тип токена «Администратор», присвойте ему название и нажмите кнопку «Создать ключ».',
-						'Скопируйте появившийся ключ и Client ID.'
-					]
-				}
-			})
-		},
 		getKeys(item) {
 			const newArr = {...item}
 
@@ -504,9 +361,6 @@ export default {
 			delete newArr.id
 
 			return newArr
-		},
-		handleClick(value) {
-			this.$set(this.data3[value], 'highlighting', !(this.data3[value].highlighting))
 		},
 		addNewFields() {
 			this.loading = true
@@ -538,28 +392,26 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.icon {
-	position: fixed;
-	right: 24px;
-	bottom: 65px;
-	border: 4px solid #8DC63F;
-	box-shadow: 0px 0px 14px rgba(141, 198, 63, 0.75);
-	width: 65px;
-	height: 65px;
-	border-radius: 50%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	cursor: pointer;
+.modal {
+	width: 100%;
+	height: 85%;
+	background-color: #fff;
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	border-radius: 16px 16px 0 0;
+	padding: 24px;
+	&__title {
+		font-family: 'Montserrat';
+		font-style: normal;
+		font-weight: 400;
+		font-size: 24px;
+		line-height: 29px;
+		letter-spacing: 0.15px;
+		color: #212121;
+	}
 }
 .products {
-	//padding: 12px 24px;
-	&__search {
-		.input {
-			max-width: 400px;
-			width: 100%;
-		}
-	}
 	&__info {
 		padding: 16px 24px;
 		background-color: #fff;
@@ -597,8 +449,5 @@ export default {
 			}
 		}
 	}
-}
-.green-cell {
-	color: #8DC63F;
 }
 </style>

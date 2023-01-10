@@ -94,11 +94,13 @@ export default {
 					{
 						label: 'Employee',
 						backgroundColor: "#caf270",
+						borderColor: "#caf270",
 						data: [1,19,7,23,5,7,12,74],
 						tension: .3,
 					}, {
 						label: 'Engineer',
 						backgroundColor: "#45c490",
+						borderColor: "#45c490",
 						data: [10, 25, 74,21,5,71],
 						tension: .3,
 					}

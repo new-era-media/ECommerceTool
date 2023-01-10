@@ -7,7 +7,7 @@
 				Select.select(:lists="selectChart" v-model="selectChartValue")
 				.ml-2
 					MultiSelect(:lists="selectTypes" v-model="selectType" icon="mdi-filter-outline")
-		BarChart.min(
+		LineChart.min(
 			:chartData="chartData"
 			:options="options"
 		)
@@ -26,11 +26,12 @@ import MultiSelect from "@/components/MultiSelect";
 import Select from "@/components/Select";
 import Table from "@/components/Table/Table";
 import Button from "@/components/Button/Button";
+import LineChart from "@/components/Chart/LineChart";
 // import { ChartZoomPlugin } from '@/plugins/chart'
 
 export default {
 	name: "ChartStackBar",
-	components: {BarChart, DateSelector, MultiSelect, Select, Table, Button},
+	components: {LineChart, BarChart, DateSelector, MultiSelect, Select, Table, Button},
 	props: {
 		colors: {
 			type: Array,
@@ -74,7 +75,7 @@ export default {
 				},
 				scales: {
 					x: {
-						stacked: true,
+						// stacked: true,
 						grid: {
 							color: 'transparent',
 							borderColor: 'transparent',
@@ -82,7 +83,7 @@ export default {
 						}
 					},
 					y: {
-						stacked: true
+						// stacked: true
 					}
 				}
 			},
@@ -103,19 +104,30 @@ export default {
 					{
 						label: 'Employee',
 						backgroundColor: "#caf270",
-						data: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],
-					}, {
+						borderColor: "#caf270",
+						data: Array.from({length: 10}).map(() => Math.floor(Math.random() * 30)),
+						tension: .3,
+					},
+					{
 						label: 'Engineer',
 						backgroundColor: "#45c490",
-						data: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],
-					}, {
+						borderColor: "#45c490",
+						data: Array.from({length: 10}).map(() => Math.floor(Math.random() * 30)),
+						tension: .3,
+					},
+					{
 						label: 'Government',
 						backgroundColor: "#008d93",
-						data: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],
-					}, {
+						borderColor: "#008d93",
+						data: Array.from({length: 10}).map(() => Math.floor(Math.random() * 30)),
+						tension: .3,
+					},
+					{
 						label: 'Political parties',
 						backgroundColor: "#2e5468",
-						data: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],
+						borderColor: "#2e5468",
+						data: Array.from({length: 10}).map(() => Math.floor(Math.random() * 30)),
+						tension: .3,
 					},
 				],
 			}
