@@ -27,7 +27,7 @@
 								div(:class="{'green-cell': item['average-price'] > item['average-discount']}") {{ item['average-price'] }}
 								div(:class="{'green-cell': item['average-discount'] > item['average-price']}") {{ item['average-discount'] }}
 				.products__info__title.mt-10 Категория 1 — Бренд 1
-				LazyTable(:table-data="data3" :headers="headers" @update="addNewFields" :lazy-load="false")
+				LazyTable(:table-data="tableData" :headers="headers" @update="addNewFields" :lazy-load="false")
 					template(#row="{item}")
 						td(v-for="(el, key) in getKeys(item)")
 							img(v-if="key === 'img'" width="60px" height="40px" :src="el")
@@ -42,6 +42,12 @@ import LazyTable from "@/components/LazyTable";
 export default {
 	name: "TableModal",
 	components: {LazyTable},
+	props: {
+		tableData: {
+			type: Array,
+			required: true,
+		}
+	},
 	data() {
 		return {
 			info: [

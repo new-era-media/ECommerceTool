@@ -486,14 +486,7 @@ export default {
 				component: 'TableModal',
 				isRightSidebar: true,
 				props: {
-					title: 'Настройка OZON',
-					lists: [
-						'Зайдите в личный кабинет «Ozon Seller».',
-						'Отройте «Настройки».',
-						'В разделе «Seller API» выберите «API и ключи».',
-						'Установите тип токена «Администратор», присвойте ему название и нажмите кнопку «Создать ключ».',
-						'Скопируйте появившийся ключ и Client ID.'
-					]
+					tableData: this.checkedElements,
 				}
 			})
 		},
