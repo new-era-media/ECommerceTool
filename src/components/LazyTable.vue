@@ -12,9 +12,9 @@
 	)
 		v-progress-linear(v-slot:progress color="blue" indeterminate)
 		template(v-slot:item="{item, index}")
-				template
-					tr.lazy(:class="index === tableData.length - 1 ? 'footer' : ''" @click.stop="handleClick(index)")
-						slot(name="row" :item="item")
+			template
+				tr.lazy(:class="index === tableData.length - 1 ? 'footer' : ''" @click.stop="handleClick(index)")
+					slot(name="row" :item="item")
 
 </template>
 
@@ -46,6 +46,7 @@ export default {
 	data: () => {
 		return {
 			observer: null,
+			number: 0,
 		}
 	},
 	mounted() {
@@ -71,6 +72,9 @@ export default {
 		}
 	},
 	methods: {
+		onIntersect (entries) {
+			this.number = entries[0].target.getAttribute('number')
+		},
 		useObs() {
 			const options = {
 				root: document.querySelector(".virtual-scroll"),

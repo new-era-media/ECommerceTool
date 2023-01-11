@@ -34,7 +34,7 @@
 				.products__info__title.mt-5 Категория 1 — Бренд 1
 				LazyTable(:table-data="data3" :headers="headers" :loading="loading" @update="addNewFields" :lazy-load="true" height="700px" @handle-click="handleClick")
 					template(#row="{item}")
-						td(v-for="(el, key) in getKeys(item)")
+						v-lazy(v-for="(el, key) in getKeys(item)" tag="td" :options="{threshold: .1}")
 							img(v-if="key === 'img'" width="60px" height="40px" :src="el")
 							div(v-else-if="key === 'name'")
 								span {{el}}
