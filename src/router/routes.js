@@ -19,6 +19,14 @@ export default [
 				name: 'Connecting',
 				component: _import('СonnectingMarketplace'),
 			},
+			{
+				path: '/enter-name',
+				name: 'EnterName',
+				component: _import('EnterName'),
+				meta: {
+					microHeader: true,
+				},
+			},
 		]
 	},
 	{

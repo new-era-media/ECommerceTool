@@ -1,15 +1,15 @@
 <template lang="pug">
-	AuthLayout
-		.slot.d-flex.justify-center
-			.form.d-flex.flex-column.align-center.justify-center
-				.form__label Добро пожаловать
-				.form__input.mt-8.px-2
-					v-text-field(
-						outlined
-						hide-details
-						label="Фамилия и имя" dense)
-				.form__button.mt-6
-					Button(@click="use" disabled) Сохранить
+	.slot.d-flex.justify-center
+		.form.d-flex.flex-column.align-center.justify-center
+			.form__label Добро пожаловать
+			.form__input.mt-8.px-2
+				v-text-field(
+					v-model="name"
+					outlined
+					hide-details
+					label="Фамилия и имя" dense)
+			.form__button.mt-6
+				Button(@click="use" :disabled="!name.length") Сохранить
 </template>
 
 <script>
@@ -19,8 +19,15 @@ import Button from "@/components/Button/Button";
 export default {
 	name: "EnterName",
 	components: {AuthLayout, Button},
+	data() {
+		return {
+			name: ''
+		}
+	},
 	methods: {
-		use() {}
+		use() {
+			this.$router.push({path: '/'})
+		}
 	},
 }
 </script>

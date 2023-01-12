@@ -41,20 +41,20 @@
 								v-icon.ml-1(v-if="item.highlighting" size="15" color="#FA4860") mdi-scale-unbalanced
 							.table-col(v-else ) {{ el }}
 
-				//LazyTable(:table-data="data4" :headers="headers" :loading="loading" @update="addNewFields" :lazy-load="false")
-				//	template(#row="{item}")
-				//		td(v-for="(el, key) in item")
-				//			img(v-if="key === 'img'" width="60px" height="40px" :src="el")
-				//			.table-col(v-else )
-				//				div(v-if="typeof el === 'object'")
-				//					// Пока цвета не работают, потому что приходит строка
-				//					v-tooltip(bottom)
-				//						template(v-slot:activator='{ on, attrs }')
-				//							div(v-bind='attrs' v-on='on')
-				//								div(:class="{'green-cell': el.first > el.second }") {{ el.first }}
-				//								div(:class="{'green-cell': el.second > el.first }") {{ el.second }}
-				//						span Tooltip
-				//				div(v-else) {{ el }}
+				LazyTable(:table-data="data4" :headers="headers" :loading="loading" @update="addNewFields" :lazy-load="false" height="700px" @handle-click="handleClick")
+					template(#row="{item}")
+						td(v-for="(el, key) in item")
+							img(v-if="key === 'img'" width="60px" height="40px" :src="el")
+							.table-col(v-else )
+								div(v-if="typeof el === 'object'")
+									// Пока цвета не работают, потому что приходит строка
+									v-tooltip(bottom)
+										template(v-slot:activator='{ on, attrs }')
+											div(v-bind='attrs' v-on='on')
+												div(:class="{'green-cell': el.first > el.second }") {{ el.first }}
+												div(:class="{'green-cell': el.second > el.first }") {{ el.second }}
+										span Tooltip
+								div(v-else) {{ el }}
 </template>
 
 <script>
